@@ -19,8 +19,8 @@ export function Button({ title, variant = 'primary', icon, ...rest }: Props) {
         variant === 'blue'
           ? 'blue.500'
           : variant === 'primary'
-          ? 'gray.100'
-          : 'gray.500'
+            ? 'gray.100'
+            : 'gray.500'
       }
       borderColor="green.500"
       rounded="md"
@@ -29,8 +29,8 @@ export function Button({ title, variant = 'primary', icon, ...rest }: Props) {
           variant === 'blue'
             ? 'blue.700'
             : variant === 'primary'
-            ? 'gray.200'
-            : 'gray.600',
+              ? 'gray.200'
+              : 'gray.600',
       }}
       flexDir="row"
       alignItems="center"

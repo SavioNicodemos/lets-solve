@@ -67,7 +67,7 @@ export function Home() {
     initialData: [],
     meta: {
       errorMessage: 'Ocorreu um erro ao buscar os Resolves',
-    }
+    },
   });
 
   const { data: myAds } = useQuery({
@@ -76,7 +76,7 @@ export function Home() {
     initialData: [],
     meta: {
       errorMessage: 'Ocorreu um erro ao buscar seus Resolves',
-    }
+    },
   });
 
   const myActiveProductsCount = myAds
@@ -183,9 +183,9 @@ export function Home() {
             contentContainerStyle={
               productList?.length
                 ? {
-                  flexGrow: 1,
-                  justifyContent: 'space-between',
-                }
+                    flexGrow: 1,
+                    justifyContent: 'space-between',
+                  }
                 : { flex: 1, justifyContent: 'center' }
             }
             renderItem={({ item }) => (

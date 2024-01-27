@@ -23,7 +23,7 @@ type Props = {
 };
 
 export function UploadPicturesContainer({
-  onChange = () => { },
+  onChange = () => {},
   value = [],
   errorMessage,
 }: Props) {
@@ -100,34 +100,34 @@ export function UploadPicturesContainer({
       <HStack space={5}>
         {photos.length
           ? photos.map((photo, index) => (
-            <Box mt="4" mb="8" key={photo.path}>
-              <IconButton
-                icon={
-                  <Icon as={Feather} name="x" color="red.500" size="lg" />
-                }
-                onPress={() => handleRemovePhoto(index)}
-                rounded="full"
-                bg="#0000000f"
-                p="1"
-                position="absolute"
-                zIndex={1}
-                right={0}
-              />
-              <Image
-                justifyContent="center"
-                h="100"
-                w="100"
-                rounded="lg"
-                bg="gray.500"
-                alt="Foto da queixa"
-                src={
-                  photo.isExternal
-                    ? `${api.defaults.baseURL}/images/${photo.path}`
-                    : photo.path
-                }
-              />
-            </Box>
-          ))
+              <Box mt="4" mb="8" key={photo.path}>
+                <IconButton
+                  icon={
+                    <Icon as={Feather} name="x" color="red.500" size="lg" />
+                  }
+                  onPress={() => handleRemovePhoto(index)}
+                  rounded="full"
+                  bg="#0000000f"
+                  p="1"
+                  position="absolute"
+                  zIndex={1}
+                  right={0}
+                />
+                <Image
+                  justifyContent="center"
+                  h="100"
+                  w="100"
+                  rounded="lg"
+                  bg="gray.500"
+                  alt="Foto da queixa"
+                  src={
+                    photo.isExternal
+                      ? `${api.defaults.baseURL}/images/${photo.path}`
+                      : photo.path
+                  }
+                />
+              </Box>
+            ))
           : null}
 
         {photos.length < 3 ? (

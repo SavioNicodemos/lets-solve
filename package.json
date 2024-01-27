@@ -7,10 +7,10 @@
     "android": "npx expo start --android",
     "ios": "npx expo start --ios",
     "web": "npx expo start --web",
-    "prepare": "husky install",
     "test": "jest",
-    "lint": "eslint 'src/**/*.{ts,tsx}'",
-    "ts:check": "tsc --noEmit"
+    "ts:check": "tsc --noEmit",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx src",
+    "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx src --fix"
   },
   "dependencies": {
     "@expo-google-fonts/karla": "^0.2.3",

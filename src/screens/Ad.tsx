@@ -74,8 +74,9 @@ export function Ad({ navigation, route }: IAdDetailsRoutes): JSX.Element {
   const handleChangeAdVisibility = async () => {
     await mutateAsync();
     toast.show({
-      description: `Resolve ${!product?.is_active ? 'ativado' : 'desativado'
-        } com sucesso`,
+      description: `Resolve ${
+        !product?.is_active ? 'ativado' : 'desativado'
+      } com sucesso`,
       placement: 'top',
       color: 'green.200',
     });

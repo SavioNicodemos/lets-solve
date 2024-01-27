@@ -40,7 +40,7 @@ export function MyAds() {
     initialData: [],
     meta: {
       errorMessage: 'Ocorreu um erro ao buscar seus Resolves',
-    }
+    },
   });
 
   const handleGoToAdDetails = (productId: IProductId) => {
@@ -103,14 +103,14 @@ export function MyAds() {
             contentContainerStyle={
               myAds.length
                 ? {
-                  justifyContent: 'space-between',
-                }
+                    justifyContent: 'space-between',
+                  }
                 : { flex: 1, justifyContent: 'center' }
             }
             renderItem={({ item }) => (
               <AdCard
                 name={item.name}
-                isNew={true}
+                isNew
                 price={1300}
                 productImage={item.product_images[0]?.path}
                 adIsDisabled={!item.is_active}

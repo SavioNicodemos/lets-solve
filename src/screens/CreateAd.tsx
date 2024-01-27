@@ -8,7 +8,7 @@ import {
   ScrollView,
   Text,
   VStack,
-  useToast
+  useToast,
 } from 'native-base';
 import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -185,7 +185,6 @@ export function CreateAd({ navigation, route }: ICreateAdRoutes) {
                 />
               )}
             />
-
           </VStack>
         </ScrollView>
       </VStack>

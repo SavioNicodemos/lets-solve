@@ -118,8 +118,8 @@ export function SignUp() {
             Boas vindas!
           </Heading>
           <Text color="gray.200" fontSize="sm" textAlign="center" mt={2}>
-            Crie a sua conta, junte-se ao seu grupo e resolva tudo da maneira mais
-            simples possível.
+            Crie a sua conta, junte-se ao seu grupo e resolva tudo da maneira
+            mais simples possível.
           </Text>
 
           <Center>

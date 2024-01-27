@@ -32,8 +32,8 @@ export const emptyFilters: IFiltersDTO = {
 };
 export function FiltersModal({
   visible,
-  onClose = () => { },
-  onChangeFilters = () => { },
+  onClose = () => {},
+  onChangeFilters = () => {},
   defaultValue,
 }: Props) {
   const [filters, setFilters] = useState<IFiltersDTO>(defaultValue);

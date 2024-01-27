@@ -38,8 +38,8 @@ export function AdCard({
           source={
             productImage
               ? {
-                uri: `${api.defaults.baseURL}/images/${productImage}`,
-              }
+                  uri: `${api.defaults.baseURL}/images/${productImage}`,
+                }
               : defaultProductImage
           }
           rounded="md"

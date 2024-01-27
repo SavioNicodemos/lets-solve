@@ -34,11 +34,7 @@ export function AdPreview({ navigation, route }: IAdPreviewRoutes) {
 
   const handleCreateAd = async () => {
     try {
-      const {
-        name,
-        description,
-        product_images,
-      } = product;
+      const { name, description, product_images } = product;
       const createAdResponse = await api.post('/products', {
         name,
         description,

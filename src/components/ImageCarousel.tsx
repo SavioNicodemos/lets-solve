@@ -42,10 +42,10 @@ export function ImageCarousel({ images, adIsDisabled }: Props) {
               source={
                 images.length
                   ? {
-                    uri: item.isExternal
-                      ? `${api.defaults.baseURL}/images/${item.path}`
-                      : item.path,
-                  }
+                      uri: item.isExternal
+                        ? `${api.defaults.baseURL}/images/${item.path}`
+                        : item.path,
+                    }
                   : noProduct
               }
               resizeMode="cover"

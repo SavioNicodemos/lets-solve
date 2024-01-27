@@ -64,7 +64,6 @@ export function AdDetails({ product }: Props) {
           </Text>
           <Text>Sim</Text>
         </HStack>
-
       </ScrollView>
     </VStack>
   );
