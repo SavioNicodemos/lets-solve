@@ -1,5 +1,5 @@
 import { Feather } from '@expo/vector-icons';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   HStack,
   Heading,
@@ -11,7 +11,6 @@ import {
   useToast,
 } from 'native-base';
 import { Controller, useForm } from 'react-hook-form';
-import * as yup from 'yup';
 
 import { Button } from '@components/Button';
 import { Input } from '@components/Input';
@@ -22,16 +21,16 @@ import { ICreateAdRoutes } from '@dtos/RoutesDTO';
 import { api } from '@services/api';
 import { handleError } from '@utils/handleError';
 import { findDeletedObjects } from '@utils/helpers/arrayHelper';
+import { z } from 'zod';
 
-const createAdSchema = yup.object({
-  name: yup.string().required('Informe um título para a queixa'),
+const createAdSchema = z.object({
+  name: z.string().min(1, 'Informe um título para a queixa'),
 
-  description: yup.string().required('Informe uma descrição para a queixa'),
+  description: z.string().min(1, 'Informe uma descrição para a queixa'),
 
-  product_images: yup
-    .array()
-    .min(1, 'Adicione pelo menos uma foto da queixa')
-    .required('Adicione pelo menos uma foto da queixa'),
+  product_images: z
+    .array(z.any())
+    .min(1, 'Adicione pelo menos uma foto da queixa'),
 });
 
 export function CreateAd({ navigation, route }: ICreateAdRoutes) {
@@ -52,7 +51,7 @@ export function CreateAd({ navigation, route }: ICreateAdRoutes) {
       name: isEditView ? product.name : '',
       description: isEditView ? product.description : '',
     },
-    resolver: yupResolver(createAdSchema),
+    resolver: zodResolver(createAdSchema),
   });
 
   const handleGoBack = () => {

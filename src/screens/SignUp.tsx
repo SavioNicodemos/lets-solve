@@ -1,4 +1,4 @@
-import { yupResolver } from '@hookform/resolvers/yup';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigation } from '@react-navigation/native';
 import {
   Center,
@@ -9,7 +9,7 @@ import {
   useToast,
 } from 'native-base';
 import { Controller, useForm } from 'react-hook-form';
-import * as yup from 'yup';
+import { z } from 'zod';
 
 import Logo from '@assets/Logo.svg';
 import { AvatarUpload } from '@components/AvatarUpload';
@@ -19,42 +19,41 @@ import { ICreateUser } from '@dtos/UserDTO';
 import { api } from '@services/api';
 import { handleError } from '@utils/handleError';
 
-const createUserSchema = yup.object({
-  avatar: yup.mixed().required('É necessário escolher uma foto de perfil'),
+const createUserSchema = z.object({
+  avatar: z
+    .any({ required_error: 'É necessário escolher uma foto de perfil' })
+    .refine(
+      file => file?.type.startsWith('image/'),
+      'O arquivo deve ser uma imagem',
+    ),
 
-  name: yup.string().required('Informe o nome de usuário'),
+  name: z
+    .string({ required_error: 'Informe o nome de usuário' })
+    .min(1, 'Informe o nome de usuário'),
 
-  email: yup
-    .string()
-    .email('Formato de e-mail errado')
-    .required('Informe um email'),
+  email: z
+    .string({ required_error: 'Informe um email' })
+    .min(1, 'Informe um email')
+    .email('Formato de e-mail errado'),
 
-  tel: yup
-    .number()
-    .typeError('Please enter only numeric values')
-    .nullable()
-    .required('Informe um telefone')
-    .min(0),
-
-  password: yup
-    .string()
-    .min(6, 'A senha deve ter pelo menos 6 dígitos.')
-    .transform(value => value || null)
-    .required('Informe uma senha'),
-
-  confirm_password: yup
-    .string()
-    .nullable()
-    .transform(value => value || null)
-    .oneOf([yup.ref('password')], 'A confirmação de senha não confere.')
-    .when('password', {
-      is: (Field: any) => Field,
-      then: schema =>
-        schema
-          .nullable()
-          .required('Informe a confirmação da senha.')
-          .transform(value => value || null),
+  tel: z
+    .string({
+      required_error: 'Informe um telefone',
+    })
+    .min(1, 'Informe um telefone')
+    .refine(data => !Number.isNaN(Number(data)), {
+      message: 'Please enter only numeric values',
     }),
+
+  password: z
+    .string({ required_error: 'Informe uma senha' })
+    .min(6, 'A senha deve ter pelo menos 6 dígitos.'),
+
+  confirm_password: z
+    .string({
+      required_error: 'Informe uma confirmação de senha',
+    })
+    .min(6, 'A senha deve ter pelo menos 6 dígitos.'),
 });
 
 export function SignUp() {
@@ -66,8 +65,9 @@ export function SignUp() {
     control,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm<ICreateUser>({
-    resolver: yupResolver(createUserSchema),
+    resolver: zodResolver(createUserSchema),
   });
 
   const handleGoBack = () => {
@@ -75,6 +75,12 @@ export function SignUp() {
   };
 
   const handleCreateUser = async (data: ICreateUser) => {
+    if (data.password !== data.confirm_password) {
+      setError('confirm_password', {
+        message: 'As senhas não coincidem',
+      });
+      return;
+    }
     try {
       const formData = new FormData();
       formData.append('avatar', data.avatar as any);
