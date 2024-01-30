@@ -191,9 +191,8 @@ export function Home() {
             renderItem={({ item }) => (
               <AdCard
                 name={item.name}
-                isNew={false}
-                price={13}
                 userPhoto={item.user.avatar}
+                status={{ name: 'Resolvido', color: '#ff0000' }}
                 productImage={item.product_images[0]?.path}
                 onPress={() => handleGoToAdDetails(item.id)}
               />
