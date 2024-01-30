@@ -45,14 +45,10 @@ export function AdPreview({ navigation, route }: IAdPreviewRoutes) {
       const form = new FormData();
       form.append('product_id', productId);
       product_images.forEach((element: any) => {
-        form.append('images', element);
+        form.append('images[]', element);
       });
 
-      await api.post('/products/images', form, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      await api.postForm('/products/images', form);
 
       toast.show({
         title: 'Produto criado com sucesso!',

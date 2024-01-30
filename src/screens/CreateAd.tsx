@@ -89,11 +89,7 @@ export function CreateAd({ navigation, route }: ICreateAdRoutes) {
           imagesForm.append('images[]', element);
         });
 
-        await api.post('/products/images', imagesForm, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
+        await api.postForm('/products/images', imagesForm);
       }
 
       if (deletedPhotosIds.length) {

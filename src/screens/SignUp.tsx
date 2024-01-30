@@ -89,11 +89,7 @@ export function SignUp() {
       formData.append('tel', data.tel);
       formData.append('password', data.password);
 
-      await api.post('/users', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      await api.postForm('/users', formData);
       toast.show({
         title: 'Usuário criado com sucesso!',
         placement: 'top',
