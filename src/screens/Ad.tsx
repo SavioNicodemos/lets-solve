@@ -1,6 +1,4 @@
-import { AdDetails } from '@components/AdDetails';
-import { Button } from '@components/Button';
-import Loading from '@components/Loading';
+import RenderProduct from '@components/RenderProduct';
 import { IProductId, ProductApiDTO, ProductDTO } from '@dtos/ProductDTO';
 import { IAdDetailsRoutes } from '@dtos/RoutesDTO';
 import { Feather } from '@expo/vector-icons';
@@ -8,17 +6,8 @@ import { useFocusEffect } from '@react-navigation/native';
 import { api } from '@services/api';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { handleError } from '@utils/handleError';
-import {
-  Box,
-  HStack,
-  Heading,
-  Icon,
-  IconButton,
-  VStack,
-  useToast,
-} from 'native-base';
+import { HStack, Icon, IconButton, VStack, useToast } from 'native-base';
 import { useCallback } from 'react';
-import { Platform } from 'react-native';
 
 const getProduct = async (productId: IProductId): Promise<ProductDTO> => {
   const response = await api.get(`/products/${productId}`);
@@ -57,7 +46,6 @@ export function Ad({ navigation, route }: IAdDetailsRoutes): JSX.Element {
   const {
     data: product,
     isLoading,
-    isError,
     refetch,
   } = useQuery({
     queryKey: ['product', productId],
@@ -102,10 +90,6 @@ export function Ad({ navigation, route }: IAdDetailsRoutes): JSX.Element {
     }, []),
   );
 
-  if (isError || !product) {
-    return <Heading>Sorry, something went wrong! try again later</Heading>;
-  }
-
   return (
     <VStack bgColor="gray.600" flex={1} pt={12}>
       <HStack px={6} justifyContent="space-between">
@@ -116,7 +100,7 @@ export function Ad({ navigation, route }: IAdDetailsRoutes): JSX.Element {
           }
           onPress={handlePressArrowBackButton}
         />
-        {isMyAd ? (
+        {isMyAd && product ? (
           <IconButton
             rounded="full"
             icon={
@@ -127,77 +111,13 @@ export function Ad({ navigation, route }: IAdDetailsRoutes): JSX.Element {
         ) : null}
       </HStack>
 
-      {isLoading ? (
-        <Loading backgroundStyle="appDefault" />
-      ) : (
-        <>
-          <AdDetails product={product} />
-
-          {isMyAd ? (
-            <HStack
-              justifyContent="space-between"
-              bg="white"
-              pt={4}
-              pb={8}
-              alignItems="center"
-              px="6"
-              flexDir="column"
-              space={4}
-            >
-              <VStack>
-                <Button
-                  title={
-                    product.is_active ? 'Desativar Resolve' : 'Ativar Resolve'
-                  }
-                  icon="power"
-                  variant="primary"
-                  minW={360}
-                  isDisabled={isLoadingChangeVisibility}
-                  onPress={handleChangeAdVisibility}
-                />
-              </VStack>
-              <VStack mt={3}>
-                <Button
-                  title="Excluir Resolve"
-                  icon="trash"
-                  variant="secondary"
-                  minW={360}
-                />
-              </VStack>
-            </HStack>
-          ) : (
-            <HStack
-              justifyContent="space-between"
-              bg="white"
-              pt={Platform.OS === 'ios' ? 4 : 8}
-              pb={8}
-              alignItems="center"
-              px="6"
-            >
-              <Box flexDir="row" alignItems="baseline">
-                <Heading
-                  color="blue.700"
-                  fontSize="sm"
-                  mr="1"
-                  fontFamily="heading"
-                >
-                  R$
-                </Heading>
-                <Heading color="blue.700" fontSize="2xl" fontFamily="heading">
-                  13,00
-                </Heading>
-              </Box>
-              <Button
-                icon="message-circle"
-                title="Entrar em contato"
-                variant="blue"
-                maxWidth={200}
-                px={4}
-              />
-            </HStack>
-          )}
-        </>
-      )}
+      <RenderProduct
+        isLoading={isLoading}
+        isLoadingChangeVisibility={isLoadingChangeVisibility}
+        isMyAd={isMyAd}
+        onChangeVisibilityClick={handleChangeAdVisibility}
+        product={product}
+      />
     </VStack>
   );
 }
