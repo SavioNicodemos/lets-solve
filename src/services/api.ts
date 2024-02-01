@@ -1,11 +1,12 @@
 /* eslint-disable no-async-promise-executor */
 import axios, { AxiosError, AxiosInstance } from 'axios';
 
-import { AppError } from '@utils/AppError';
 import {
   storageAuthTokenGet,
   storageAuthTokenSave,
 } from '@storage/storageAuthToken';
+import { AppError } from '@utils/AppError';
+import { env } from '@utils/env';
 
 type SignOut = () => void;
 
@@ -19,7 +20,7 @@ type APIInstanceProps = AxiosInstance & {
 };
 
 const api = axios.create({
-  baseURL: 'http://192.168.1.74:8000/api/v1',
+  baseURL: env.API_URL,
 }) as APIInstanceProps;
 
 let failedQueued: Array<PromiseType> = [];
