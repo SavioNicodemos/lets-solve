@@ -1,7 +1,7 @@
-import { api } from '@services/api';
-import { Image, IImageProps } from 'native-base';
-import { ColorType } from 'native-base/lib/typescript/components/types';
 import defaultUserImage from '@assets/defaultAvatar.png';
+import { api } from '@services/api';
+import { IImageProps, Image } from 'native-base';
+import { ColorType } from 'native-base/lib/typescript/components/types';
 
 type Props = IImageProps & {
   isExternalImage?: boolean;
@@ -35,6 +35,7 @@ export function UserPhoto({
       borderColor={borderColor}
       alt="Foto de perfil do usuário"
       source={imageLink ? { uri: imagePath } : defaultUserImage}
+      fallbackSource={defaultUserImage}
       {...rest}
     />
   );

@@ -1,3 +1,4 @@
+import noProductImage from '@assets/noProduct.png';
 import { IImageUpload } from '@dtos/ProductDTO';
 import { Feather } from '@expo/vector-icons';
 import { api } from '@services/api';
@@ -125,6 +126,7 @@ export function UploadPicturesContainer({
                       ? `${api.defaults.baseURL}/images/${photo.path}`
                       : photo.path
                   }
+                  fallbackSource={noProductImage}
                 />
               </Box>
             ))
