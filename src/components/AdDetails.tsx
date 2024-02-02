@@ -1,13 +1,20 @@
 import { ImageCarousel } from '@components/ImageCarousel';
 import { UserPhoto } from '@components/UserPhoto';
 import { ShowAdDetailsDTO } from '@dtos/ProductDTO';
-import { Box, HStack, Heading, ScrollView, Text, VStack } from 'native-base';
+import { HStack, Heading, ScrollView, Text, VStack } from 'native-base';
+import StatusChip from './StatusChip';
 
 type Props = {
   product: ShowAdDetailsDTO;
 };
 
 export function AdDetails({ product }: Props) {
+  const status = {
+    name: 'Não respondida',
+    color: 'blue.500',
+    is_positive: false,
+  };
+
   return (
     <VStack flex={1}>
       <ImageCarousel
@@ -32,38 +39,18 @@ export function AdDetails({ product }: Props) {
 
           <Text fontSize="sm">{product.user.name}</Text>
         </HStack>
-        <HStack>
-          <Box py={0.5} px={2} rounded="full" bg="gray.500">
-            <Text fontSize="10" fontFamily="heading">
-              USADO
-            </Text>
-          </Box>
-        </HStack>
+
+        <StatusChip status={status} />
 
         <HStack justifyContent="space-between" mt="3">
           <Heading color="gray.100" fontSize="lg" fontFamily="heading">
             {product.name}
           </Heading>
-          <Box flexDir="row" alignItems="baseline">
-            <Heading color="blue.500" fontSize="sm" mr="1" fontFamily="heading">
-              R$
-            </Heading>
-            <Heading color="blue.500" fontSize="lg" fontFamily="heading">
-              13,00
-            </Heading>
-          </Box>
         </HStack>
 
         <Text mt="2" fontSize="sm" color="gray.200">
           {product.description}
         </Text>
-
-        <HStack mt={4}>
-          <Text mr="2" fontFamily="heading" color="gray.200">
-            Aceita troca?
-          </Text>
-          <Text>Sim</Text>
-        </HStack>
       </ScrollView>
     </VStack>
   );

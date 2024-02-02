@@ -192,7 +192,11 @@ export function Home() {
               <AdCard
                 name={item.name}
                 userPhoto={item.user.avatar}
-                status={{ name: 'Resolvido', color: '#ff0000' }}
+                status={{
+                  name: 'Resolvido',
+                  color: '#00aa00',
+                  is_positive: true,
+                }}
                 productImage={item.product_images[0]?.path}
                 onPress={() => handleGoToAdDetails(item.id)}
               />

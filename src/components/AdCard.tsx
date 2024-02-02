@@ -2,6 +2,7 @@ import defaultProductImage from '@assets/noProduct.png';
 import { ComplaintStatusDTO } from '@dtos/ComplaintStatusDTO';
 import { api } from '@services/api';
 import { Box, HStack, Image, Pressable, Text, VStack } from 'native-base';
+import StatusChip from './StatusChip';
 import { UserPhoto } from './UserPhoto';
 
 type Props = {
@@ -60,20 +61,8 @@ export function AdCard({
               imageLink={userPhoto}
             />
           ) : null}
-          <Text
-            px="2"
-            py="0.5"
-            fontSize="10"
-            fontWeight="bold"
-            rounded="full"
-            bg={status?.color}
-            color="white"
-            top={2}
-            right={2}
-            position="absolute"
-          >
-            {status?.name.toUpperCase()}
-          </Text>
+
+          <StatusChip status={status} />
         </HStack>
 
         {adIsDisabled ? (
