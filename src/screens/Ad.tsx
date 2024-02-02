@@ -1,3 +1,4 @@
+import { Menu, MenuItem } from '@components/Menu';
 import RenderProduct from '@components/RenderProduct';
 import { IProductId, ProductApiDTO, ProductDTO } from '@dtos/ProductDTO';
 import { IAdDetailsRoutes } from '@dtos/RoutesDTO';
@@ -8,6 +9,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { handleError } from '@utils/handleError';
 import { HStack, Icon, IconButton, VStack, useToast } from 'native-base';
 import { useCallback } from 'react';
+import { Alert } from 'react-native';
 
 const getProduct = async (productId: IProductId): Promise<ProductDTO> => {
   const response = await api.get(`/products/${productId}`);
@@ -100,24 +102,33 @@ export function Ad({ navigation, route }: IAdDetailsRoutes): JSX.Element {
           }
           onPress={handlePressArrowBackButton}
         />
-        {isMyAd && product ? (
-          <IconButton
-            rounded="full"
-            icon={
-              <Icon as={Feather} name="edit-3" color="gray.100" size="lg" />
-            }
-            onPress={handleGoToEditAd}
-          />
-        ) : null}
+
+        {Boolean(isMyAd && product) && (
+          <Menu>
+            <MenuItem icon="edit-3" onPress={handleGoToEditAd} title="Editar" />
+            <MenuItem
+              icon="power"
+              onPress={handleChangeAdVisibility}
+              title={
+                product!.is_active ? 'Desativar Resolve' : 'Ativar Resolve'
+              }
+              isDisabled={isLoadingChangeVisibility}
+            />
+            <MenuItem
+              icon="trash"
+              title="Excluir Resolve"
+              onPress={() =>
+                Alert.alert(
+                  'Função indisponível',
+                  'A seguinte função ainda está em desenvolvimento',
+                )
+              }
+            />
+          </Menu>
+        )}
       </HStack>
 
-      <RenderProduct
-        isLoading={isLoading}
-        isLoadingChangeVisibility={isLoadingChangeVisibility}
-        isMyAd={isMyAd}
-        onChangeVisibilityClick={handleChangeAdVisibility}
-        product={product}
-      />
+      <RenderProduct isLoading={isLoading} product={product} />
     </VStack>
   );
 }
