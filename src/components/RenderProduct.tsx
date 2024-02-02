@@ -1,5 +1,4 @@
-import { Box, Center, HStack, Heading, Text, VStack } from 'native-base';
-import { Platform } from 'react-native';
+import { Center, HStack, Text, VStack } from 'native-base';
 
 import { ProductDTO } from '@dtos/ProductDTO';
 import { AdDetails } from './AdDetails';
@@ -61,32 +60,7 @@ function RenderProduct({
             />
           </VStack>
         </HStack>
-      ) : (
-        <HStack
-          justifyContent="space-between"
-          bg="white"
-          pt={Platform.OS === 'ios' ? 4 : 8}
-          pb={8}
-          alignItems="center"
-          px="6"
-        >
-          <Box flexDir="row" alignItems="baseline">
-            <Heading color="blue.700" fontSize="sm" mr="1" fontFamily="heading">
-              R$
-            </Heading>
-            <Heading color="blue.700" fontSize="2xl" fontFamily="heading">
-              13,00
-            </Heading>
-          </Box>
-          <Button
-            icon="message-circle"
-            title="Entrar em contato"
-            variant="blue"
-            maxWidth={200}
-            px={4}
-          />
-        </HStack>
-      )}
+      ) : null}
     </>
   );
 }

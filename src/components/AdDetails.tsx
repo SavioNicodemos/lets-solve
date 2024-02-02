@@ -11,7 +11,7 @@ type Props = {
 export function AdDetails({ product }: Props) {
   const status = {
     name: 'Não respondida',
-    color: 'blue.500',
+    color: 'purple.500',
     is_positive: false,
   };
 
@@ -29,20 +29,23 @@ export function AdDetails({ product }: Props) {
         bg="gray.600"
         mt={-5}
       >
-        <HStack mb={6} mt={5}>
-          <UserPhoto
-            size={6}
-            borderWidth={2}
-            imageLink={product.user.avatar}
-            mr={2}
-          />
+        <HStack mb={3} mt={5} justifyContent="space-between">
+          <HStack>
+            <UserPhoto
+              size={6}
+              borderWidth={2}
+              borderColor={status.color}
+              imageLink={product.user.avatar}
+              mr={2}
+            />
 
-          <Text fontSize="sm">{product.user.name}</Text>
+            <Text fontSize="sm">{product.user.name}</Text>
+          </HStack>
+
+          <StatusChip status={status} />
         </HStack>
 
-        <StatusChip status={status} />
-
-        <HStack justifyContent="space-between" mt="3">
+        <HStack justifyContent="space-between">
           <Heading color="gray.100" fontSize="lg" fontFamily="heading">
             {product.name}
           </Heading>

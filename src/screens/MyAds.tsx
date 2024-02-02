@@ -110,7 +110,11 @@ export function MyAds() {
             renderItem={({ item }) => (
               <AdCard
                 name={item.name}
-                status={{ name: 'Resolvido', color: '#ff0000' }}
+                status={{
+                  name: 'Resolvido',
+                  color: '#00aa00',
+                  is_positive: true,
+                }}
                 productImage={item.product_images[0]?.path}
                 adIsDisabled={!item.is_active}
                 onPress={() => handleGoToAdDetails(item.id)}
