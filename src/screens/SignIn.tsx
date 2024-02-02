@@ -15,7 +15,7 @@ type FormData = {
 
 export function SignIn() {
   const navigation = useNavigation<AuthNavigatorRoutesProps>();
-  const { singIn } = useAuth();
+  const { signIn } = useAuth();
   const {
     control,
     handleSubmit,
@@ -24,7 +24,7 @@ export function SignIn() {
 
   async function handleSignIn({ email, password }: FormData) {
     try {
-      await singIn(email, password);
+      await signIn(email, password);
     } catch (error) {
       handleError(error);
     }

@@ -8,9 +8,9 @@ import {
 } from 'react';
 
 import {
-  storageAuthTokenSave,
   storageAuthTokenGet,
   storageAuthTokenRemove,
+  storageAuthTokenSave,
 } from '@storage/storageAuthToken';
 import {
   storageUserGet,
@@ -18,13 +18,12 @@ import {
   storageUserSave,
 } from '@storage/storageUser';
 
-import { api } from '@services/api';
 import { UserDTO } from '@dtos/UserDTO';
+import { api } from '@services/api';
 
 export type AuthContextDataProps = {
   user: UserDTO;
-  singIn: (email: string, password: string) => Promise<void>;
-  updateUserProfile: (userUpdated: UserDTO) => Promise<void>;
+  signIn: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
   isLoadingUserStorageData: boolean;
 };
@@ -62,7 +61,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     }
   }
 
-  const singIn = useCallback(async (email: string, password: string) => {
+  const signIn = useCallback(async (email: string, password: string) => {
     try {
       const { data } = await api.post('/sessions', { email, password });
 
@@ -88,11 +87,6 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     } finally {
       setIsLoadingUserStorageData(false);
     }
-  }
-
-  async function updateUserProfile(userUpdated: UserDTO) {
-    setUser(userUpdated);
-    await storageUserSave(userUpdated);
   }
 
   async function loadUserData() {
@@ -126,12 +120,11 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const contextReturnValues = useMemo(() => {
     return {
       user,
-      singIn,
+      signIn,
       signOut,
-      updateUserProfile,
       isLoadingUserStorageData,
     };
-  }, [isLoadingUserStorageData, singIn, user]);
+  }, [isLoadingUserStorageData, signIn, user]);
 
   return (
     <AuthContext.Provider value={contextReturnValues}>
