@@ -2,6 +2,7 @@ import defaultUserImage from '@assets/defaultAvatar.png';
 import { api } from '@services/api';
 import { IImageProps, Image } from 'native-base';
 import { ColorType } from 'native-base/lib/typescript/components/types';
+import { Pressable } from 'react-native';
 
 type Props = IImageProps & {
   isExternalImage?: boolean;
@@ -9,6 +10,7 @@ type Props = IImageProps & {
   borderWidth?: number;
   borderColor?: ColorType;
   imageLink: string;
+  onPress?: () => void;
 };
 
 export function UserPhoto({
@@ -17,6 +19,7 @@ export function UserPhoto({
   borderWidth = 3,
   borderColor = 'blue.500',
   imageLink,
+  onPress = () => {},
   ...rest
 }: Props) {
   const imagePath = isExternalImage
@@ -27,16 +30,18 @@ export function UserPhoto({
     : imageLink;
 
   return (
-    <Image
-      w={size}
-      h={size}
-      rounded="full"
-      borderWidth={borderWidth}
-      borderColor={borderColor}
-      alt="Foto de perfil do usuário"
-      source={imageLink ? { uri: imagePath } : defaultUserImage}
-      fallbackSource={defaultUserImage}
-      {...rest}
-    />
+    <Pressable onPress={onPress}>
+      <Image
+        w={size}
+        h={size}
+        rounded="full"
+        borderWidth={borderWidth}
+        borderColor={borderColor}
+        alt="Foto de perfil do usuário"
+        source={imageLink ? { uri: imagePath } : defaultUserImage}
+        fallbackSource={defaultUserImage}
+        {...rest}
+      />
+    </Pressable>
   );
 }

@@ -18,13 +18,17 @@ import {
   storageUserSave,
 } from '@storage/storageUser';
 
+import { IImageUpload } from '@dtos/ProductDTO';
 import { UserDTO } from '@dtos/UserDTO';
 import { api } from '@services/api';
+import { handleError } from '@utils/handleError';
+import { AxiosError } from 'axios';
 
 export type AuthContextDataProps = {
   user: UserDTO;
   signIn: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
+  updateUserAvatar: (avatar: IImageUpload) => Promise<void>;
   isLoadingUserStorageData: boolean;
 };
 
@@ -104,6 +108,25 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     }
   }
 
+  async function updateUserAvatar(avatar: IImageUpload): Promise<void> {
+    try {
+      const body = new FormData();
+      body.append('_method', 'PUT');
+      body.append('avatar', avatar as any);
+
+      await api.postForm('/users/avatar', body);
+
+      const response = await api.get<UserDTO>('/users/me');
+
+      await storageUserSave(response.data);
+      setUser(response.data);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        handleError(new Error('Erro ao atualizar foto de perfil'));
+      }
+    }
+  }
+
   useEffect(() => {
     loadUserData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -117,11 +140,12 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     };
   }, []);
 
-  const contextReturnValues = useMemo(() => {
+  const contextReturnValues = useMemo<AuthContextDataProps>(() => {
     return {
       user,
       signIn,
       signOut,
+      updateUserAvatar,
       isLoadingUserStorageData,
     };
   }, [isLoadingUserStorageData, signIn, user]);

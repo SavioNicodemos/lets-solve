@@ -95,12 +95,22 @@ export function Home() {
     navigation.navigate('ad', { productId, isMyAd: false });
   };
 
+  const handleGoToProfile = () => {
+    navigation.navigate('profile');
+  };
+
   return (
     <>
       <VStack bgColor="gray.600" flex={1} pt={16} px={6}>
         <HStack justifyContent="space-between">
           <HStack flexShrink={1}>
-            <UserPhoto size={12} mr={2} imageLink={user.avatar} />
+            <UserPhoto
+              key={user.avatar}
+              onPress={handleGoToProfile}
+              size={12}
+              mr={2}
+              imageLink={user.avatar}
+            />
             <VStack flexShrink={1}>
               <Text fontSize="md">Boas vindas,</Text>
               <Heading
