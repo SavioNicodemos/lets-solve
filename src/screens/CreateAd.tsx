@@ -7,7 +7,7 @@ import { Header } from '@components/Header';
 import { Input } from '@components/Input';
 import { TextArea } from '@components/TextArea';
 import { UploadPicturesContainer } from '@components/UploadPicturesContainer';
-import { CreateProductDTO, IImageUpload } from '@dtos/ProductDTO';
+import { CreateComplaintDTO, IImageUpload } from '@dtos/ComplaintDTO';
 import { ICreateAdRoutes } from '@dtos/RoutesDTO';
 import { api } from '@services/api';
 import { handleError } from '@utils/handleError';
@@ -19,7 +19,7 @@ const createAdSchema = z.object({
 
   description: z.string().min(1, 'Informe uma descrição para a queixa'),
 
-  product_images: z
+  complaint_images: z
     .array(z.any())
     .min(1, 'Adicione pelo menos uma foto da queixa'),
 });
@@ -27,20 +27,20 @@ const createAdSchema = z.object({
 export function CreateAd({ navigation, route }: ICreateAdRoutes) {
   const toast = useToast();
 
-  const { product } = route.params;
+  const { complaint } = route.params;
 
-  const isEditView = !!product;
+  const isEditView = !!complaint;
 
-  const initialPhotos = product?.product_images;
+  const initialPhotos = complaint?.complaint_images;
 
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<CreateProductDTO>({
+  } = useForm<CreateComplaintDTO>({
     defaultValues: {
-      name: isEditView ? product.name : '',
-      description: isEditView ? product.description : '',
+      name: isEditView ? complaint.name : '',
+      description: isEditView ? complaint.description : '',
     },
     resolver: zodResolver(createAdSchema),
   });
@@ -49,11 +49,11 @@ export function CreateAd({ navigation, route }: ICreateAdRoutes) {
     navigation.goBack();
   };
 
-  const handleGoToPreview = (data: CreateProductDTO) => {
-    navigation.navigate('adPreview', { product: data });
+  const handleGoToPreview = (data: CreateComplaintDTO) => {
+    navigation.navigate('adPreview', { complaint: data });
   };
 
-  const handleSuccessPress = async (data: CreateProductDTO) => {
+  const handleSuccessPress = async (data: CreateComplaintDTO) => {
     if (!isEditView) {
       handleGoToPreview(data);
       return;
@@ -61,21 +61,21 @@ export function CreateAd({ navigation, route }: ICreateAdRoutes) {
 
     const deletedPhotos = findDeletedObjects(
       initialPhotos as IImageUpload[],
-      data.product_images,
+      data.complaint_images,
       'path',
     );
     const deletedPhotosIds = deletedPhotos.map(image => image.id);
 
-    const newPhotosToAdd = data.product_images.filter(
+    const newPhotosToAdd = data.complaint_images.filter(
       image => image.isExternal === false,
     );
 
     try {
-      await api.put(`/complaints/${product.id}`, data);
+      await api.put(`/complaints/${complaint.id}`, data);
 
       if (newPhotosToAdd.length) {
         const imagesForm = new FormData();
-        imagesForm.append('product_id', product.id);
+        imagesForm.append('complaint_id', complaint.id);
         newPhotosToAdd.forEach((element: any) => {
           imagesForm.append('images[]', element);
         });
@@ -86,7 +86,7 @@ export function CreateAd({ navigation, route }: ICreateAdRoutes) {
       if (deletedPhotosIds.length) {
         await api.delete('/complaints/images', {
           data: {
-            productImagesIds: deletedPhotosIds,
+            complaintImagesIds: deletedPhotosIds,
           },
         });
       }
@@ -97,7 +97,7 @@ export function CreateAd({ navigation, route }: ICreateAdRoutes) {
         bgColor: 'green.500',
       });
 
-      navigation.navigate('ad', { productId: product.id, isMyAd: true });
+      navigation.navigate('ad', { complaintId: complaint.id, isMyAd: true });
     } catch (error) {
       handleError(error);
     }
@@ -119,12 +119,12 @@ export function CreateAd({ navigation, route }: ICreateAdRoutes) {
 
             <Controller
               control={control}
-              name="product_images"
+              name="complaint_images"
               render={({ field: { value, onChange } }) => (
                 <UploadPicturesContainer
                   value={value}
                   onChange={onChange}
-                  errorMessage={errors.product_images?.message}
+                  errorMessage={errors.complaint_images?.message}
                 />
               )}
             />

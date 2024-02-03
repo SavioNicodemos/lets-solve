@@ -14,28 +14,28 @@ export type IImageUpload = {
   type: string;
 };
 
-export type CreateProductDTO = {
+export type CreateComplaintDTO = {
   name: string;
   description: string;
-  product_images: IImageUpload[];
+  complaint_images: IImageUpload[];
 };
 
-export type ShowAdDetailsDTO = CreateProductDTO & {
+export type ShowAdDetailsDTO = CreateComplaintDTO & {
   user: User;
-  product_images: ImagesDTO[] | IImageUpload[];
+  complaint_images: ImagesDTO[] | IImageUpload[];
 };
 
-export type ProductDTO = ShowAdDetailsDTO & {
+export type ComplaintDTO = ShowAdDetailsDTO & {
   id: string;
   user_id: string;
   is_active: boolean;
 };
 
-export type ProductApiDTO = Omit<ProductDTO, 'payment_methods'> & {
+export type ComplaintApiDTO = Omit<ComplaintDTO, 'payment_methods'> & {
   payment_methods: IPaymentMethodObject[];
 };
 
-export type IProductId = string;
+export type IComplaintId = string;
 
 export type ImagesDTO = {
   id: string;

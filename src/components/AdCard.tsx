@@ -1,4 +1,4 @@
-import defaultProductImage from '@assets/noProduct.png';
+import defaultComplaintImage from '@assets/noComplaint.png';
 import { ComplaintStatusDTO } from '@dtos/ComplaintStatusDTO';
 import { api } from '@services/api';
 import { Box, HStack, Image, Pressable, Text, VStack } from 'native-base';
@@ -7,7 +7,7 @@ import { UserPhoto } from './UserPhoto';
 
 type Props = {
   userPhoto?: string;
-  productImage: string;
+  complaintImage: string;
   name: string;
   adIsDisabled?: boolean;
   status: Omit<ComplaintStatusDTO, 'id'>;
@@ -16,7 +16,7 @@ type Props = {
 
 export function AdCard({
   name,
-  productImage,
+  complaintImage,
   userPhoto,
   adIsDisabled,
   status,
@@ -34,13 +34,13 @@ export function AdCard({
       <VStack flex={1}>
         <Image
           source={
-            productImage
+            complaintImage
               ? {
-                  uri: `${api.defaults.baseURL}/images/${productImage}`,
+                  uri: `${api.defaults.baseURL}/images/${complaintImage}`,
                 }
-              : defaultProductImage
+              : defaultComplaintImage
           }
-          fallbackSource={defaultProductImage}
+          fallbackSource={defaultComplaintImage}
           rounded="md"
           alt="Foto do da queixa"
           resizeMode="cover"

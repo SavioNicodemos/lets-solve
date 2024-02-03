@@ -16,11 +16,11 @@ import { useCallback, useState } from 'react';
 import { AdCard } from '@components/AdCard';
 import { EmptyListText } from '@components/EmptyListText';
 import Loading from '@components/Loading';
-import { IProductId, ProductDTO } from '@dtos/ProductDTO';
+import { ComplaintDTO, IComplaintId } from '@dtos/ComplaintDTO';
 import { INavigationRoutes } from '@dtos/RoutesDTO';
 import { api } from '@services/api';
 
-const getMyAds = async (): Promise<ProductDTO[]> => {
+const getMyAds = async (): Promise<ComplaintDTO[]> => {
   const response = await api.get('/users/complaints');
   return response.data;
 };
@@ -43,8 +43,8 @@ export function MyAds() {
     },
   });
 
-  const handleGoToAdDetails = (productId: IProductId) => {
-    navigation.navigate('ad', { productId, isMyAd: true });
+  const handleGoToAdDetails = (complaintId: IComplaintId) => {
+    navigation.navigate('ad', { complaintId, isMyAd: true });
   };
 
   const handleGoToCreateAd = () => {
@@ -115,7 +115,7 @@ export function MyAds() {
                   color: '#00aa00',
                   is_positive: true,
                 }}
-                productImage={item.product_images[0]?.path}
+                complaintImage={item.complaint_images[0]?.path}
                 adIsDisabled={!item.is_active}
                 onPress={() => handleGoToAdDetails(item.id)}
               />

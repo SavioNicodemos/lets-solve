@@ -1,4 +1,4 @@
-import { IImageUpload } from '@dtos/ProductDTO';
+import { IImageUpload } from '@dtos/ComplaintDTO';
 import { Feather } from '@expo/vector-icons';
 import { AppError } from '@utils/AppError';
 import { handleError } from '@utils/handleError';

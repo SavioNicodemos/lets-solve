@@ -1,9 +1,13 @@
 /* eslint-disable import/extensions */
-import { CreateProductDTO, IProductId, ProductDTO } from '@dtos/ProductDTO';
+import {
+  ComplaintDTO,
+  CreateComplaintDTO,
+  IComplaintId,
+} from '@dtos/ComplaintDTO';
 import { NavigatorScreenParams } from '@react-navigation/native';
 import {
-  createNativeStackNavigator,
   NativeStackNavigationProp,
+  createNativeStackNavigator,
 } from '@react-navigation/native-stack';
 import { Ad } from '@screens/Ad';
 import { AdPreview } from '@screens/AdPreview';
@@ -14,10 +18,10 @@ import { BottomTabRoutes, HomeRoutes } from './home.routes';
 export type MainNavRoutes = {
   MainNav: NavigatorScreenParams<BottomTabRoutes>;
   createAd: {
-    product?: ProductDTO;
+    complaint?: ComplaintDTO;
   };
-  ad: { productId: IProductId; isMyAd: boolean };
-  adPreview: { product: CreateProductDTO };
+  ad: { complaintId: IComplaintId; isMyAd: boolean };
+  adPreview: { complaint: CreateComplaintDTO };
   profile: undefined;
 };
 

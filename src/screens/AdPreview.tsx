@@ -2,7 +2,7 @@
 /* eslint-disable camelcase */
 import { AdDetails } from '@components/AdDetails';
 import { Button } from '@components/Button';
-import { ShowAdDetailsDTO } from '@dtos/ProductDTO';
+import { ShowAdDetailsDTO } from '@dtos/ComplaintDTO';
 import { IAdPreviewRoutes } from '@dtos/RoutesDTO';
 import { useAuth } from '@hooks/useAuth';
 import { api } from '@services/api';
@@ -11,12 +11,12 @@ import { Center, HStack, Heading, Text, VStack, useToast } from 'native-base';
 import { Platform } from 'react-native';
 
 export function AdPreview({ navigation, route }: IAdPreviewRoutes) {
-  const { product } = route.params;
+  const { complaint } = route.params;
   const { user } = useAuth();
   const toast = useToast();
 
-  const productPreview: ShowAdDetailsDTO = {
-    ...product,
+  const complaintPreview: ShowAdDetailsDTO = {
+    ...complaint,
     user: {
       name: user.name,
       avatar: user.avatar,
@@ -28,23 +28,23 @@ export function AdPreview({ navigation, route }: IAdPreviewRoutes) {
     navigation.goBack();
   };
 
-  const handleGoToAd = (productId: string) => {
-    navigation.navigate('ad', { productId, isMyAd: true });
+  const handleGoToAd = (complaintId: string) => {
+    navigation.navigate('ad', { complaintId, isMyAd: true });
   };
 
   const handleCreateAd = async () => {
     try {
-      const { name, description, product_images } = product;
+      const { name, description, complaint_images } = complaint;
       const createAdResponse = await api.post('/complaints', {
         name,
         description,
       });
 
-      const productId = createAdResponse.data.id;
+      const complaintId = createAdResponse.data.id;
 
       const form = new FormData();
-      form.append('product_id', productId);
-      product_images.forEach((element: any) => {
+      form.append('complaint_id', complaintId);
+      complaint_images.forEach((element: any) => {
         form.append('images[]', element);
       });
 
@@ -56,7 +56,7 @@ export function AdPreview({ navigation, route }: IAdPreviewRoutes) {
         bgColor: 'green.500',
       });
 
-      handleGoToAd(productId);
+      handleGoToAd(complaintId);
     } catch (error) {
       handleError(error);
     }
@@ -73,7 +73,7 @@ export function AdPreview({ navigation, route }: IAdPreviewRoutes) {
         </Text>
       </Center>
 
-      <AdDetails product={productPreview} />
+      <AdDetails complaint={complaintPreview} />
 
       <HStack
         justifyContent="space-between"

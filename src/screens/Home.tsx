@@ -5,8 +5,8 @@ import { FiltersModal, emptyFilters } from '@components/FiltersModal';
 import { Input } from '@components/Input';
 import Loading from '@components/Loading';
 import { UserPhoto } from '@components/UserPhoto';
+import { ComplaintDTO, IComplaintId } from '@dtos/ComplaintDTO';
 import { IFiltersDTO } from '@dtos/FiltersDTO';
-import { IProductId, ProductDTO } from '@dtos/ProductDTO';
 import { INavigationRoutes } from '@dtos/RoutesDTO';
 import { Feather } from '@expo/vector-icons';
 import { useAuth } from '@hooks/useAuth';
@@ -25,10 +25,10 @@ import {
 } from 'native-base';
 import { useState } from 'react';
 
-const getAds = async (filters: IFiltersDTO): Promise<ProductDTO[]> => {
+const getAds = async (filters: IFiltersDTO): Promise<ComplaintDTO[]> => {
   const params = new URLSearchParams();
-  if (filters?.productName) {
-    params.append('query', filters.productName);
+  if (filters?.complaintName) {
+    params.append('query', filters.complaintName);
   }
 
   if (typeof filters?.acceptTrade === 'boolean') {
@@ -49,7 +49,7 @@ const getAds = async (filters: IFiltersDTO): Promise<ProductDTO[]> => {
   return response.data;
 };
 
-const getMyAds = async (): Promise<ProductDTO[]> => {
+const getMyAds = async (): Promise<ComplaintDTO[]> => {
   const response = await api.get('/users/complaints');
   return response.data;
 };
@@ -61,7 +61,7 @@ export function Home() {
   const navigation = useNavigation<INavigationRoutes['navigation']>();
   const { user } = useAuth();
 
-  const { data: productList, isLoading } = useQuery({
+  const { data: complaintList, isLoading } = useQuery({
     queryKey: ['ads', filters],
     queryFn: () => getAds(filters),
     initialData: [],
@@ -80,7 +80,7 @@ export function Home() {
   });
 
   const myActiveComplaintsCount = myAds
-    ? myAds.filter(product => product.is_active).length
+    ? myAds.filter(complaint => complaint.is_active).length
     : 0;
 
   const handleGoToCreateAdd = () => {
@@ -91,8 +91,8 @@ export function Home() {
     navigation.navigate('myAds');
   };
 
-  const handleGoToAdDetails = (productId: IProductId) => {
-    navigation.navigate('ad', { productId, isMyAd: false });
+  const handleGoToAdDetails = (complaintId: IComplaintId) => {
+    navigation.navigate('ad', { complaintId, isMyAd: false });
   };
 
   const handleGoToProfile = () => {
@@ -178,7 +178,7 @@ export function Home() {
             searchBar
             onFilterPress={() => setIsFiltersModalOpen(true)}
             onChangeText={value =>
-              setFilters(prev => ({ ...prev, productName: value }))
+              setFilters(prev => ({ ...prev, complaintName: value }))
             }
           />
         </VStack>
@@ -187,11 +187,11 @@ export function Home() {
           <Loading backgroundStyle="appDefault" />
         ) : (
           <FlatList
-            data={productList}
+            data={complaintList}
             showsVerticalScrollIndicator={false}
             keyExtractor={item => item.id}
             contentContainerStyle={
-              productList?.length
+              complaintList?.length
                 ? {
                     flexGrow: 1,
                     justifyContent: 'space-between',
@@ -207,7 +207,7 @@ export function Home() {
                   color: 'yellow.500',
                   is_positive: true,
                 }}
-                productImage={item.product_images[0]?.path}
+                complaintImage={item.complaint_images[0]?.path}
                 onPress={() => handleGoToAdDetails(item.id)}
               />
             )}

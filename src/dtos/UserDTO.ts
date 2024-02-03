@@ -1,4 +1,4 @@
-import { IImageUpload } from './ProductDTO';
+import { IImageUpload } from './ComplaintDTO';
 
 export type UserDTO = {
   id: string;

@@ -1,11 +1,11 @@
-import { IImageUpload, ImagesDTO } from '@dtos/ProductDTO';
+import { IImageUpload, ImagesDTO } from '@dtos/ComplaintDTO';
 import { api } from '@services/api';
 import { Box, Center, HStack, Image, Text, View } from 'native-base';
 import { useState } from 'react';
 import { Dimensions } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 
-import noProduct from '@assets/noProduct.png';
+import noComplaint from '@assets/noComplaint.png';
 
 type Props = {
   images: ImagesDTO[] | IImageUpload[];
@@ -14,7 +14,7 @@ type Props = {
 
 export function ImageCarousel({ images, adIsDisabled }: Props) {
   const { width } = Dimensions.get('window');
-  const imagesArray = images.length ? images : [noProduct];
+  const imagesArray = images.length ? images : [noComplaint];
   const [viewingImageIndex, setViewingImageIndex] = useState(0);
   return (
     <View zIndex={1}>
@@ -46,7 +46,7 @@ export function ImageCarousel({ images, adIsDisabled }: Props) {
                         ? `${api.defaults.baseURL}/images/${item.path}`
                         : item.path,
                     }
-                  : noProduct
+                  : noComplaint
               }
               resizeMode="cover"
               alt="."

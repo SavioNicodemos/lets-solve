@@ -25,7 +25,7 @@ type Props = {
 };
 
 export const emptyFilters: IFiltersDTO = {
-  productName: null,
+  complaintName: null,
   isNew: null,
   acceptTrade: null,
   paymentMethods: [],

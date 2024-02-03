@@ -18,7 +18,7 @@ import {
   storageUserSave,
 } from '@storage/storageUser';
 
-import { IImageUpload } from '@dtos/ProductDTO';
+import { IImageUpload } from '@dtos/ComplaintDTO';
 import { UserDTO } from '@dtos/UserDTO';
 import { api } from '@services/api';
 import { handleError } from '@utils/handleError';

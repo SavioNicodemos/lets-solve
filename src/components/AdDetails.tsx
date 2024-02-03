@@ -1,14 +1,14 @@
 import { ImageCarousel } from '@components/ImageCarousel';
 import { UserPhoto } from '@components/UserPhoto';
-import { ShowAdDetailsDTO } from '@dtos/ProductDTO';
+import { ShowAdDetailsDTO } from '@dtos/ComplaintDTO';
 import { HStack, Heading, ScrollView, Text, VStack } from 'native-base';
 import StatusChip from './StatusChip';
 
 type Props = {
-  product: ShowAdDetailsDTO;
+  complaint: ShowAdDetailsDTO;
 };
 
-export function AdDetails({ product }: Props) {
+export function AdDetails({ complaint }: Props) {
   const status = {
     name: 'Não respondida',
     color: 'purple.500',
@@ -18,8 +18,8 @@ export function AdDetails({ product }: Props) {
   return (
     <VStack flex={1}>
       <ImageCarousel
-        images={product.product_images}
-        adIsDisabled={'is_active' in product ? !product.is_active : false}
+        images={complaint.complaint_images}
+        adIsDisabled={'is_active' in complaint ? !complaint.is_active : false}
       />
       <ScrollView
         px={6}
@@ -35,11 +35,11 @@ export function AdDetails({ product }: Props) {
               size={6}
               borderWidth={2}
               borderColor={status.color}
-              imageLink={product.user.avatar}
+              imageLink={complaint.user.avatar}
               mr={2}
             />
 
-            <Text fontSize="sm">{product.user.name}</Text>
+            <Text fontSize="sm">{complaint.user.name}</Text>
           </HStack>
 
           <StatusChip status={status} />
@@ -47,12 +47,12 @@ export function AdDetails({ product }: Props) {
 
         <HStack justifyContent="space-between">
           <Heading color="gray.100" fontSize="lg" fontFamily="heading">
-            {product.name}
+            {complaint.name}
           </Heading>
         </HStack>
 
         <Text mt="2" fontSize="sm" color="gray.200">
-          {product.description}
+          {complaint.description}
         </Text>
       </ScrollView>
     </VStack>

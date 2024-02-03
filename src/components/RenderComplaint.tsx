@@ -1,15 +1,15 @@
 import { Center, Text } from 'native-base';
 
-import { ProductDTO } from '@dtos/ProductDTO';
+import { ComplaintDTO } from '@dtos/ComplaintDTO';
 import { AdDetails } from './AdDetails';
 import Loading from './Loading';
 
-function RenderProduct({ product, isLoading }: Props) {
+function RenderComplaint({ complaint, isLoading }: Props) {
   if (isLoading) {
     return <Loading backgroundStyle="appDefault" />;
   }
 
-  if (!product) {
+  if (!complaint) {
     return (
       <Center flex={1} bg="gray.700">
         <Text>Produto não encontrado</Text>
@@ -17,12 +17,12 @@ function RenderProduct({ product, isLoading }: Props) {
     );
   }
 
-  return <AdDetails product={product!} />;
+  return <AdDetails complaint={complaint!} />;
 }
 
 type Props = {
-  product?: ProductDTO;
+  complaint?: ComplaintDTO;
   isLoading: boolean;
 };
 
-export default RenderProduct;
+export default RenderComplaint;

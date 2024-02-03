@@ -1,6 +1,10 @@
 import { Menu, MenuItem } from '@components/Menu';
-import RenderProduct from '@components/RenderProduct';
-import { IProductId, ProductApiDTO, ProductDTO } from '@dtos/ProductDTO';
+import RenderComplaint from '@components/RenderComplaint';
+import {
+  ComplaintApiDTO,
+  ComplaintDTO,
+  IComplaintId,
+} from '@dtos/ComplaintDTO';
 import { IAdDetailsRoutes } from '@dtos/RoutesDTO';
 import { Feather } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
@@ -11,61 +15,63 @@ import { HStack, Icon, IconButton, VStack, useToast } from 'native-base';
 import { useCallback } from 'react';
 import { Alert } from 'react-native';
 
-const getProduct = async (productId: IProductId): Promise<ProductDTO> => {
-  const response = await api.get(`/complaints/${productId}`);
-  const responseData: ProductApiDTO = response.data;
+const getComplaint = async (
+  complaintId: IComplaintId,
+): Promise<ComplaintDTO> => {
+  const response = await api.get(`/complaints/${complaintId}`);
+  const responseData: ComplaintApiDTO = response.data;
 
-  const productData: ProductDTO = {
+  const complaintData: ComplaintDTO = {
     ...responseData,
-    product_images: responseData.product_images.map(image => ({
+    complaint_images: responseData.complaint_images.map(image => ({
       ...image,
       isExternal: true,
     })),
   };
-  return productData;
+  return complaintData;
 };
 
 const changeAdVisibility = async (
-  productId: IProductId,
-  productActualStatus: boolean,
+  complaintId: IComplaintId,
+  complaintActualStatus: boolean,
 ) => {
   try {
-    const response = await api.patch(`/complaints/${productId}`, {
-      is_active: !productActualStatus,
+    const response = await api.patch(`/complaints/${complaintId}`, {
+      is_active: !complaintActualStatus,
     });
 
     return response.data.is_active;
   } catch (error) {
     handleError(error);
-    return productActualStatus;
+    return complaintActualStatus;
   }
 };
 
 export function Ad({ navigation, route }: IAdDetailsRoutes): JSX.Element {
   const toast = useToast();
-  const { productId, isMyAd } = route.params;
+  const { complaintId, isMyAd } = route.params;
 
   const {
-    data: product,
+    data: complaint,
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ['product', productId],
-    queryFn: () => getProduct(productId),
+    queryKey: ['complaint', complaintId],
+    queryFn: () => getComplaint(complaintId),
     meta: {
       errorMessage: 'Ocorreu um erro ao buscar o Resolve',
     },
   });
 
   const { isPending: isLoadingChangeVisibility, mutateAsync } = useMutation({
-    mutationFn: () => changeAdVisibility(productId, !!product?.is_active),
+    mutationFn: () => changeAdVisibility(complaintId, !!complaint?.is_active),
   });
 
   const handleChangeAdVisibility = async () => {
     await mutateAsync();
     toast.show({
       description: `Resolve ${
-        !product?.is_active ? 'ativado' : 'desativado'
+        !complaint?.is_active ? 'ativado' : 'desativado'
       } com sucesso`,
       placement: 'top',
       color: 'green.200',
@@ -82,7 +88,7 @@ export function Ad({ navigation, route }: IAdDetailsRoutes): JSX.Element {
   };
 
   const handleGoToEditAd = () => {
-    navigation.navigate('createAd', { product });
+    navigation.navigate('createAd', { complaint });
   };
 
   useFocusEffect(
@@ -103,14 +109,14 @@ export function Ad({ navigation, route }: IAdDetailsRoutes): JSX.Element {
           onPress={handlePressArrowBackButton}
         />
 
-        {Boolean(isMyAd && product) && (
+        {Boolean(isMyAd && complaint) && (
           <Menu>
             <MenuItem icon="edit-3" onPress={handleGoToEditAd} title="Editar" />
             <MenuItem
               icon="power"
               onPress={handleChangeAdVisibility}
               title={
-                product!.is_active ? 'Desativar Resolve' : 'Ativar Resolve'
+                complaint!.is_active ? 'Desativar Resolve' : 'Ativar Resolve'
               }
               isDisabled={isLoadingChangeVisibility}
             />
@@ -128,7 +134,7 @@ export function Ad({ navigation, route }: IAdDetailsRoutes): JSX.Element {
         )}
       </HStack>
 
-      <RenderProduct isLoading={isLoading} product={product} />
+      <RenderComplaint isLoading={isLoading} complaint={complaint} />
     </VStack>
   );
 }
