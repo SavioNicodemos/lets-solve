@@ -1,18 +1,9 @@
-import { Feather } from '@expo/vector-icons';
 import { zodResolver } from '@hookform/resolvers/zod';
-import {
-  HStack,
-  Heading,
-  Icon,
-  IconButton,
-  ScrollView,
-  Text,
-  VStack,
-  useToast,
-} from 'native-base';
+import { HStack, ScrollView, Text, VStack, useToast } from 'native-base';
 import { Controller, useForm } from 'react-hook-form';
 
 import { Button } from '@components/Button';
+import { Header } from '@components/Header';
 import { Input } from '@components/Input';
 import { TextArea } from '@components/TextArea';
 import { UploadPicturesContainer } from '@components/UploadPicturesContainer';
@@ -115,20 +106,8 @@ export function CreateAd({ navigation, route }: ICreateAdRoutes) {
   return (
     <>
       <VStack bgColor="gray.600" flex={1} pt={16} px={6}>
-        <HStack justifyContent="space-between" mb="8">
-          <IconButton
-            icon={
-              <Icon as={Feather} name="arrow-left" color="gray.100" size="lg" />
-            }
-            rounded="full"
-            onPress={handleGoBack}
-          />
+        <Header title={isEditView ? 'Editar Resolve' : 'Criar Resolve'} />
 
-          <Heading fontSize="lg" color="gray.100" ml={-5}>
-            {isEditView ? 'Editar Resolve' : 'Criar Resolve'}
-          </Heading>
-          <VStack />
-        </HStack>
         <ScrollView showsVerticalScrollIndicator={false}>
           <VStack>
             <Text fontFamily="heading" fontSize="md" color="gray.200">
