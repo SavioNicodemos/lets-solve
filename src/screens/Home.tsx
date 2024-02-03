@@ -45,12 +45,12 @@ const getAds = async (filters: IFiltersDTO): Promise<ProductDTO[]> => {
 
   const paramsString = params.toString();
 
-  const response = await api.get(`/products?${paramsString}`);
+  const response = await api.get(`/complaints?${paramsString}`);
   return response.data;
 };
 
 const getMyAds = async (): Promise<ProductDTO[]> => {
-  const response = await api.get('/users/products');
+  const response = await api.get('/users/complaints');
   return response.data;
 };
 
@@ -79,7 +79,7 @@ export function Home() {
     },
   });
 
-  const myActiveProductsCount = myAds
+  const myActiveComplaintsCount = myAds
     ? myAds.filter(product => product.is_active).length
     : 0;
 
@@ -147,7 +147,7 @@ export function Home() {
               <Icon as={Feather} name="tag" color="blue.700" size="lg" />
               <Box flex={1} ml={3}>
                 <Heading fontSize="lg" color="gray.200">
-                  {myActiveProductsCount}
+                  {myActiveComplaintsCount}
                 </Heading>
                 <Text color="gray.200" fontSize="xs">
                   Resolves ativos
@@ -204,7 +204,7 @@ export function Home() {
                 userPhoto={item.user.avatar}
                 status={{
                   name: 'Resolvido',
-                  color: '#00aa00',
+                  color: 'yellow.500',
                   is_positive: true,
                 }}
                 productImage={item.product_images[0]?.path}

@@ -21,7 +21,7 @@ import { INavigationRoutes } from '@dtos/RoutesDTO';
 import { api } from '@services/api';
 
 const getMyAds = async (): Promise<ProductDTO[]> => {
-  const response = await api.get('/users/products');
+  const response = await api.get('/users/complaints');
   return response.data;
 };
 

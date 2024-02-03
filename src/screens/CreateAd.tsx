@@ -71,7 +71,7 @@ export function CreateAd({ navigation, route }: ICreateAdRoutes) {
     );
 
     try {
-      await api.put(`/products/${product.id}`, data);
+      await api.put(`/complaints/${product.id}`, data);
 
       if (newPhotosToAdd.length) {
         const imagesForm = new FormData();
@@ -80,11 +80,11 @@ export function CreateAd({ navigation, route }: ICreateAdRoutes) {
           imagesForm.append('images[]', element);
         });
 
-        await api.postForm('/products/images', imagesForm);
+        await api.postForm('/complaints/images', imagesForm);
       }
 
       if (deletedPhotosIds.length) {
-        await api.delete('/products/images', {
+        await api.delete('/complaints/images', {
           data: {
             productImagesIds: deletedPhotosIds,
           },

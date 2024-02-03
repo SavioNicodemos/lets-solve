@@ -12,7 +12,7 @@ import { useCallback } from 'react';
 import { Alert } from 'react-native';
 
 const getProduct = async (productId: IProductId): Promise<ProductDTO> => {
-  const response = await api.get(`/products/${productId}`);
+  const response = await api.get(`/complaints/${productId}`);
   const responseData: ProductApiDTO = response.data;
 
   const productData: ProductDTO = {
@@ -30,7 +30,7 @@ const changeAdVisibility = async (
   productActualStatus: boolean,
 ) => {
   try {
-    const response = await api.patch(`/products/${productId}`, {
+    const response = await api.patch(`/complaints/${productId}`, {
       is_active: !productActualStatus,
     });
 

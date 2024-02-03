@@ -35,7 +35,7 @@ export function AdPreview({ navigation, route }: IAdPreviewRoutes) {
   const handleCreateAd = async () => {
     try {
       const { name, description, product_images } = product;
-      const createAdResponse = await api.post('/products', {
+      const createAdResponse = await api.post('/complaints', {
         name,
         description,
       });
@@ -48,7 +48,7 @@ export function AdPreview({ navigation, route }: IAdPreviewRoutes) {
         form.append('images[]', element);
       });
 
-      await api.postForm('/products/images', form);
+      await api.postForm('/complaints/images', form);
 
       toast.show({
         title: 'Produto criado com sucesso!',
