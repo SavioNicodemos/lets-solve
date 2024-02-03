@@ -1,10 +1,24 @@
 import { AvatarUpload } from '@components/AvatarUpload';
 import { Header } from '@components/Header';
 import { useAuth } from '@hooks/useAuth';
-import { Center, Heading, VStack } from 'native-base';
+import { Button, Center, Heading, VStack } from 'native-base';
+import { Alert } from 'react-native';
 
 export function Profile() {
-  const { user, updateUserAvatar } = useAuth();
+  const { user, updateUserAvatar, signOut } = useAuth();
+
+  const handleSignOut = () => {
+    Alert.alert('Sair', 'Deseja realmente sair?', [
+      {
+        text: 'Cancelar',
+        style: 'cancel',
+      },
+      {
+        text: 'Sair',
+        onPress: () => signOut(),
+      },
+    ]);
+  };
 
   return (
     <VStack bgColor="gray.600" flex={1} pt={16} px={6}>
@@ -28,6 +42,10 @@ export function Profile() {
         <Heading fontSize="md" color="gray.200">
           {user.tel}
         </Heading>
+
+        <Button size="lg" variant="link" mt={8} onPress={handleSignOut}>
+          Sair
+        </Button>
       </Center>
     </VStack>
   );

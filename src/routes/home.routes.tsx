@@ -1,13 +1,12 @@
 /* eslint-disable react/no-unstable-nested-components */
+import { Octicons } from '@expo/vector-icons';
 import {
-  createBottomTabNavigator,
   BottomTabNavigationProp,
+  createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
 import { Home } from '@screens/Home';
 import { MyAds } from '@screens/MyAds';
-import { useTheme, Pressable } from 'native-base';
-import { Octicons } from '@expo/vector-icons';
-import { useAuth } from '@hooks/useAuth';
+import { useTheme } from 'native-base';
 
 export type BottomTabRoutes = {
   home: undefined;
@@ -19,12 +18,7 @@ export type AppNavigatorRoutesProps = BottomTabNavigationProp<BottomTabRoutes>;
 
 const { Navigator, Screen } = createBottomTabNavigator<BottomTabRoutes>();
 
-function LogoutComponent() {
-  return null;
-}
-
 export function HomeRoutes() {
-  const { signOut } = useAuth();
   const { sizes, colors } = useTheme();
   const iconSize = sizes[6];
   return (
@@ -52,27 +46,6 @@ export function HomeRoutes() {
         options={{
           tabBarIcon: ({ color }) => (
             <Octicons name="tag" color={color} size={iconSize} />
-          ),
-        }}
-      />
-
-      <Screen
-        name="logout"
-        component={LogoutComponent}
-        options={{
-          tabBarButton: () => (
-            <Pressable
-              pt="3"
-              pr="4"
-              onPress={() => signOut()}
-              _pressed={{ opacity: 0.5 }}
-            >
-              <Octicons
-                name="sign-out"
-                color={colors.red[300]}
-                size={iconSize}
-              />
-            </Pressable>
           ),
         }}
       />
