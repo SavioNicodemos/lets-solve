@@ -1,3 +1,5 @@
+import { ComplaintStatusDTO } from './ComplaintStatusDTO';
+
 export type PaymentMethodsTypes =
   | 'pix'
   | 'card'
@@ -23,12 +25,14 @@ export type CreateComplaintDTO = {
 export type ShowAdDetailsDTO = CreateComplaintDTO & {
   user: User;
   complaint_images: ImagesDTO[] | IImageUpload[];
+  state: ComplaintStatusDTO;
 };
 
 export type ComplaintDTO = ShowAdDetailsDTO & {
   id: string;
   user_id: string;
   is_active: boolean;
+  state: ComplaintStatusDTO;
 };
 
 export type ComplaintApiDTO = Omit<ComplaintDTO, 'payment_methods'> & {

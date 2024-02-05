@@ -19,6 +19,7 @@ export function StatusChip({ status }: Props) {
         style={{ gap: 4 }}
       >
         <Icon
+          key={String(status.is_positive)}
           as={FontAwesome6}
           name={status.is_positive ? 'face-laugh-wink' : 'angry'}
           color="white"

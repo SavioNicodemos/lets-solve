@@ -9,11 +9,7 @@ type Props = {
 };
 
 export function AdDetails({ complaint }: Props) {
-  const status = {
-    name: 'Não respondida',
-    color: 'purple.500',
-    is_positive: false,
-  };
+  const status = complaint.state;
 
   return (
     <VStack flex={1}>

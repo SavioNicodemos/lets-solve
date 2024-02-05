@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable camelcase */
 import { AdDetails } from '@components/AdDetails';
 import { Button } from '@components/Button';
 import { ShowAdDetailsDTO } from '@dtos/ComplaintDTO';
@@ -22,6 +20,12 @@ export function AdPreview({ navigation, route }: IAdPreviewRoutes) {
       avatar: user.avatar,
       tel: user.tel,
     },
+    state: {
+      color: 'gray.500',
+      name: 'Em andamento',
+      id: '0',
+      is_positive: false,
+    },
   };
 
   const handleGoBack = () => {
@@ -34,7 +38,11 @@ export function AdPreview({ navigation, route }: IAdPreviewRoutes) {
 
   const handleCreateAd = async () => {
     try {
-      const { name, description, complaint_images } = complaint;
+      const {
+        name,
+        description,
+        complaint_images: complaintImages,
+      } = complaint;
       const createAdResponse = await api.post('/complaints', {
         name,
         description,
@@ -44,7 +52,7 @@ export function AdPreview({ navigation, route }: IAdPreviewRoutes) {
 
       const form = new FormData();
       form.append('complaint_id', complaintId);
-      complaint_images.forEach((element: any) => {
+      complaintImages.forEach((element: any) => {
         form.append('images[]', element);
       });
 
