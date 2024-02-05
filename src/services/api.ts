@@ -1,5 +1,6 @@
 /* eslint-disable no-async-promise-executor */
 import axios, { AxiosError, AxiosInstance } from 'axios';
+import { getLocales } from 'expo-localization';
 
 import {
   storageAuthTokenGet,
@@ -19,8 +20,14 @@ type APIInstanceProps = AxiosInstance & {
   registerInterceptTokenManager: (signOut: SignOut) => () => void;
 };
 
+const locales = getLocales();
+const languageCode = locales?.[0].languageCode;
+
 const api = axios.create({
   baseURL: env.API_URL,
+  headers: {
+    'Accept-Language': languageCode,
+  },
 }) as APIInstanceProps;
 
 let failedQueued: Array<PromiseType> = [];
