@@ -4,7 +4,7 @@ import { useAuth } from '@hooks/useAuth';
 import { Button, Center, Heading, VStack } from 'native-base';
 import { Alert } from 'react-native';
 
-export function Profile() {
+export default function Profile() {
   const { user, updateUserAvatar, signOut } = useAuth();
 
   const handleSignOut = () => {

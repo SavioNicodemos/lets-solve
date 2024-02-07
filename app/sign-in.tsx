@@ -1,20 +1,19 @@
+import { router } from 'expo-router';
+import { Center, Heading, ScrollView, Text, VStack } from 'native-base';
+import { Controller, useForm } from 'react-hook-form';
+
 import Logo from '@assets/Logo.svg';
 import { Button } from '@components/Button';
 import { Input } from '@components/Input';
 import { useAuth } from '@hooks/useAuth';
-import { useNavigation } from '@react-navigation/native';
-import { AuthNavigatorRoutesProps } from '@routes/auth.routes';
 import { handleError } from '@utils/handleError';
-import { Center, Heading, ScrollView, Text, VStack } from 'native-base';
-import { Controller, useForm } from 'react-hook-form';
 
 type FormData = {
   email: string;
   password: string;
 };
 
-export function SignIn() {
-  const navigation = useNavigation<AuthNavigatorRoutesProps>();
+export default function SignIn() {
   const { signIn } = useAuth();
   const {
     control,
@@ -31,7 +30,7 @@ export function SignIn() {
   }
 
   const handleGoToNewAccount = () => {
-    navigation.navigate('signUp');
+    router.push('/sign-up');
   };
 
   return (
@@ -49,7 +48,7 @@ export function SignIn() {
           <Center>
             <Logo height={80} width={200} />
             <Heading fontSize={35} color="gray.100">
-              Vamo Resolver
+              Resolve Ai
             </Heading>
             <Text color="gray.300" fontSize="sm">
               Seu espaço de compra e venda

@@ -5,14 +5,12 @@ import {
   ComplaintDTO,
   IComplaintId,
 } from '@dtos/ComplaintDTO';
-import { IAdDetailsRoutes } from '@dtos/RoutesDTO';
 import { Feather } from '@expo/vector-icons';
-import { useFocusEffect } from '@react-navigation/native';
 import { api } from '@services/api';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { handleError } from '@utils/handleError';
+import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import { HStack, Icon, IconButton, VStack, useToast } from 'native-base';
-import { useCallback } from 'react';
 import { Alert } from 'react-native';
 
 const getComplaint = async (
@@ -47,9 +45,10 @@ const changeAdVisibility = async (
   }
 };
 
-export function Ad({ navigation, route }: IAdDetailsRoutes): JSX.Element {
+export default function Ad() {
+  const navigation = useNavigation();
   const toast = useToast();
-  const { complaintId, isMyAd } = route.params;
+  const { complaintId, isMyAd } = useLocalSearchParams();
 
   const {
     data: complaint,
@@ -57,14 +56,15 @@ export function Ad({ navigation, route }: IAdDetailsRoutes): JSX.Element {
     refetch,
   } = useQuery({
     queryKey: ['complaint', complaintId],
-    queryFn: () => getComplaint(complaintId),
+    queryFn: () => getComplaint(complaintId as string),
     meta: {
       errorMessage: 'Ocorreu um erro ao buscar o Resolve',
     },
   });
 
   const { isPending: isLoadingChangeVisibility, mutateAsync } = useMutation({
-    mutationFn: () => changeAdVisibility(complaintId, !!complaint?.is_active),
+    mutationFn: () =>
+      changeAdVisibility(complaintId as string, !!complaint?.is_active),
   });
 
   const handleChangeAdVisibility = async () => {
@@ -82,21 +82,17 @@ export function Ad({ navigation, route }: IAdDetailsRoutes): JSX.Element {
   const handlePressArrowBackButton = () => {
     const routeList = navigation.getState().routes;
     if (routeList[routeList.length - 2].name === 'adPreview') {
-      return navigation.popToTop();
+      return router.push('/');
     }
     return navigation.goBack();
   };
 
   const handleGoToEditAd = () => {
-    navigation.navigate('createAd', { complaint });
+    router.push({
+      pathname: '/ad/create',
+      params: { complaint: JSON.stringify(complaint) },
+    });
   };
-
-  useFocusEffect(
-    useCallback(() => {
-      refetch();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []),
-  );
 
   return (
     <VStack bgColor="gray.600" flex={1} pt={12}>
@@ -109,7 +105,7 @@ export function Ad({ navigation, route }: IAdDetailsRoutes): JSX.Element {
           onPress={handlePressArrowBackButton}
         />
 
-        {Boolean(isMyAd && complaint) && (
+        {Boolean(Boolean(isMyAd) && complaint) && (
           <Menu>
             <MenuItem icon="edit-3" onPress={handleGoToEditAd} title="Editar" />
             <MenuItem

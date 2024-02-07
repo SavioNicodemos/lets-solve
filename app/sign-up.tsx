@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useNavigation } from '@react-navigation/native';
+import { router } from 'expo-router';
 import {
   Center,
   Heading,
@@ -19,46 +19,7 @@ import { ICreateUser } from '@dtos/UserDTO';
 import { api } from '@services/api';
 import { handleError } from '@utils/handleError';
 
-const createUserSchema = z.object({
-  avatar: z
-    .any({ required_error: 'É necessário escolher uma foto de perfil' })
-    .refine(
-      file => file?.type.startsWith('image/'),
-      'O arquivo deve ser uma imagem',
-    ),
-
-  name: z
-    .string({ required_error: 'Informe o nome de usuário' })
-    .min(1, 'Informe o nome de usuário'),
-
-  email: z
-    .string({ required_error: 'Informe um email' })
-    .min(1, 'Informe um email')
-    .email('Formato de e-mail errado'),
-
-  tel: z
-    .string({
-      required_error: 'Informe um telefone',
-    })
-    .min(1, 'Informe um telefone')
-    .refine(data => !Number.isNaN(Number(data)), {
-      message: 'Please enter only numeric values',
-    }),
-
-  password: z
-    .string({ required_error: 'Informe uma senha' })
-    .min(6, 'A senha deve ter pelo menos 6 dígitos.'),
-
-  confirm_password: z
-    .string({
-      required_error: 'Informe uma confirmação de senha',
-    })
-    .min(6, 'A senha deve ter pelo menos 6 dígitos.'),
-});
-
-export function SignUp() {
-  const navigation = useNavigation();
-
+export default function SignUp() {
   const toast = useToast();
 
   const {
@@ -67,11 +28,12 @@ export function SignUp() {
     formState: { errors },
     setError,
   } = useForm<ICreateUser>({
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     resolver: zodResolver(createUserSchema),
   });
 
   const handleGoBack = () => {
-    navigation.goBack();
+    router.back();
   };
 
   const handleCreateUser = async (data: ICreateUser) => {
@@ -230,3 +192,40 @@ export function SignUp() {
     </ScrollView>
   );
 }
+
+const createUserSchema = z.object({
+  avatar: z
+    .any({ required_error: 'É necessário escolher uma foto de perfil' })
+    .refine(
+      file => file?.type.startsWith('image/'),
+      'O arquivo deve ser uma imagem',
+    ),
+
+  name: z
+    .string({ required_error: 'Informe o nome de usuário' })
+    .min(1, 'Informe o nome de usuário'),
+
+  email: z
+    .string({ required_error: 'Informe um email' })
+    .min(1, 'Informe um email')
+    .email('Formato de e-mail errado'),
+
+  tel: z
+    .string({
+      required_error: 'Informe um telefone',
+    })
+    .min(1, 'Informe um telefone')
+    .refine(data => !Number.isNaN(Number(data)), {
+      message: 'Please enter only numeric values',
+    }),
+
+  password: z
+    .string({ required_error: 'Informe uma senha' })
+    .min(6, 'A senha deve ter pelo menos 6 dígitos.'),
+
+  confirm_password: z
+    .string({
+      required_error: 'Informe uma confirmação de senha',
+    })
+    .min(6, 'A senha deve ter pelo menos 6 dígitos.'),
+});

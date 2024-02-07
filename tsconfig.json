@@ -15,5 +15,12 @@
       "@contexts/*": ["./src/contexts/*"],
       "@routes/*": ["./src/routes/*"]
     }
-  }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts",
+    "./src/storage/__mocks__/@react-native-async-storage/async-storage.js"
+  ]
 }

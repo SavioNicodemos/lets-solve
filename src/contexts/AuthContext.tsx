@@ -23,6 +23,7 @@ import { UserDTO } from '@dtos/UserDTO';
 import { api } from '@services/api';
 import { handleError } from '@utils/handleError';
 import { AxiosError } from 'axios';
+import { router } from 'expo-router';
 
 export type AuthContextDataProps = {
   user: UserDTO;
@@ -77,6 +78,8 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
         );
         userAndTokenUpdate(data.user, data.token);
       }
+
+      router.push('/');
     } finally {
       setIsLoadingUserStorageData(false);
     }
@@ -88,6 +91,8 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       setUser({} as UserDTO);
       await storageUserRemove();
       await storageAuthTokenRemove();
+
+      router.replace('/sign-in');
     } finally {
       setIsLoadingUserStorageData(false);
     }

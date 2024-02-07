@@ -7,12 +7,11 @@ import Loading from '@components/Loading';
 import { UserPhoto } from '@components/UserPhoto';
 import { ComplaintDTO, IComplaintId } from '@dtos/ComplaintDTO';
 import { IFiltersDTO } from '@dtos/FiltersDTO';
-import { INavigationRoutes } from '@dtos/RoutesDTO';
 import { Feather } from '@expo/vector-icons';
 import { useAuth } from '@hooks/useAuth';
-import { useNavigation } from '@react-navigation/native';
 import { api } from '@services/api';
 import { useQuery } from '@tanstack/react-query';
+import { router } from 'expo-router';
 import {
   Box,
   FlatList,
@@ -54,11 +53,10 @@ const getMyAds = async (): Promise<ComplaintDTO[]> => {
   return response.data;
 };
 
-export function Home() {
+export default function Home() {
   const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(false);
   const [filters, setFilters] = useState<IFiltersDTO>(emptyFilters);
 
-  const navigation = useNavigation<INavigationRoutes['navigation']>();
   const { user } = useAuth();
 
   const { data: complaintList, isLoading } = useQuery({
@@ -84,19 +82,25 @@ export function Home() {
     : 0;
 
   const handleGoToCreateAdd = () => {
-    navigation.navigate('createAd', {});
+    router.push({
+      pathname: '/ad/create',
+      params: { complaint: '' },
+    });
   };
 
   const handleGoToMyAds = () => {
-    navigation.navigate('myAds');
+    router.push('/ad/my');
   };
 
   const handleGoToAdDetails = (complaintId: IComplaintId) => {
-    navigation.navigate('ad', { complaintId, isMyAd: false });
+    router.push({
+      pathname: '/ad/',
+      params: { complaintId, isMyAd: 0 },
+    });
   };
 
   const handleGoToProfile = () => {
-    navigation.navigate('profile');
+    router.push('/profile');
   };
 
   return (
@@ -189,11 +193,11 @@ export function Home() {
           <FlatList
             data={complaintList}
             showsVerticalScrollIndicator={false}
+            numColumns={2}
             keyExtractor={item => item.id}
             contentContainerStyle={
               complaintList?.length
                 ? {
-                    flexGrow: 1,
                     justifyContent: 'space-between',
                   }
                 : { flex: 1, justifyContent: 'center' }
@@ -210,7 +214,6 @@ export function Home() {
             ListEmptyComponent={
               <EmptyListText title="Ainda não há nenhum Resolve criado! Seja o primeiro!" />
             }
-            numColumns={2}
           />
         )}
       </VStack>

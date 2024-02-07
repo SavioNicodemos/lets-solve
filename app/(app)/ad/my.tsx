@@ -1,5 +1,4 @@
 import { Feather } from '@expo/vector-icons';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useQuery } from '@tanstack/react-query';
 import {
   FlatList,
@@ -11,30 +10,24 @@ import {
   Text,
   VStack,
 } from 'native-base';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
 import { AdCard } from '@components/AdCard';
 import { EmptyListText } from '@components/EmptyListText';
 import Loading from '@components/Loading';
 import { ComplaintDTO, IComplaintId } from '@dtos/ComplaintDTO';
-import { INavigationRoutes } from '@dtos/RoutesDTO';
 import { api } from '@services/api';
+import { router } from 'expo-router';
 
 const getMyAds = async (): Promise<ComplaintDTO[]> => {
   const response = await api.get('/users/complaints');
   return response.data;
 };
 
-export function MyAds() {
+export default function MyAds() {
   const [status, setStatus] = useState('');
 
-  const navigation = useNavigation<INavigationRoutes['navigation']>();
-
-  const {
-    data: myAds,
-    isLoading,
-    refetch,
-  } = useQuery({
+  const { data: myAds, isLoading } = useQuery({
     queryKey: ['myAds'],
     queryFn: () => getMyAds(),
     initialData: [],
@@ -44,18 +37,18 @@ export function MyAds() {
   });
 
   const handleGoToAdDetails = (complaintId: IComplaintId) => {
-    navigation.navigate('ad', { complaintId, isMyAd: true });
+    router.push({
+      pathname: '/ad/',
+      params: { complaintId, isMyAd: 1 },
+    });
   };
 
   const handleGoToCreateAd = () => {
-    navigation.navigate('createAd', {});
+    router.push({
+      pathname: '/ad/create',
+      params: { complaint: '' },
+    });
   };
-
-  useFocusEffect(
-    useCallback(() => {
-      refetch();
-    }, [refetch]),
-  );
 
   return (
     <VStack bgColor="gray.600" flex={1} pt={16} px={6}>

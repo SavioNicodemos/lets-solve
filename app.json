@@ -2,6 +2,7 @@
   "expo": {
     "name": "lets-solve",
     "slug": "lets-solve",
+    "scheme": "lets-solve",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -31,7 +32,11 @@
           "photosPermission": "The app accesses your photos to let you share them with your friends."
         }
       ],
-      "expo-localization"
-    ]
+      "expo-localization",
+      "expo-router"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
   }
 }

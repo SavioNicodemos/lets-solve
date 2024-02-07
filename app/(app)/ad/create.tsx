@@ -7,11 +7,15 @@ import { Header } from '@components/Header';
 import { Input } from '@components/Input';
 import { TextArea } from '@components/TextArea';
 import { UploadPicturesContainer } from '@components/UploadPicturesContainer';
-import { CreateComplaintDTO, IImageUpload } from '@dtos/ComplaintDTO';
-import { ICreateAdRoutes } from '@dtos/RoutesDTO';
+import {
+  ComplaintDTO,
+  CreateComplaintDTO,
+  IImageUpload,
+} from '@dtos/ComplaintDTO';
 import { api } from '@services/api';
 import { handleError } from '@utils/handleError';
 import { findDeletedObjects } from '@utils/helpers/arrayHelper';
+import { router, useLocalSearchParams } from 'expo-router';
 import { z } from 'zod';
 
 const createAdSchema = z.object({
@@ -24,14 +28,18 @@ const createAdSchema = z.object({
     .min(1, 'Adicione pelo menos uma foto da queixa'),
 });
 
-export function CreateAd({ navigation, route }: ICreateAdRoutes) {
+export default function CreateAd() {
   const toast = useToast();
 
-  const { complaint } = route.params;
+  const { complaint } = useLocalSearchParams();
 
-  const isEditView = !!complaint;
+  const complaintObj: ComplaintDTO = complaint
+    ? JSON.parse(complaint as string)
+    : null;
 
-  const initialPhotos = complaint?.complaint_images;
+  const isEditView = !!complaintObj;
+
+  const initialPhotos = complaintObj?.complaint_images;
 
   const {
     control,
@@ -39,18 +47,21 @@ export function CreateAd({ navigation, route }: ICreateAdRoutes) {
     formState: { errors },
   } = useForm<CreateComplaintDTO>({
     defaultValues: {
-      name: isEditView ? complaint.name : '',
-      description: isEditView ? complaint.description : '',
+      name: isEditView ? complaintObj.name : '',
+      description: isEditView ? complaintObj.description : '',
     },
     resolver: zodResolver(createAdSchema),
   });
 
   const handleGoBack = () => {
-    navigation.goBack();
+    router.back();
   };
 
   const handleGoToPreview = (data: CreateComplaintDTO) => {
-    navigation.navigate('adPreview', { complaint: data });
+    router.push({
+      pathname: '/ad/preview',
+      params: { complaint: JSON.stringify(data) },
+    });
   };
 
   const handleSuccessPress = async (data: CreateComplaintDTO) => {
@@ -71,11 +82,11 @@ export function CreateAd({ navigation, route }: ICreateAdRoutes) {
     );
 
     try {
-      await api.put(`/complaints/${complaint.id}`, data);
+      await api.put(`/complaints/${complaintObj.id}`, data);
 
       if (newPhotosToAdd.length) {
         const imagesForm = new FormData();
-        imagesForm.append('complaint_id', complaint.id);
+        imagesForm.append('complaint_id', complaintObj.id);
         newPhotosToAdd.forEach((element: any) => {
           imagesForm.append('images[]', element);
         });
@@ -97,7 +108,10 @@ export function CreateAd({ navigation, route }: ICreateAdRoutes) {
         bgColor: 'green.500',
       });
 
-      navigation.navigate('ad', { complaintId: complaint.id, isMyAd: true });
+      router.push({
+        pathname: '/ad/',
+        params: { complaintId: complaintObj.id, isMyAd: 1 },
+      });
     } catch (error) {
       handleError(error);
     }
@@ -189,3 +203,5 @@ export function CreateAd({ navigation, route }: ICreateAdRoutes) {
     </>
   );
 }
+
+export { ErrorBoundary } from '@components/ErrorBoundary';

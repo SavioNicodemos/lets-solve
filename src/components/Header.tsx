@@ -1,14 +1,12 @@
-import { INavigationRoutes } from '@dtos/RoutesDTO';
 import { Feather } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { router } from 'expo-router';
 import { HStack, Heading, Icon, IconButton, VStack } from 'native-base';
 
 export function Header({ title }: Props) {
-  const navigation = useNavigation<INavigationRoutes['navigation']>();
-
   const handleGoBack = () => {
-    navigation.goBack();
+    router.back();
   };
+
   return (
     <HStack justifyContent="space-between" mb="8">
       <IconButton

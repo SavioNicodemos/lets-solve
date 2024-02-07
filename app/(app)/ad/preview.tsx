@@ -1,39 +1,46 @@
 import { AdDetails } from '@components/AdDetails';
 import { Button } from '@components/Button';
-import { ShowAdDetailsDTO } from '@dtos/ComplaintDTO';
-import { IAdPreviewRoutes } from '@dtos/RoutesDTO';
+import { CreateComplaintDTO, ShowAdDetailsDTO } from '@dtos/ComplaintDTO';
 import { useAuth } from '@hooks/useAuth';
 import { api } from '@services/api';
 import { handleError } from '@utils/handleError';
+import { router, useLocalSearchParams } from 'expo-router';
 import { Center, HStack, Heading, Text, VStack, useToast } from 'native-base';
 import { Platform } from 'react-native';
 
-export function AdPreview({ navigation, route }: IAdPreviewRoutes) {
-  const { complaint } = route.params;
+export { ErrorBoundary } from '@components/ErrorBoundary';
+
+export default function AdPreview() {
+  const { complaint } = useLocalSearchParams();
+
+  const complaintObj: CreateComplaintDTO = JSON.parse(complaint as string);
   const { user } = useAuth();
   const toast = useToast();
 
   const complaintPreview: ShowAdDetailsDTO = {
-    ...complaint,
+    ...complaintObj,
     user: {
       name: user.name,
       avatar: user.avatar,
       tel: user.tel,
     },
     state: {
-      color: 'gray.500',
-      name: 'Em andamento',
+      color: 'green.500',
+      name: 'Status',
       id: '0',
-      is_positive: false,
+      is_positive: true,
     },
   };
 
   const handleGoBack = () => {
-    navigation.goBack();
+    router.back();
   };
 
   const handleGoToAd = (complaintId: string) => {
-    navigation.navigate('ad', { complaintId, isMyAd: true });
+    router.push({
+      pathname: '/ad/',
+      params: { complaintId, isMyAd: 1 },
+    });
   };
 
   const handleCreateAd = async () => {
@@ -42,7 +49,7 @@ export function AdPreview({ navigation, route }: IAdPreviewRoutes) {
         name,
         description,
         complaint_images: complaintImages,
-      } = complaint;
+      } = complaintObj;
       const createAdResponse = await api.post('/complaints', {
         name,
         description,
