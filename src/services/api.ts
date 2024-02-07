@@ -5,9 +5,9 @@ import { getLocales } from 'expo-localization';
 import {
   storageAuthTokenGet,
   storageAuthTokenSave,
-} from '@storage/storageAuthToken';
-import { AppError } from '@utils/AppError';
-import { env } from '@utils/env';
+} from '@/storage/storageAuthToken';
+import { AppError } from '@/utils/AppError';
+import { env } from '@/utils/env';
 
 type SignOut = () => void;
 

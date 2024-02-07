@@ -12,10 +12,10 @@ import {
 } from 'native-base';
 import { useState } from 'react';
 
-import { Button } from '@components/Button';
-import { FilterChip } from '@components/FilterChip';
-import { IFiltersDTO } from '@dtos/FiltersDTO';
-import { chooseIfNewOrUsedIsBooleanOrNull } from '@utils/helpers/conditions';
+import { Button } from '@/components/Button';
+import { FilterChip } from '@/components/FilterChip';
+import { IFiltersDTO } from '@/dtos/FiltersDTO';
+import { chooseIfNewOrUsedIsBooleanOrNull } from '@/utils/helpers/conditions';
 
 type Props = {
   visible: boolean;

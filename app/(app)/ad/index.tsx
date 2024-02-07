@@ -1,17 +1,18 @@
-import { Menu, MenuItem } from '@components/Menu';
-import RenderComplaint from '@components/RenderComplaint';
+import { Feather } from '@expo/vector-icons';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { router, useLocalSearchParams, useNavigation } from 'expo-router';
+import { HStack, Icon, IconButton, VStack, useToast } from 'native-base';
+import { Alert } from 'react-native';
+
+import { Menu, MenuItem } from '@/components/Menu';
+import RenderComplaint from '@/components/RenderComplaint';
 import {
   ComplaintApiDTO,
   ComplaintDTO,
   IComplaintId,
-} from '@dtos/ComplaintDTO';
-import { Feather } from '@expo/vector-icons';
-import { api } from '@services/api';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { handleError } from '@utils/handleError';
-import { router, useLocalSearchParams, useNavigation } from 'expo-router';
-import { HStack, Icon, IconButton, VStack, useToast } from 'native-base';
-import { Alert } from 'react-native';
+} from '@/dtos/ComplaintDTO';
+import { api } from '@/services/api';
+import { handleError } from '@/utils/handleError';
 
 const getComplaint = async (
   complaintId: IComplaintId,

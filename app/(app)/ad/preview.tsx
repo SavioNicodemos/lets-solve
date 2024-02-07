@@ -1,14 +1,15 @@
-import { AdDetails } from '@components/AdDetails';
-import { Button } from '@components/Button';
-import { CreateComplaintDTO, ShowAdDetailsDTO } from '@dtos/ComplaintDTO';
-import { useAuth } from '@hooks/useAuth';
-import { api } from '@services/api';
-import { handleError } from '@utils/handleError';
 import { router, useLocalSearchParams } from 'expo-router';
 import { Center, HStack, Heading, Text, VStack, useToast } from 'native-base';
 import { Platform } from 'react-native';
 
-export { ErrorBoundary } from '@components/ErrorBoundary';
+import { AdDetails } from '@/components/AdDetails';
+import { Button } from '@/components/Button';
+import { CreateComplaintDTO, ShowAdDetailsDTO } from '@/dtos/ComplaintDTO';
+import { useAuth } from '@/hooks/useAuth';
+import { api } from '@/services/api';
+import { handleError } from '@/utils/handleError';
+
+export { ErrorBoundary } from '@/components/ErrorBoundary';
 
 export default function AdPreview() {
   const { complaint } = useLocalSearchParams();

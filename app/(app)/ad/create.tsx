@@ -1,22 +1,22 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { router, useLocalSearchParams } from 'expo-router';
 import { HStack, ScrollView, Text, VStack, useToast } from 'native-base';
 import { Controller, useForm } from 'react-hook-form';
+import { z } from 'zod';
 
-import { Button } from '@components/Button';
-import { Header } from '@components/Header';
-import { Input } from '@components/Input';
-import { TextArea } from '@components/TextArea';
-import { UploadPicturesContainer } from '@components/UploadPicturesContainer';
+import { Button } from '@/components/Button';
+import { Header } from '@/components/Header';
+import { Input } from '@/components/Input';
+import { TextArea } from '@/components/TextArea';
+import { UploadPicturesContainer } from '@/components/UploadPicturesContainer';
 import {
   ComplaintDTO,
   CreateComplaintDTO,
   IImageUpload,
-} from '@dtos/ComplaintDTO';
-import { api } from '@services/api';
-import { handleError } from '@utils/handleError';
-import { findDeletedObjects } from '@utils/helpers/arrayHelper';
-import { router, useLocalSearchParams } from 'expo-router';
-import { z } from 'zod';
+} from '@/dtos/ComplaintDTO';
+import { api } from '@/services/api';
+import { handleError } from '@/utils/handleError';
+import { findDeletedObjects } from '@/utils/helpers/arrayHelper';
 
 const createAdSchema = z.object({
   name: z.string().min(1, 'Informe um título para a queixa'),
@@ -204,4 +204,4 @@ export default function CreateAd() {
   );
 }
 
-export { ErrorBoundary } from '@components/ErrorBoundary';
+export { ErrorBoundary } from '@/components/ErrorBoundary';

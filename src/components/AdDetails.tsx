@@ -1,7 +1,9 @@
-import { ImageCarousel } from '@components/ImageCarousel';
-import { UserPhoto } from '@components/UserPhoto';
-import { ShowAdDetailsDTO } from '@dtos/ComplaintDTO';
 import { HStack, Heading, ScrollView, Text, VStack } from 'native-base';
+
+import { ImageCarousel } from '@/components/ImageCarousel';
+import { UserPhoto } from '@/components/UserPhoto';
+import { ShowAdDetailsDTO } from '@/dtos/ComplaintDTO';
+
 import StatusChip from './StatusChip';
 
 type Props = {

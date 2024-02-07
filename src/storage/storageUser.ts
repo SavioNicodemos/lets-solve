@@ -1,5 +1,5 @@
-import { UserDTO } from '@dtos/UserDTO';
-import LocalStorage from '@storage/localStorage';
+import { UserDTO } from '@/dtos/UserDTO';
+import LocalStorage from '@/storage/localStorage';
 
 import { USER_STORAGE } from './storageConfig';
 

@@ -1,5 +1,5 @@
-import LocalStorage from '@storage/localStorage';
-import { AUTH_STORAGE } from '@storage/storageConfig';
+import LocalStorage from '@/storage/localStorage';
+import { AUTH_STORAGE } from '@/storage/storageConfig';
 
 type StorageAuthTokenProps = {
   token: string;

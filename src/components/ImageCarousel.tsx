@@ -1,11 +1,11 @@
-import { IImageUpload, ImagesDTO } from '@dtos/ComplaintDTO';
-import { api } from '@services/api';
 import { Box, Center, HStack, Image, Text, View } from 'native-base';
 import { useState } from 'react';
 import { Dimensions } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 
-import noComplaint from '@assets/noComplaint.png';
+import noComplaint from '@/assets/noComplaint.png';
+import { IImageUpload, ImagesDTO } from '@/dtos/ComplaintDTO';
+import { api } from '@/services/api';
 
 type Props = {
   images: ImagesDTO[] | IImageUpload[];

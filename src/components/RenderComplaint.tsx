@@ -1,6 +1,6 @@
 import { Center, Text } from 'native-base';
 
-import { ComplaintDTO } from '@dtos/ComplaintDTO';
+import { ComplaintDTO } from '@/dtos/ComplaintDTO';
 import { AdDetails } from './AdDetails';
 import Loading from './Loading';
 

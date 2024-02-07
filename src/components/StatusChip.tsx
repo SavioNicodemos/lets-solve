@@ -1,6 +1,7 @@
-import { ComplaintStatusDTO } from '@dtos/ComplaintStatusDTO';
 import { FontAwesome6 } from '@expo/vector-icons';
 import { Box, HStack, Icon, Text } from 'native-base';
+
+import { ComplaintStatusDTO } from '@/dtos/ComplaintStatusDTO';
 
 type Props = {
   status: Omit<ComplaintStatusDTO, 'id'>;

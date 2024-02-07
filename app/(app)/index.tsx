@@ -1,15 +1,4 @@
-import { AdCard } from '@components/AdCard';
-import { Button } from '@components/Button';
-import { EmptyListText } from '@components/EmptyListText';
-import { FiltersModal, emptyFilters } from '@components/FiltersModal';
-import { Input } from '@components/Input';
-import Loading from '@components/Loading';
-import { UserPhoto } from '@components/UserPhoto';
-import { ComplaintDTO, IComplaintId } from '@dtos/ComplaintDTO';
-import { IFiltersDTO } from '@dtos/FiltersDTO';
 import { Feather } from '@expo/vector-icons';
-import { useAuth } from '@hooks/useAuth';
-import { api } from '@services/api';
 import { useQuery } from '@tanstack/react-query';
 import { router } from 'expo-router';
 import {
@@ -23,6 +12,18 @@ import {
   VStack,
 } from 'native-base';
 import { useState } from 'react';
+
+import { AdCard } from '@/components/AdCard';
+import { Button } from '@/components/Button';
+import { EmptyListText } from '@/components/EmptyListText';
+import { FiltersModal, emptyFilters } from '@/components/FiltersModal';
+import { Input } from '@/components/Input';
+import Loading from '@/components/Loading';
+import { UserPhoto } from '@/components/UserPhoto';
+import { ComplaintDTO, IComplaintId } from '@/dtos/ComplaintDTO';
+import { IFiltersDTO } from '@/dtos/FiltersDTO';
+import { useAuth } from '@/hooks/useAuth';
+import { api } from '@/services/api';
 
 const getAds = async (filters: IFiltersDTO): Promise<ComplaintDTO[]> => {
   const params = new URLSearchParams();

@@ -11,13 +11,13 @@ import {
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import Logo from '@assets/Logo.svg';
-import { AvatarUpload } from '@components/AvatarUpload';
-import { Button } from '@components/Button';
-import { Input } from '@components/Input';
-import { ICreateUser } from '@dtos/UserDTO';
-import { api } from '@services/api';
-import { handleError } from '@utils/handleError';
+import Logo from '@/assets/Logo.svg';
+import { AvatarUpload } from '@/components/AvatarUpload';
+import { Button } from '@/components/Button';
+import { Input } from '@/components/Input';
+import { ICreateUser } from '@/dtos/UserDTO';
+import { api } from '@/services/api';
+import { handleError } from '@/utils/handleError';
 
 export default function SignUp() {
   const toast = useToast();

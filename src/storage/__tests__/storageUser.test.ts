@@ -1,14 +1,14 @@
-import LocalStorage from '@storage/localStorage';
-import { UserDTO } from '@dtos/UserDTO';
+import { UserDTO } from '@/dtos/UserDTO';
+import LocalStorage from '@/storage/localStorage';
+import { USER_STORAGE } from '../storageConfig';
 import {
-  storageUserSave,
   storageUserGet,
   storageUserRemove,
+  storageUserSave,
 } from '../storageUser';
-import { USER_STORAGE } from '../storageConfig';
 
 // Mock the LocalStorage module
-jest.mock('@storage/localStorage', () => {
+jest.mock('@/storage/localStorage', () => {
   return {
     setItem: jest.fn(),
     getItem: jest.fn(),

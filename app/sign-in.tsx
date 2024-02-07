@@ -2,11 +2,11 @@ import { router } from 'expo-router';
 import { Center, Heading, ScrollView, Text, VStack } from 'native-base';
 import { Controller, useForm } from 'react-hook-form';
 
-import Logo from '@assets/Logo.svg';
-import { Button } from '@components/Button';
-import { Input } from '@components/Input';
-import { useAuth } from '@hooks/useAuth';
-import { handleError } from '@utils/handleError';
+import Logo from '@/assets/Logo.svg';
+import { Button } from '@/components/Button';
+import { Input } from '@/components/Input';
+import { useAuth } from '@/hooks/useAuth';
+import { handleError } from '@/utils/handleError';
 
 type FormData = {
   email: string;

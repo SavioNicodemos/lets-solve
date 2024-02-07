@@ -1,8 +1,4 @@
-import noComplaintImage from '@assets/noComplaint.png';
-import { IImageUpload } from '@dtos/ComplaintDTO';
 import { Feather } from '@expo/vector-icons';
-import { api } from '@services/api';
-import { handleError } from '@utils/handleError';
 import * as FileSystem from 'expo-file-system';
 import * as ImagePicker from 'expo-image-picker';
 import {
@@ -16,6 +12,11 @@ import {
 } from 'native-base';
 import { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
+
+import noComplaintImage from '@/assets/noComplaint.png';
+import { IImageUpload } from '@/dtos/ComplaintDTO';
+import { api } from '@/services/api';
+import { handleError } from '@/utils/handleError';
 
 type Props = {
   onChange: (value: IImageUpload[]) => void;

@@ -18,24 +18,33 @@
     "project": "./tsconfig.json"
   },
   "rules": {
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/no-shadow": ["error"],
+    "@typescript-eslint/no-use-before-define": ["error"],
+    "import/extensions": [
+      "error",
+      {
+        "png": "always",
+        "jpg": "always",
+        "jpeg": "always",
+        "gif": "always",
+        "svg": "always"
+      }
+    ],
     "import/no-unresolved": 0,
+    "import/prefer-default-export": "off",
+    "no-shadow": "off",
+    "no-use-before-define": "off",
+    "prettier/prettier": "warn",
     "react/jsx-filename-extension": [
       1,
       {
         "extensions": [".ts", ".tsx"]
       }
     ],
-    "prettier/prettier": "warn",
-    "@typescript-eslint/no-explicit-any": "off",
-    "no-use-before-define": "off",
-    "@typescript-eslint/no-empty-function": "off",
-    "@typescript-eslint/no-use-before-define": ["error"],
-    "import/extensions": ["error", "never"],
-    "react/require-default-props": "off",
-    "import/prefer-default-export": "off",
     "react/jsx-props-no-spreading": "off",
     "react/prop-types": 0,
-    "no-shadow": "off",
-    "@typescript-eslint/no-shadow": ["error"]
+    "react/require-default-props": "off"
   }
 }

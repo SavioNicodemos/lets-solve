@@ -1,5 +1,6 @@
 import { Feather } from '@expo/vector-icons';
 import { useQuery } from '@tanstack/react-query';
+import { router } from 'expo-router';
 import {
   FlatList,
   HStack,
@@ -12,12 +13,11 @@ import {
 } from 'native-base';
 import { useState } from 'react';
 
-import { AdCard } from '@components/AdCard';
-import { EmptyListText } from '@components/EmptyListText';
-import Loading from '@components/Loading';
-import { ComplaintDTO, IComplaintId } from '@dtos/ComplaintDTO';
-import { api } from '@services/api';
-import { router } from 'expo-router';
+import { AdCard } from '@/components/AdCard';
+import { EmptyListText } from '@/components/EmptyListText';
+import Loading from '@/components/Loading';
+import { ComplaintDTO, IComplaintId } from '@/dtos/ComplaintDTO';
+import { api } from '@/services/api';
 
 const getMyAds = async (): Promise<ComplaintDTO[]> => {
   const response = await api.get('/users/complaints');

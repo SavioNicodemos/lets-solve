@@ -1,11 +1,13 @@
-import { IImageUpload } from '@dtos/ComplaintDTO';
 import { Feather } from '@expo/vector-icons';
-import { AppError } from '@utils/AppError';
-import { handleError } from '@utils/handleError';
 import * as FileSystem from 'expo-file-system';
 import * as ImagePicker from 'expo-image-picker';
 import { Box, FormControl, IBoxProps, Icon, IconButton } from 'native-base';
 import { useState } from 'react';
+
+import { IImageUpload } from '@/dtos/ComplaintDTO';
+import { AppError } from '@/utils/AppError';
+import { handleError } from '@/utils/handleError';
+
 import { UserPhoto } from './UserPhoto';
 
 type Props = IBoxProps & {

@@ -1,3 +1,5 @@
+import { AxiosError } from 'axios';
+import { router } from 'expo-router';
 import {
   createContext,
   ReactNode,
@@ -7,23 +9,20 @@ import {
   useState,
 } from 'react';
 
+import { IImageUpload } from '@/dtos/ComplaintDTO';
+import { UserDTO } from '@/dtos/UserDTO';
+import { api } from '@/services/api';
 import {
   storageAuthTokenGet,
   storageAuthTokenRemove,
   storageAuthTokenSave,
-} from '@storage/storageAuthToken';
+} from '@/storage/storageAuthToken';
 import {
   storageUserGet,
   storageUserRemove,
   storageUserSave,
-} from '@storage/storageUser';
-
-import { IImageUpload } from '@dtos/ComplaintDTO';
-import { UserDTO } from '@dtos/UserDTO';
-import { api } from '@services/api';
-import { handleError } from '@utils/handleError';
-import { AxiosError } from 'axios';
-import { router } from 'expo-router';
+} from '@/storage/storageUser';
+import { handleError } from '@/utils/handleError';
 
 export type AuthContextDataProps = {
   user: UserDTO;

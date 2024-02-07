@@ -1,8 +1,9 @@
-import { AvatarUpload } from '@components/AvatarUpload';
-import { Header } from '@components/Header';
-import { useAuth } from '@hooks/useAuth';
 import { Button, Center, Heading, VStack } from 'native-base';
 import { Alert } from 'react-native';
+
+import { AvatarUpload } from '@/components/AvatarUpload';
+import { Header } from '@/components/Header';
+import { useAuth } from '@/hooks/useAuth';
 
 export default function Profile() {
   const { user, updateUserAvatar, signOut } = useAuth();

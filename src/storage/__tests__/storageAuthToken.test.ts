@@ -1,13 +1,13 @@
 // Assuming you mock LocalStorage and AUTH_STORAGE
-import LocalStorage from '@storage/localStorage';
-import { AUTH_STORAGE } from '@storage/storageConfig';
+import LocalStorage from '@/storage/localStorage';
+import { AUTH_STORAGE } from '@/storage/storageConfig';
 import {
-  storageAuthTokenSave,
   storageAuthTokenGet,
   storageAuthTokenRemove,
+  storageAuthTokenSave,
 } from '../storageAuthToken';
 
-jest.mock('@storage/localStorage', () => {
+jest.mock('@/storage/localStorage', () => {
   return {
     setItem: jest.fn().mockResolvedValue(undefined),
     getItem: jest.fn().mockResolvedValue(null),

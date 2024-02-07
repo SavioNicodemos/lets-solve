@@ -1,8 +1,9 @@
-import defaultUserImage from '@assets/defaultAvatar.png';
-import { api } from '@services/api';
 import { IImageProps, Image } from 'native-base';
 import { ColorType } from 'native-base/lib/typescript/components/types';
 import { Pressable } from 'react-native';
+
+import defaultUserImage from '@/assets/defaultAvatar.png';
+import { api } from '@/services/api';
 
 type Props = IImageProps & {
   isExternalImage?: boolean;
