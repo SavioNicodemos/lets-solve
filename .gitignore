@@ -13,6 +13,9 @@ web-build/
 .eslintcache
 .env
 
+# husky cache
+.husky/_
+
 # macOS
 .DS_Store
 
