@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import LocalStorage from '../localStorage';
+
+import LocalStorage from '@/storage/localStorage';
 
 const AsyncStorageMock = AsyncStorage as jest.Mocked<typeof AsyncStorage>;
 

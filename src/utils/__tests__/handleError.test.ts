@@ -1,6 +1,7 @@
 import { Toast } from 'native-base';
-import { AppError } from '../AppError';
-import { handleError } from '../handleError';
+
+import { AppError } from '@/utils/AppError';
+import { handleError } from '@/utils/handleError';
 
 jest.mock('native-base', () => ({
   Toast: {

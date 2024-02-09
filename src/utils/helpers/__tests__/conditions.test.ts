@@ -1,4 +1,4 @@
-import { chooseIfNewOrUsedIsBooleanOrNull } from '../conditions';
+import { chooseIfNewOrUsedIsBooleanOrNull } from '@/utils/helpers/conditions';
 
 describe('chooseIfNewOrUsedIsBooleanOrNull', () => {
   it.each<

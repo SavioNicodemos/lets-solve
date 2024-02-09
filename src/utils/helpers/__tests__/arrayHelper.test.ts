@@ -1,4 +1,4 @@
-import { findDeletedObjects } from '../arrayHelper';
+import { findDeletedObjects } from '@/utils/helpers/arrayHelper';
 
 describe('findDeletedObjects', () => {
   it('should return an array of objects deleted from the initial array', () => {

@@ -1,4 +1,4 @@
-import { AppError } from '../AppError';
+import { AppError } from '@/utils/AppError';
 
 describe('AppError', () => {
   it('should correctly assign a message on instantiation', () => {
