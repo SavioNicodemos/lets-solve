@@ -9,8 +9,8 @@
     "web": "npx expo start --web",
     "test": "jest",
     "ts:check": "tsc --noEmit",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx src app",
-    "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx src app --fix"
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx src",
+    "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx src --fix"
   },
   "dependencies": {
     "@expo-google-fonts/karla": "^0.2.3",
