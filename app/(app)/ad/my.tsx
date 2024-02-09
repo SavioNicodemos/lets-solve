@@ -50,10 +50,20 @@ export default function MyAds() {
     });
   };
 
+  const handleGoBack = () => {
+    router.back();
+  };
+
   return (
     <VStack bgColor="gray.600" flex={1} pt={16} px={6}>
-      <HStack justifyContent="space-between" mb="8">
-        <VStack />
+      <HStack justifyContent="space-between" mb="8" alignItems="center">
+        <IconButton
+          icon={
+            <Icon as={Feather} name="arrow-left" color="gray.100" size="lg" />
+          }
+          rounded="full"
+          onPress={handleGoBack}
+        />
         <Heading fontSize="lg" color="gray.100" mr={-5}>
           Meus Resolves
         </Heading>
