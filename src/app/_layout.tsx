@@ -18,7 +18,7 @@ import { AuthContextProvider } from '@/contexts/AuthContext';
 import { AppError } from '@/utils/AppError';
 import { handleError } from '@/utils/handleError';
 
-import THEME from '../src/theme';
+import THEME from '@/theme';
 
 const queryClient = new QueryClient({
   queryCache: new QueryCache({
