@@ -2,7 +2,6 @@
 import axios, { AxiosError, AxiosInstance } from 'axios';
 import { getLocales } from 'expo-localization';
 
-import { refreshMyToken } from '@/queries/mutations/auth';
 import {
   storageAuthTokenGet,
   storageAuthTokenSave,
@@ -72,7 +71,9 @@ api.registerInterceptTokenManager = singOut => {
 
           return new Promise(async (resolve, reject) => {
             try {
-              const data = await refreshMyToken(refreshToken);
+              const { data } = await api.post('/sessions/refresh-token', {
+                refresh_token: refreshToken,
+              });
 
               await storageAuthTokenSave({
                 token: data.token,

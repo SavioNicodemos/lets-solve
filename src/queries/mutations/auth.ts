@@ -25,16 +25,6 @@ export async function createSession({
   return data;
 }
 
-export async function refreshMyToken(
-  refreshToken: string,
-): Promise<IUserAndToken> {
-  const { data } = await api.post('/sessions/refresh-token', {
-    refresh_token: refreshToken,
-  });
-
-  return data;
-}
-
 export async function updateAvatar(avatar: IImageUpload): Promise<void> {
   const body = new FormData();
   body.append('_method', 'PUT');
