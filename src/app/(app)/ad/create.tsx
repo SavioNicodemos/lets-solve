@@ -9,11 +9,8 @@ import { Header } from '@/components/Header';
 import { Input } from '@/components/Input';
 import { TextArea } from '@/components/TextArea';
 import { UploadPicturesContainer } from '@/components/UploadPicturesContainer';
-import {
-  ComplaintDTO,
-  CreateComplaintDTO,
-  IImageUpload,
-} from '@/dtos/ComplaintDTO';
+import { CreateComplaintDTO, IImageUpload } from '@/dtos/ComplaintDTO';
+import { useComplaint } from '@/hooks/useComplaint';
 import {
   deleteComplaintImagesByIds,
   updateComplaint,
@@ -35,15 +32,17 @@ const createAdSchema = z.object({
 export default function CreateAd() {
   const toast = useToast();
 
-  const { complaint } = useLocalSearchParams();
+  const { complaintId } = useLocalSearchParams();
 
-  const complaintObj: ComplaintDTO = complaint
-    ? JSON.parse(complaint as string)
-    : null;
+  if (complaintId && typeof complaintId !== 'string') {
+    throw new Error('Invalid complaintId sent to CreateAd page');
+  }
 
-  const isEditView = !!complaintObj;
+  const { data: complaint } = useComplaint(complaintId);
 
-  const initialPhotos = complaintObj?.complaint_images;
+  const isEditView = !!complaint;
+
+  const initialPhotos = complaint?.complaint_images;
 
   const {
     control,
@@ -51,8 +50,9 @@ export default function CreateAd() {
     formState: { errors },
   } = useForm<CreateComplaintDTO>({
     defaultValues: {
-      name: isEditView ? complaintObj.name : '',
-      description: isEditView ? complaintObj.description : '',
+      name: isEditView ? complaint.name : '',
+      description: isEditView ? complaint.description : '',
+      complaint_images: isEditView ? complaint.complaint_images : [],
     },
     resolver: zodResolver(createAdSchema),
   });
@@ -88,11 +88,11 @@ export default function CreateAd() {
     );
 
     try {
-      await updateComplaint({ id: complaintObj.id, ...data });
+      await updateComplaint({ id: complaint.id, ...data });
 
       if (newPhotosToAdd.length) {
         const imagesForm = new FormData();
-        imagesForm.append('complaint_id', complaintObj.id);
+        imagesForm.append('complaint_id', complaint.id);
         newPhotosToAdd.forEach((element: any) => {
           imagesForm.append('images[]', element);
         });
@@ -110,10 +110,7 @@ export default function CreateAd() {
         bgColor: 'green.500',
       });
 
-      router.push({
-        pathname: '/ad/',
-        params: { complaintId: complaintObj.id, isMyAd: 1 },
-      });
+      router.back();
     } catch (error) {
       handleError(error);
     }
