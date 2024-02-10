@@ -1,33 +1,30 @@
 import { Feather } from '@expo/vector-icons';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { router, useLocalSearchParams, useNavigation } from 'expo-router';
+import { useMutation } from '@tanstack/react-query';
+import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
 import { HStack, Icon, IconButton, VStack, useToast } from 'native-base';
 import { Alert } from 'react-native';
 
 import { Menu, MenuItem } from '@/components/Menu';
 import RenderComplaint from '@/components/RenderComplaint';
-import { changeAdVisibility, getComplaint } from '@/queries/solves';
+import { useAuth } from '@/hooks/useAuth';
+import { useComplaint } from '@/hooks/useComplaint';
+import { changeAdVisibility } from '@/queries/solves';
 
 export default function Ad() {
-  const navigation = useNavigation();
+  const { user } = useAuth();
   const toast = useToast();
-  const { complaintId, isMyAd } = useLocalSearchParams();
+  const { complaintId } = useLocalSearchParams();
 
-  const {
-    data: complaint,
-    isLoading,
-    refetch,
-  } = useQuery({
-    queryKey: ['complaint', complaintId],
-    queryFn: () => getComplaint(complaintId as string),
-    meta: {
-      errorMessage: 'Ocorreu um erro ao buscar o Resolve',
-    },
-  });
+  if (typeof complaintId !== 'string') {
+    throw new Error('Invalid complaintId sent to Ad page');
+  }
+
+  const { data: complaint, isLoading, refetch } = useComplaint(complaintId);
+
+  const isMyAd = user.id === complaint?.user_id;
 
   const { isPending: isLoadingChangeVisibility, mutateAsync } = useMutation({
-    mutationFn: () =>
-      changeAdVisibility(complaintId as string, !!complaint?.is_active),
+    mutationFn: () => changeAdVisibility(complaintId, !!complaint?.is_active),
   });
 
   const handleChangeAdVisibility = async () => {
@@ -43,19 +40,19 @@ export default function Ad() {
   };
 
   const handlePressArrowBackButton = () => {
-    const routeList = navigation.getState().routes;
-    if (routeList[routeList.length - 2].name === 'adPreview') {
-      return router.push('/');
-    }
-    return navigation.goBack();
+    return router.back();
   };
 
   const handleGoToEditAd = () => {
     router.push({
       pathname: '/ad/create',
-      params: { complaint: JSON.stringify(complaint) },
+      params: { complaintId: complaint?.id || '' },
     });
   };
+
+  useFocusEffect(() => {
+    refetch();
+  });
 
   return (
     <VStack bgColor="gray.600" flex={1} pt={12}>
@@ -68,7 +65,7 @@ export default function Ad() {
           onPress={handlePressArrowBackButton}
         />
 
-        {Boolean(Boolean(isMyAd) && complaint) && (
+        {isMyAd && (
           <Menu>
             <MenuItem icon="edit-3" onPress={handleGoToEditAd} title="Editar" />
             <MenuItem
@@ -97,3 +94,5 @@ export default function Ad() {
     </VStack>
   );
 }
+
+export { ErrorBoundary } from '@/components/ErrorBoundary';
