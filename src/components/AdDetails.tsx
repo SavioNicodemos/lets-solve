@@ -4,6 +4,7 @@ import { ImageCarousel } from '@/components/ImageCarousel';
 import { UserPhoto } from '@/components/UserPhoto';
 import { ShowAdDetailsDTO } from '@/dtos/ComplaintDTO';
 
+import { CommentSection } from './CommentSection';
 import StatusChip from './StatusChip';
 
 type Props = {
@@ -25,7 +26,6 @@ export function AdDetails({ complaint }: Props) {
         flex={1}
         showsVerticalScrollIndicator={false}
         bg="gray.600"
-        mt={-5}
       >
         <HStack mb={3} mt={5} justifyContent="space-between">
           <HStack>
@@ -52,6 +52,8 @@ export function AdDetails({ complaint }: Props) {
         <Text mt="2" fontSize="sm" color="gray.200">
           {complaint.description}
         </Text>
+
+        <CommentSection comments={['1', '2', '3']} />
       </ScrollView>
     </VStack>
   );
