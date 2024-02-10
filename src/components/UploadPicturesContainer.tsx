@@ -1,20 +1,13 @@
 import { Feather } from '@expo/vector-icons';
 import * as FileSystem from 'expo-file-system';
 import * as ImagePicker from 'expo-image-picker';
-import {
-  Box,
-  FormControl,
-  HStack,
-  Icon,
-  IconButton,
-  Image,
-  useToast,
-} from 'native-base';
+import { Box, FormControl, HStack, Icon, IconButton, Image } from 'native-base';
 import { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 
 import noComplaintImage from '@/assets/noComplaint.png';
 import { IImageUpload } from '@/dtos/ComplaintDTO';
+import { useToast } from '@/hooks/useToast';
 import { api } from '@/services/api';
 import { handleError } from '@/utils/handleError';
 
@@ -55,11 +48,7 @@ export function UploadPicturesContainer({
         })) as { size: number };
 
         if (photoInfo.size && photoInfo.size / 1024 / 1024 > 5) {
-          toast.show({
-            title: 'Essa imagem é muito grande. Escolha uma de até 5MB',
-            placement: 'top',
-            bgColor: 'red.500',
-          });
+          toast.error('Essa imagem é muito grande. Escolha uma de até 5MB');
           return;
         }
 

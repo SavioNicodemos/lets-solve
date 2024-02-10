@@ -1,5 +1,6 @@
 import { router } from 'expo-router';
-import { useToast } from 'native-base';
+
+import { useToast } from '@/hooks/useToast';
 
 type Props = {
   message?: string;
@@ -7,11 +8,7 @@ type Props = {
 
 export function ErrorBoundary({ message }: Props) {
   const toast = useToast();
-  toast.show({
-    placement: 'top',
-    bgColor: 'red.500',
-    title: message || 'Erro ao carregar essa página, tente novamente!',
-  });
+  toast.error(message || 'Erro ao carregar essa página, tente novamente!');
 
   router.back();
 

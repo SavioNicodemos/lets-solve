@@ -1,13 +1,14 @@
 import { Feather } from '@expo/vector-icons';
 import { useMutation } from '@tanstack/react-query';
 import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
-import { HStack, Icon, IconButton, VStack, useToast } from 'native-base';
+import { HStack, Icon, IconButton, VStack } from 'native-base';
 import { Alert } from 'react-native';
 
 import { Menu, MenuItem } from '@/components/Menu';
 import RenderComplaint from '@/components/RenderComplaint';
 import { useAuth } from '@/hooks/useAuth';
 import { useComplaint } from '@/hooks/useComplaint';
+import { useToast } from '@/hooks/useToast';
 import { changeAdVisibility } from '@/queries/solves';
 
 export default function Ad() {
@@ -29,13 +30,9 @@ export default function Ad() {
 
   const handleChangeAdVisibility = async () => {
     await mutateAsync();
-    toast.show({
-      description: `Resolve ${
-        !complaint?.is_active ? 'ativado' : 'desativado'
-      } com sucesso`,
-      placement: 'top',
-      color: 'green.200',
-    });
+    toast.success(
+      `Resolve ${!complaint?.is_active ? 'ativado' : 'desativado'} com sucesso`,
+    );
     refetch();
   };
 

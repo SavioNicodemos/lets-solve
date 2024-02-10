@@ -1,13 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { router } from 'expo-router';
-import {
-  Center,
-  Heading,
-  ScrollView,
-  Text,
-  VStack,
-  useToast,
-} from 'native-base';
+import { Center, Heading, ScrollView, Text, VStack } from 'native-base';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -16,6 +9,7 @@ import { AvatarUpload } from '@/components/AvatarUpload';
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
 import { ICreateUser } from '@/dtos/UserDTO';
+import { useToast } from '@/hooks/useToast';
 import { createUser } from '@/queries/mutations/auth';
 import { handleError } from '@/utils/handleError';
 
@@ -46,11 +40,8 @@ export default function SignUp() {
     try {
       await createUser(data);
 
-      toast.show({
-        title: 'Usuário criado com sucesso!',
-        placement: 'top',
-        bgColor: 'green.500',
-      });
+      toast.success('Usuário criado com sucesso!');
+
       handleGoBack();
     } catch (error: any) {
       handleError(error);

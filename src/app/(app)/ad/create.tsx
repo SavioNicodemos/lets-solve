@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { router, useLocalSearchParams } from 'expo-router';
-import { HStack, ScrollView, Text, VStack, useToast } from 'native-base';
+import { HStack, ScrollView, Text, VStack } from 'native-base';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -11,6 +11,7 @@ import { TextArea } from '@/components/TextArea';
 import { UploadPicturesContainer } from '@/components/UploadPicturesContainer';
 import { CreateComplaintDTO, IImageUpload } from '@/dtos/ComplaintDTO';
 import { useComplaint } from '@/hooks/useComplaint';
+import { useToast } from '@/hooks/useToast';
 import {
   deleteComplaintImagesByIds,
   updateComplaint,
@@ -104,11 +105,7 @@ export default function CreateAd() {
         await deleteComplaintImagesByIds(deletedPhotosIds);
       }
 
-      toast.show({
-        title: 'Resolve atualizado com sucesso!',
-        placement: 'top',
-        bgColor: 'green.500',
-      });
+      toast.success('Resolve atualizado com sucesso!');
 
       router.back();
     } catch (error) {

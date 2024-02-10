@@ -1,11 +1,12 @@
 import { router, useLocalSearchParams } from 'expo-router';
-import { Center, HStack, Heading, Text, VStack, useToast } from 'native-base';
+import { Center, HStack, Heading, Text, VStack } from 'native-base';
 import { Platform } from 'react-native';
 
 import { AdDetails } from '@/components/AdDetails';
 import { Button } from '@/components/Button';
 import { CreateComplaintDTO, ShowAdDetailsDTO } from '@/dtos/ComplaintDTO';
 import { useAuth } from '@/hooks/useAuth';
+import { useToast } from '@/hooks/useToast';
 import { createComplaint } from '@/queries/mutations/solves';
 import { api } from '@/services/api';
 import { handleError } from '@/utils/handleError';
@@ -65,11 +66,7 @@ export default function AdPreview() {
 
       await api.postForm('/complaints/images', form);
 
-      toast.show({
-        title: 'Produto criado com sucesso!',
-        placement: 'top',
-        bgColor: 'green.500',
-      });
+      toast.success('Produto criado com sucesso!');
 
       handleGoToAd(complaintId);
     } catch (error) {
