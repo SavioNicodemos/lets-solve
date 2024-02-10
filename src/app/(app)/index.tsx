@@ -54,10 +54,7 @@ export default function Home() {
     : 0;
 
   const handleGoToCreateAdd = () => {
-    router.push({
-      pathname: '/ad/create',
-      params: { complaint: '' },
-    });
+    router.push('/ad/create');
   };
 
   const handleGoToMyAds = () => {
@@ -67,7 +64,7 @@ export default function Home() {
   const handleGoToAdDetails = (complaintId: IComplaintId) => {
     router.push({
       pathname: '/ad/',
-      params: { complaintId, isMyAd: 0 },
+      params: { complaintId },
     });
   };
 

@@ -46,7 +46,7 @@ export default function Ad() {
   const handleGoToEditAd = () => {
     router.push({
       pathname: '/ad/create',
-      params: { complaintId: complaint?.id || '' },
+      params: { complaintId: complaint!.id },
     });
   };
 

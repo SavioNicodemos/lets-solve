@@ -1,6 +1,6 @@
 import { Feather } from '@expo/vector-icons';
 import { useQuery } from '@tanstack/react-query';
-import { router } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
 import {
   FlatList,
   HStack,
@@ -22,7 +22,11 @@ import { getMyAds } from '@/queries/solves';
 export default function MyAds() {
   const [status, setStatus] = useState('');
 
-  const { data: myAds, isLoading } = useQuery({
+  const {
+    data: myAds,
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ['myAds'],
     queryFn: () => getMyAds(),
     initialData: [],
@@ -34,20 +38,21 @@ export default function MyAds() {
   const handleGoToAdDetails = (complaintId: IComplaintId) => {
     router.push({
       pathname: '/ad/',
-      params: { complaintId, isMyAd: 1 },
+      params: { complaintId },
     });
   };
 
   const handleGoToCreateAd = () => {
-    router.push({
-      pathname: '/ad/create',
-      params: { complaint: '' },
-    });
+    router.push('/ad/create');
   };
 
   const handleGoBack = () => {
     router.back();
   };
+
+  useFocusEffect(() => {
+    refetch();
+  });
 
   return (
     <VStack bgColor="gray.600" flex={1} pt={16} px={6}>

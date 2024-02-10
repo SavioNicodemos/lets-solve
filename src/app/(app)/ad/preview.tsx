@@ -41,7 +41,7 @@ export default function AdPreview() {
   const handleGoToAd = (complaintId: string) => {
     router.push({
       pathname: '/ad/',
-      params: { complaintId, isMyAd: 1 },
+      params: { complaintId },
     });
   };
 
