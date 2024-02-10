@@ -14,6 +14,10 @@ import {
   CreateComplaintDTO,
   IImageUpload,
 } from '@/dtos/ComplaintDTO';
+import {
+  deleteComplaintImagesByIds,
+  updateComplaint,
+} from '@/queries/mutations/solves';
 import { api } from '@/services/api';
 import { handleError } from '@/utils/handleError';
 import { findDeletedObjects } from '@/utils/helpers/arrayHelper';
@@ -75,14 +79,16 @@ export default function CreateAd() {
       data.complaint_images,
       'path',
     );
-    const deletedPhotosIds = deletedPhotos.map(image => image.id);
+    const deletedPhotosIds = deletedPhotos
+      .map(image => image?.id)
+      .filter(Boolean) as string[];
 
     const newPhotosToAdd = data.complaint_images.filter(
       image => image.isExternal === false,
     );
 
     try {
-      await api.put(`/complaints/${complaintObj.id}`, data);
+      await updateComplaint({ id: complaintObj.id, ...data });
 
       if (newPhotosToAdd.length) {
         const imagesForm = new FormData();
@@ -95,11 +101,7 @@ export default function CreateAd() {
       }
 
       if (deletedPhotosIds.length) {
-        await api.delete('/complaints/images', {
-          data: {
-            complaintImagesIds: deletedPhotosIds,
-          },
-        });
+        await deleteComplaintImagesByIds(deletedPhotosIds);
       }
 
       toast.show({

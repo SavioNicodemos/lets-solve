@@ -11,6 +11,8 @@ import {
 
 import { IImageUpload } from '@/dtos/ComplaintDTO';
 import { UserDTO } from '@/dtos/UserDTO';
+import { fetchMyUser } from '@/queries/auth';
+import { createSession, updateAvatar } from '@/queries/mutations/auth';
 import { api } from '@/services/api';
 import {
   storageAuthTokenGet,
@@ -67,7 +69,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
   const signIn = useCallback(async (email: string, password: string) => {
     try {
-      const { data } = await api.post('/sessions', { email, password });
+      const data = await createSession({ email, password });
 
       if (data.user && data.token && data.refresh_token) {
         await storageUserAndTokenSave(
@@ -114,16 +116,12 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
   async function updateUserAvatar(avatar: IImageUpload): Promise<void> {
     try {
-      const body = new FormData();
-      body.append('_method', 'PUT');
-      body.append('avatar', avatar as any);
+      await updateAvatar(avatar);
 
-      await api.postForm('/users/avatar', body);
+      const myUser = await fetchMyUser();
 
-      const response = await api.get<UserDTO>('/users/me');
-
-      await storageUserSave(response.data);
-      setUser(response.data);
+      await storageUserSave(myUser);
+      setUser(myUser);
     } catch (error) {
       if (error instanceof AxiosError) {
         handleError(new Error('Erro ao atualizar foto de perfil'));

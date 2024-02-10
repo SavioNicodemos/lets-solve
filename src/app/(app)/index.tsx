@@ -20,39 +20,10 @@ import { FiltersModal, emptyFilters } from '@/components/FiltersModal';
 import { Input } from '@/components/Input';
 import Loading from '@/components/Loading';
 import { UserPhoto } from '@/components/UserPhoto';
-import { ComplaintDTO, IComplaintId } from '@/dtos/ComplaintDTO';
+import { IComplaintId } from '@/dtos/ComplaintDTO';
 import { IFiltersDTO } from '@/dtos/FiltersDTO';
 import { useAuth } from '@/hooks/useAuth';
-import { api } from '@/services/api';
-
-const getAds = async (filters: IFiltersDTO): Promise<ComplaintDTO[]> => {
-  const params = new URLSearchParams();
-  if (filters?.complaintName) {
-    params.append('query', filters.complaintName);
-  }
-
-  if (typeof filters?.acceptTrade === 'boolean') {
-    params.append('accept_trade', filters.acceptTrade.toString());
-  }
-
-  if (typeof filters?.isNew === 'boolean') {
-    params.append('is_new', filters.isNew.toString());
-  }
-
-  filters?.paymentMethods.forEach(element => {
-    params.append('payment_methods', element);
-  });
-
-  const paramsString = params.toString();
-
-  const response = await api.get(`/complaints?${paramsString}`);
-  return response.data;
-};
-
-const getMyAds = async (): Promise<ComplaintDTO[]> => {
-  const response = await api.get('/users/complaints');
-  return response.data;
-};
+import { getAds, getMyAds } from '@/queries/solves';
 
 export default function Home() {
   const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(false);

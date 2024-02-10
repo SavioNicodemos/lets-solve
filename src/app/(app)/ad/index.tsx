@@ -6,45 +6,7 @@ import { Alert } from 'react-native';
 
 import { Menu, MenuItem } from '@/components/Menu';
 import RenderComplaint from '@/components/RenderComplaint';
-import {
-  ComplaintApiDTO,
-  ComplaintDTO,
-  IComplaintId,
-} from '@/dtos/ComplaintDTO';
-import { api } from '@/services/api';
-import { handleError } from '@/utils/handleError';
-
-const getComplaint = async (
-  complaintId: IComplaintId,
-): Promise<ComplaintDTO> => {
-  const response = await api.get(`/complaints/${complaintId}`);
-  const responseData: ComplaintApiDTO = response.data;
-
-  const complaintData: ComplaintDTO = {
-    ...responseData,
-    complaint_images: responseData.complaint_images.map(image => ({
-      ...image,
-      isExternal: true,
-    })),
-  };
-  return complaintData;
-};
-
-const changeAdVisibility = async (
-  complaintId: IComplaintId,
-  complaintActualStatus: boolean,
-) => {
-  try {
-    const response = await api.patch(`/complaints/${complaintId}`, {
-      is_active: !complaintActualStatus,
-    });
-
-    return response.data.is_active;
-  } catch (error) {
-    handleError(error);
-    return complaintActualStatus;
-  }
-};
+import { changeAdVisibility, getComplaint } from '@/queries/solves';
 
 export default function Ad() {
   const navigation = useNavigation();

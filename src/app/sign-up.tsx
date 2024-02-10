@@ -16,7 +16,7 @@ import { AvatarUpload } from '@/components/AvatarUpload';
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
 import { ICreateUser } from '@/dtos/UserDTO';
-import { api } from '@/services/api';
+import { createUser } from '@/queries/mutations/auth';
 import { handleError } from '@/utils/handleError';
 
 export default function SignUp() {
@@ -44,14 +44,8 @@ export default function SignUp() {
       return;
     }
     try {
-      const formData = new FormData();
-      formData.append('avatar', data.avatar as any);
-      formData.append('name', data.name);
-      formData.append('email', data.email);
-      formData.append('tel', data.tel);
-      formData.append('password', data.password);
+      await createUser(data);
 
-      await api.postForm('/users', formData);
       toast.show({
         title: 'Usuário criado com sucesso!',
         placement: 'top',

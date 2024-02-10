@@ -6,6 +6,7 @@ import { AdDetails } from '@/components/AdDetails';
 import { Button } from '@/components/Button';
 import { CreateComplaintDTO, ShowAdDetailsDTO } from '@/dtos/ComplaintDTO';
 import { useAuth } from '@/hooks/useAuth';
+import { createComplaint } from '@/queries/mutations/solves';
 import { api } from '@/services/api';
 import { handleError } from '@/utils/handleError';
 
@@ -51,12 +52,10 @@ export default function AdPreview() {
         description,
         complaint_images: complaintImages,
       } = complaintObj;
-      const createAdResponse = await api.post('/complaints', {
-        name,
-        description,
-      });
 
-      const complaintId = createAdResponse.data.id;
+      const createAdResponse = await createComplaint({ name, description });
+
+      const complaintId = createAdResponse.id;
 
       const form = new FormData();
       form.append('complaint_id', complaintId);

@@ -16,13 +16,8 @@ import { useState } from 'react';
 import { AdCard } from '@/components/AdCard';
 import { EmptyListText } from '@/components/EmptyListText';
 import Loading from '@/components/Loading';
-import { ComplaintDTO, IComplaintId } from '@/dtos/ComplaintDTO';
-import { api } from '@/services/api';
-
-const getMyAds = async (): Promise<ComplaintDTO[]> => {
-  const response = await api.get('/users/complaints');
-  return response.data;
-};
+import { IComplaintId } from '@/dtos/ComplaintDTO';
+import { getMyAds } from '@/queries/solves';
 
 export default function MyAds() {
   const [status, setStatus] = useState('');
