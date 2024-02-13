@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import { HStack, Heading, ScrollView, Text, VStack } from 'native-base';
 
-import { ImageCarousel } from '@/components/ImageCarousel';
 import { UserPhoto } from '@/components/UserPhoto';
-import { ShowAdDetailsDTO } from '@/dtos/ComplaintDTO';
+import { IComment, ShowAdDetailsDTO } from '@/dtos/ComplaintDTO';
 
 import { CommentSection } from './CommentSection';
+import { ImageCarousel } from './ImageCarousel';
 import StatusChip from './StatusChip';
 
 type Props = {
@@ -20,13 +21,7 @@ export function AdDetails({ complaint }: Props) {
         images={complaint.complaint_images}
         adIsDisabled={'is_active' in complaint ? !complaint.is_active : false}
       />
-      <ScrollView
-        px={6}
-        py={6}
-        flex={1}
-        showsVerticalScrollIndicator={false}
-        bg="gray.600"
-      >
+      <ScrollView px={6} flex={1} bg="gray.600">
         <HStack mb={3} mt={5} justifyContent="space-between">
           <HStack>
             <UserPhoto
@@ -53,8 +48,52 @@ export function AdDetails({ complaint }: Props) {
           {complaint.description}
         </Text>
 
-        <CommentSection comments={['1', '2', '3']} />
+        <CommentSection comments={comments} />
       </ScrollView>
     </VStack>
   );
 }
+
+const comments: IComment[] = [
+  {
+    id: '1',
+    comment:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+    user: {
+      avatar: 'https://avatars.githubusercontent.com/u/22616441?v=4',
+      name: 'Nicodemos Santos',
+      tel: '123456789',
+    },
+    created_at: new Date('2024-02-10'),
+  },
+  {
+    id: '2',
+    comment: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    user: {
+      avatar: 'https://avatars.githubusercontent.com/u/22616441?v=4',
+      name: 'Savio Costa',
+      tel: '123456789',
+    },
+    created_at: new Date('2024-02-12T11:24:42.000Z'),
+  },
+  {
+    id: '3',
+    comment: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    user: {
+      avatar: 'https://avatars.githubusercontent.com/u/22616441?v=4',
+      name: 'Nico Gomez',
+      tel: '123456789',
+    },
+    created_at: new Date('2024-02-13T01:14:42.000Z'),
+  },
+  {
+    id: '4',
+    comment: 'Lorem.',
+    user: {
+      avatar: 'https://avatars.githubusercontent.com/u/22616441?v=4',
+      name: 'Nico Gomez',
+      tel: '123456789',
+    },
+    created_at: new Date('2024-01-13T14:14:42.000Z'),
+  },
+];
