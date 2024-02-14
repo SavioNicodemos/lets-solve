@@ -48,7 +48,13 @@ export function AdDetails({ complaint }: Props) {
           {complaint.description}
         </Text>
 
-        <CommentSection comments={comments} />
+        {complaint?.id && (
+          <CommentSection
+            comments={comments}
+            complaintId={complaint.id}
+            allowAdd
+          />
+        )}
       </ScrollView>
     </VStack>
   );

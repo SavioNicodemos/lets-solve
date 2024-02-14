@@ -1,3 +1,4 @@
+import { IComment } from '@/dtos/ComplaintDTO';
 import { api } from '@/services/api';
 
 export async function createComplaint({
@@ -19,6 +20,20 @@ export async function updateComplaint(data: IUpdateComplaint): Promise<void> {
 export async function deleteComplaintImagesByIds(ids: string[]): Promise<void> {
   await api.delete('/complaints/images', { data: { complaintImagesIds: ids } });
 }
+
+export async function addComment({
+  complaintId,
+  message,
+}: IAddComment): Promise<void> {
+  await api.post<IComment>(`complaints/${complaintId}/comments`, {
+    message,
+  });
+}
+
+type IAddComment = {
+  complaintId: string;
+  message: string;
+};
 
 type ICreateComplaint = {
   name: string;

@@ -23,6 +23,7 @@ export type CreateComplaintDTO = {
 };
 
 export type ShowAdDetailsDTO = CreateComplaintDTO & {
+  id?: string;
   user: User;
   complaint_images: ImagesDTO[] | IImageUpload[];
   state: ComplaintStatusDTO;
