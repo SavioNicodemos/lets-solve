@@ -1,9 +1,11 @@
+import { FetchCommentDTO, IComment } from '@/dtos/CommentDTO';
 import {
   ComplaintApiDTO,
   ComplaintDTO,
   IComplaintId,
 } from '@/dtos/ComplaintDTO';
 import { IFiltersDTO } from '@/dtos/FiltersDTO';
+import { LaravelPagination } from '@/dtos/RequestsDTO';
 import { api } from '@/services/api';
 import { handleError } from '@/utils/handleError';
 
@@ -66,4 +68,30 @@ export const changeAdVisibility = async (
     handleError(error);
     return complaintActualStatus;
   }
+};
+
+export const getComments = async ({
+  complaintId,
+  page,
+}: IGetComments): Promise<LaravelPagination<IComment>> => {
+  const response = await api.get<LaravelPagination<FetchCommentDTO>>(
+    `/complaints/${complaintId}/comments?page=${page}`,
+  );
+
+  const comments: IComment[] = response.data.data.map(comment => ({
+    ...comment,
+    created_at: new Date(comment.created_at),
+  }));
+
+  const newComments: LaravelPagination<IComment> = {
+    ...response.data,
+    data: comments,
+  };
+
+  return newComments;
+};
+
+type IGetComments = {
+  complaintId: IComplaintId;
+  page: number;
 };

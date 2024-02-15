@@ -1,15 +1,10 @@
 import { Heading, VStack, View } from 'native-base';
 
-import { IComment } from '@/dtos/ComplaintDTO';
-
+import { useInfiniteComments } from '@/hooks/useInfiniteComments';
 import { AddComment } from './AddComment';
 import { CommentItem } from './CommentItem';
 
-export function CommentSection({
-  comments,
-  complaintId,
-  allowAdd = false,
-}: Props) {
+export function CommentSection({ complaintId, allowAdd = false }: Props) {
   return (
     <View pb={4} style={{ gap: 16 }}>
       <Heading size="sm" color="gray.100" mt={5}>
@@ -19,13 +14,37 @@ export function CommentSection({
       {allowAdd && <AddComment complaintId={complaintId} />}
 
       <VStack style={{ gap: 4 }}>
-        <RenderComments comments={comments} />
+        <RenderComments complaintId={complaintId} />
       </VStack>
     </View>
   );
 }
 
-function RenderComments({ comments }: { comments: IComment[] }) {
+function RenderComments({ complaintId }: { complaintId: string }) {
+  const {
+    data: commentsReturned,
+    isSuccess,
+    isLoading,
+  } = useInfiniteComments(complaintId);
+
+  if (isLoading) {
+    return (
+      <Heading size="sm" color="gray.100" pt={4} textAlign="center">
+        Carregando comentários...
+      </Heading>
+    );
+  }
+
+  if (!isSuccess) {
+    return (
+      <Heading size="sm" color="gray.100" pt={4} textAlign="center">
+        Erro ao carregar comentários
+      </Heading>
+    );
+  }
+
+  const comments = commentsReturned?.pages.flatMap(page => page.data) || [];
+
   if (!comments.length) {
     return (
       <Heading size="sm" color="gray.100" pt={4} textAlign="center">
@@ -40,7 +59,6 @@ function RenderComments({ comments }: { comments: IComment[] }) {
 }
 
 type Props = {
-  comments: IComment[];
   complaintId: string;
   allowAdd?: boolean;
 };
