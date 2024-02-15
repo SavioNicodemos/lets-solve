@@ -1,6 +1,6 @@
 import { HStack, Heading, Text, VStack } from 'native-base';
 
-import { IComment } from '@/dtos/ComplaintDTO';
+import { IComment } from '@/dtos/CommentDTO';
 
 import { formatRelativeDate } from '@/utils/helpers/dates';
 import { UserPhoto } from './UserPhoto';
@@ -11,7 +11,7 @@ export function CommentItem({ comment }: Props) {
       <UserPhoto
         borderWidth={0}
         isExternalImage={false}
-        imageLink={comment.user.avatar}
+        imageLink=""
         size={12}
       />
 
@@ -33,7 +33,7 @@ export function CommentItem({ comment }: Props) {
           flex={1}
           lineHeight={18}
         >
-          {comment.comment}
+          {comment.content}
         </Text>
       </VStack>
     </HStack>

@@ -1,4 +1,4 @@
-import { IComment } from '@/dtos/ComplaintDTO';
+import { FetchCommentDTO, IComment } from '@/dtos/CommentDTO';
 import { api } from '@/services/api';
 
 export async function createComplaint({
@@ -24,10 +24,20 @@ export async function deleteComplaintImagesByIds(ids: string[]): Promise<void> {
 export async function addComment({
   complaintId,
   message,
-}: IAddComment): Promise<void> {
-  await api.post<IComment>(`complaints/${complaintId}/comments`, {
-    message,
-  });
+}: IAddComment): Promise<IComment> {
+  const response = await api.post<FetchCommentDTO>(
+    `complaints/${complaintId}/comments`,
+    {
+      content: message,
+    },
+  );
+
+  const comment: IComment = {
+    ...response.data,
+    created_at: new Date(response.data.created_at),
+  };
+
+  return comment;
 }
 
 type IAddComment = {

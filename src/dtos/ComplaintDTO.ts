@@ -58,10 +58,3 @@ type User = {
   name: string;
   tel: string;
 };
-
-export type IComment = {
-  id: string;
-  comment: string;
-  user: User;
-  created_at: Date;
-};
