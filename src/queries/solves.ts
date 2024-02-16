@@ -1,7 +1,8 @@
 import { FetchCommentDTO, IComment } from '@/dtos/CommentDTO';
 import {
-  ComplaintApiDTO,
   ComplaintDTO,
+  FetchComplaint,
+  FetchMyComplaintsResponse,
   IComplaintId,
 } from '@/dtos/ComplaintDTO';
 import { IFiltersDTO } from '@/dtos/FiltersDTO';
@@ -33,7 +34,7 @@ export const getAds = async (filters: IFiltersDTO): Promise<ComplaintDTO[]> => {
   return response.data;
 };
 
-export const getMyAds = async (): Promise<ComplaintDTO[]> => {
+export const getMyAds = async (): Promise<FetchMyComplaintsResponse[]> => {
   const response = await api.get('/users/complaints');
   return response.data;
 };
@@ -42,11 +43,12 @@ export const getComplaint = async (
   complaintId: IComplaintId,
 ): Promise<ComplaintDTO> => {
   const response = await api.get(`/complaints/${complaintId}`);
-  const responseData: ComplaintApiDTO = response.data;
+  const responseData: FetchComplaint = response.data;
 
   const complaintData: ComplaintDTO = {
     ...responseData,
-    complaint_images: responseData.complaint_images.map(image => ({
+    user_id: responseData.user.id,
+    complaint_images: responseData.images.map(image => ({
       ...image,
       isExternal: true,
     })),

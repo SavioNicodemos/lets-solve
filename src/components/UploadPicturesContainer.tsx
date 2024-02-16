@@ -8,7 +8,6 @@ import { TouchableOpacity } from 'react-native';
 import noComplaintImage from '@/assets/noComplaint.png';
 import { IImageUpload } from '@/dtos/ComplaintDTO';
 import { useToast } from '@/hooks/useToast';
-import { api } from '@/services/api';
 import { handleError } from '@/utils/handleError';
 
 type Props = {
@@ -61,7 +60,7 @@ export function UploadPicturesContainer({
           name: photoName,
           uri: photoSelected.assets[0].uri,
           path: photoSelected.assets[0].uri,
-          isExternal: false,
+          isExternal: false as const,
           type: `${photoSelected.assets[0].type}/${fileExtension}`,
         };
 
@@ -111,11 +110,7 @@ export function UploadPicturesContainer({
                   rounded="lg"
                   bg="gray.500"
                   alt="Foto da queixa"
-                  src={
-                    photo.isExternal
-                      ? `${api.defaults.baseURL}/images/${photo.path}`
-                      : photo.path
-                  }
+                  src={photo.path}
                   fallbackSource={noComplaintImage}
                 />
               </Box>

@@ -114,7 +114,7 @@ export default function MyAds() {
               <AdCard
                 name={item.name}
                 status={item.state}
-                complaintImage={item.complaint_images[0]?.path}
+                complaintImage={item.images?.[0]?.path}
                 adIsDisabled={!item.is_active}
                 onPress={() => handleGoToAdDetails(item.id)}
               />

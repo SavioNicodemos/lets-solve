@@ -12,20 +12,20 @@ export type IImageUpload = {
   name: string;
   uri: string;
   path: string;
-  isExternal: boolean;
+  isExternal: false;
   type: string;
 };
 
 export type CreateComplaintDTO = {
   name: string;
   description: string;
-  complaint_images: IImageUpload[];
+  complaint_images: (IImageUpload | ImagesDTO)[];
 };
 
-export type ShowAdDetailsDTO = CreateComplaintDTO & {
+export type ShowAdDetailsDTO = Omit<CreateComplaintDTO, 'complaint_images'> & {
   id?: string;
   user: User;
-  complaint_images: ImagesDTO[] | IImageUpload[];
+  complaint_images: (ImagesDTO | IImageUpload)[];
   state: ComplaintStatusDTO;
 };
 
@@ -36,16 +36,12 @@ export type ComplaintDTO = ShowAdDetailsDTO & {
   state: ComplaintStatusDTO;
 };
 
-export type ComplaintApiDTO = Omit<ComplaintDTO, 'payment_methods'> & {
-  payment_methods: IPaymentMethodObject[];
-};
-
 export type IComplaintId = string;
 
 export type ImagesDTO = {
   id: string;
   path: string;
-  isExternal: boolean;
+  isExternal: true;
 };
 
 export type IPaymentMethodObject = {
@@ -54,7 +50,21 @@ export type IPaymentMethodObject = {
 };
 
 type User = {
-  avatar_url: string;
+  id: string;
   name: string;
-  tel: string;
+  avatar_url: string;
+};
+
+export type FetchMyComplaintsResponse = {
+  id: string;
+  name: string;
+  description: string;
+  is_active: boolean;
+  created_at: string;
+  images: ImagesDTO[];
+  state: ComplaintStatusDTO;
+};
+
+export type FetchComplaint = FetchMyComplaintsResponse & {
+  user: User;
 };

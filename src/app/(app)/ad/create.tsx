@@ -132,6 +132,7 @@ export default function CreateAd() {
               name="complaint_images"
               render={({ field: { value, onChange } }) => (
                 <UploadPicturesContainer
+                  // @ts-expect-error The type 'IImageUpload | ImagesDTO' is not assignable to type 'IImageUpload'
                   value={value}
                   onChange={onChange}
                   errorMessage={errors.complaint_images?.message}

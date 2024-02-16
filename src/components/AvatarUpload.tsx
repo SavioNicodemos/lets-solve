@@ -57,7 +57,7 @@ export function AvatarUpload({
           name: photoName,
           uri: photoSelected.assets[0].uri,
           path: photoSelected.assets[0].uri,
-          isExternal: false,
+          isExternal: false as const,
           type: `${photoSelected.assets[0].type}/${fileExtension}`,
         };
 

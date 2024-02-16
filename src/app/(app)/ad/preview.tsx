@@ -26,6 +26,7 @@ export default function AdPreview() {
     state: {
       color: 'green.500',
       name: 'Status',
+      key: 'status',
       id: '0',
       is_positive: true,
     },

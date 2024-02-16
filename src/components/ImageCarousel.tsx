@@ -5,10 +5,9 @@ import Carousel from 'react-native-reanimated-carousel';
 
 import noComplaint from '@/assets/noComplaint.png';
 import { IImageUpload, ImagesDTO } from '@/dtos/ComplaintDTO';
-import { api } from '@/services/api';
 
 type Props = {
-  images: ImagesDTO[] | IImageUpload[];
+  images: (ImagesDTO | IImageUpload)[];
   adIsDisabled?: boolean;
 };
 
@@ -42,9 +41,7 @@ export function ImageCarousel({ images, adIsDisabled }: Props) {
               source={
                 images.length
                   ? {
-                      uri: item.isExternal
-                        ? `${api.defaults.baseURL}/images/${item.path}`
-                        : item.path,
+                      uri: item.path,
                     }
                   : noComplaint
               }
