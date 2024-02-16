@@ -4,6 +4,8 @@ import { HStack, Icon, IconButton, TextArea } from 'native-base';
 import { useState } from 'react';
 
 import { useAuth } from '@/hooks/useAuth';
+import { useComplaint } from '@/hooks/useComplaint';
+import { useInfiniteComments } from '@/hooks/useInfiniteComments';
 import { useToast } from '@/hooks/useToast';
 import { addComment } from '@/queries/mutations/solves';
 import { UserPhoto } from './UserPhoto';
@@ -16,8 +18,12 @@ export function AddComment({ complaintId }: { complaintId: string }) {
 
   const { isPending, mutateAsync } = useMutation({
     mutationFn: () => addComment({ complaintId, message: message.trim() }),
-    mutationKey: ['addComment', complaintId],
+    mutationKey: ['comments', complaintId],
   });
+
+  const { refetch } = useInfiniteComments(complaintId);
+
+  const { refetch: refetchComplaint } = useComplaint(complaintId);
 
   const handleAddComment = async () => {
     const trimmedMessage = message.trim();
@@ -29,6 +35,8 @@ export function AddComment({ complaintId }: { complaintId: string }) {
 
     try {
       await mutateAsync();
+      refetch();
+      refetchComplaint();
     } catch (error) {
       toast.error('Erro ao adicionar comentário');
     } finally {
