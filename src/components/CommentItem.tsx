@@ -1,4 +1,9 @@
 import { HStack, Heading, Skeleton, Text, VStack } from 'native-base';
+import Animated, {
+  LinearTransition,
+  SlideInRight,
+  SlideOutLeft,
+} from 'react-native-reanimated';
 
 import { IComment } from '@/dtos/CommentDTO';
 import { formatRelativeDate } from '@/utils/helpers/dates';
@@ -10,36 +15,42 @@ export function CommentItem({ comment, isLoading }: Props) {
   }
 
   return (
-    <HStack style={{ gap: 8 }}>
-      <UserPhoto
-        borderWidth={0}
-        isExternalImage={false}
-        imageLink=""
-        size={12}
-      />
+    <Animated.View
+      entering={SlideInRight}
+      exiting={SlideOutLeft}
+      layout={LinearTransition.springify()}
+    >
+      <HStack style={{ gap: 8 }}>
+        <UserPhoto
+          borderWidth={0}
+          isExternalImage={false}
+          imageLink=""
+          size={12}
+        />
 
-      <VStack flex={1}>
-        <HStack>
-          <Heading size="sm" color="gray.100">
-            {comment.user.name}
-          </Heading>
-          <Text color="gray.400">
-            {' '}
-            - {formatRelativeDate(comment.created_at)}
+        <VStack flex={1}>
+          <HStack>
+            <Heading size="sm" color="gray.100">
+              {comment.user.name}
+            </Heading>
+            <Text color="gray.400">
+              {' '}
+              - {formatRelativeDate(comment.created_at)}
+            </Text>
+          </HStack>
+
+          <Text
+            color="gray.200"
+            fontSize="sm"
+            textBreakStrategy="balanced"
+            flex={1}
+            lineHeight={18}
+          >
+            {comment.content}
           </Text>
-        </HStack>
-
-        <Text
-          color="gray.200"
-          fontSize="sm"
-          textBreakStrategy="balanced"
-          flex={1}
-          lineHeight={18}
-        >
-          {comment.content}
-        </Text>
-      </VStack>
-    </HStack>
+        </VStack>
+      </HStack>
+    </Animated.View>
   );
 }
 
