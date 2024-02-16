@@ -22,11 +22,7 @@ export default function AdPreview() {
 
   const complaintPreview: ShowAdDetailsDTO = {
     ...complaintObj,
-    user: {
-      name: user.name,
-      avatar: user.avatar,
-      tel: user.tel,
-    },
+    user,
     state: {
       color: 'green.500',
       name: 'Status',

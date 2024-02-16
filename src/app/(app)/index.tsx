@@ -78,11 +78,11 @@ export default function Home() {
         <HStack justifyContent="space-between">
           <HStack flexShrink={1}>
             <UserPhoto
-              key={user.avatar}
+              key={user.avatar_url}
               onPress={handleGoToProfile}
               size={12}
               mr={2}
-              imageLink={user.avatar}
+              imageLink={user.avatar_url}
             />
             <VStack flexShrink={1}>
               <Text fontSize="md">Boas vindas,</Text>
@@ -174,7 +174,7 @@ export default function Home() {
             renderItem={({ item }) => (
               <AdCard
                 name={item.name}
-                userPhoto={item.user.avatar}
+                userPhoto={item.user.avatar_url}
                 status={item.state}
                 complaintImage={item.complaint_images[0]?.path}
                 onPress={() => handleGoToAdDetails(item.id)}

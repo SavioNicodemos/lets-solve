@@ -46,7 +46,7 @@ export function AddComment({ complaintId }: { complaintId: string }) {
 
   return (
     <HStack style={{ gap: 4 }} alignItems="center">
-      <UserPhoto imageLink={user.avatar} size={10} borderColor="red" />
+      <UserPhoto imageLink={user.avatar_url} size={10} borderColor="red" />
 
       <TextArea
         isDisabled={isPending}

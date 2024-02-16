@@ -29,7 +29,7 @@ export default function Profile() {
         <AvatarUpload
           size={40}
           onChange={image => updateUserAvatar(image)}
-          value={{ isExternal: !!user.avatar, path: user.avatar || '' }}
+          value={{ isExternal: !!user.avatar_url, path: user.avatar_url || '' }}
         />
 
         <Heading fontSize="lg" color="gray.100">

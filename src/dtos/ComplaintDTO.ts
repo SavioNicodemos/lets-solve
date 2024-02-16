@@ -54,7 +54,7 @@ export type IPaymentMethodObject = {
 };
 
 type User = {
-  avatar: string;
+  avatar_url: string;
   name: string;
   tel: string;
 };

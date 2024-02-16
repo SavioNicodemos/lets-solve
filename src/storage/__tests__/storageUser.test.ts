@@ -27,7 +27,7 @@ describe('User storage', () => {
       id: 'uuid',
       name: 'John Doe',
       tel: '2342342',
-      avatar: 'avatar.png',
+      avatar_url: 'avatar.png',
       email: 'test@email.com',
     };
     await storageUserSave(mockUser);

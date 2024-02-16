@@ -5,7 +5,7 @@ export type UserDTO = {
   name: string;
   email: string;
   tel: string;
-  avatar: string;
+  avatar_url: string;
 };
 
 export type ICreateUser = {

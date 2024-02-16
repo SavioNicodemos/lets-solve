@@ -1,6 +1,6 @@
 import { UserDTO } from './UserDTO';
 
-type UserForComments = Pick<UserDTO, 'name' | 'id'>;
+type UserForComments = Pick<UserDTO, 'name' | 'id' | 'avatar_url'>;
 
 export type FetchCommentDTO = {
   id: number;

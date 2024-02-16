@@ -23,8 +23,7 @@ export function CommentItem({ comment, isLoading }: Props) {
       <HStack style={{ gap: 8 }}>
         <UserPhoto
           borderWidth={0}
-          isExternalImage={false}
-          imageLink=""
+          imageLink={comment.user.avatar_url}
           size={12}
         />
 

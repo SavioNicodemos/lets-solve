@@ -28,7 +28,7 @@ export function AdDetails({ complaint }: Props) {
               size={6}
               borderWidth={2}
               borderColor={status.color}
-              imageLink={complaint.user.avatar}
+              imageLink={complaint.user.avatar_url}
               mr={2}
             />
 
