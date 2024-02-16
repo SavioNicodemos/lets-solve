@@ -1,11 +1,14 @@
-import { HStack, Heading, Text, VStack } from 'native-base';
+import { HStack, Heading, Skeleton, Text, VStack } from 'native-base';
 
 import { IComment } from '@/dtos/CommentDTO';
-
 import { formatRelativeDate } from '@/utils/helpers/dates';
 import { UserPhoto } from './UserPhoto';
 
-export function CommentItem({ comment }: Props) {
+export function CommentItem({ comment, isLoading }: Props) {
+  if (isLoading) {
+    return <CommentItemSkeleton quantity={2} />;
+  }
+
   return (
     <HStack style={{ gap: 8 }}>
       <UserPhoto
@@ -40,6 +43,31 @@ export function CommentItem({ comment }: Props) {
   );
 }
 
-type Props = {
-  comment: IComment;
-};
+function CommentItemSkeleton({ quantity = 1 }: { quantity?: number }) {
+  return Array.from({ length: quantity }).map((_, index) => (
+    // eslint-disable-next-line react/no-array-index-key
+    <HStack style={{ gap: 8 }} my={2} key={index}>
+      <Skeleton size={12} rounded="full" startColor="blueGray.300" />
+      <VStack flex={1} space="2">
+        <HStack space={2}>
+          <Skeleton h="3" flex="3" rounded="full" startColor="gray.500" />
+          <Skeleton h="3" flex="2" rounded="full" />
+        </HStack>
+        <Skeleton h="3" flex="1" rounded="full" />
+        <VStack>
+          <Skeleton h="3" width="70%" rounded="full" />
+        </VStack>
+      </VStack>
+    </HStack>
+  ));
+}
+
+type Props =
+  | {
+      comment: IComment;
+      isLoading?: false;
+    }
+  | {
+      comment?: undefined;
+      isLoading: true;
+    };

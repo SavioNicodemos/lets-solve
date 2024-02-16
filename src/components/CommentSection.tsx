@@ -28,11 +28,7 @@ function RenderComments({ complaintId }: { complaintId: string }) {
   } = useInfiniteComments(complaintId);
 
   if (isLoading) {
-    return (
-      <Heading size="sm" color="gray.100" pt={4} textAlign="center">
-        Carregando comentários...
-      </Heading>
-    );
+    return <CommentItem isLoading />;
   }
 
   if (!isSuccess) {
