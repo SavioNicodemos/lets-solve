@@ -1,12 +1,5 @@
 import { ComplaintStatusDTO } from './ComplaintStatusDTO';
 
-export type PaymentMethodsTypes =
-  | 'pix'
-  | 'card'
-  | 'boleto'
-  | 'cash'
-  | 'deposit';
-
 export type IImageUpload = {
   id?: string;
   name: string;
@@ -42,11 +35,6 @@ export type ImagesDTO = {
   id: string;
   path: string;
   isExternal: true;
-};
-
-export type IPaymentMethodObject = {
-  key: PaymentMethodsTypes;
-  name: string;
 };
 
 type User = {

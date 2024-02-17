@@ -6,16 +6,13 @@ import {
   Icon,
   IconButton,
   Modal,
-  Switch,
   Text,
   VStack,
 } from 'native-base';
 import { useState } from 'react';
 
 import { Button } from '@/components/Button';
-import { FilterChip } from '@/components/FilterChip';
 import { IFiltersDTO } from '@/dtos/FiltersDTO';
-import { chooseIfNewOrUsedIsBooleanOrNull } from '@/utils/helpers/conditions';
 
 type Props = {
   visible: boolean;
@@ -26,9 +23,6 @@ type Props = {
 
 export const emptyFilters: IFiltersDTO = {
   complaintName: null,
-  isNew: null,
-  acceptTrade: null,
-  paymentMethods: [],
 };
 export function FiltersModal({
   visible,
@@ -37,12 +31,8 @@ export function FiltersModal({
   defaultValue,
 }: Props) {
   const [filters, setFilters] = useState<IFiltersDTO>(defaultValue);
-  const [isNewSelected, setIsNewSelected] = useState(
-    defaultValue.isNew === true,
-  );
-  const [isUsedSelected, setIsUsedSelected] = useState(
-    defaultValue.isNew === false,
-  );
+
+  const IS_IMPLEMENTED = false;
 
   const handleResetFilters = () => {
     setFilters(emptyFilters);
@@ -53,21 +43,6 @@ export function FiltersModal({
   const handleApplyFilters = () => {
     onChangeFilters(filters);
     onClose();
-  };
-
-  const handleChangeIsNewFilter = (
-    isEnabled: boolean,
-    type: 'new' | 'used',
-  ) => {
-    setFilters(prev => ({
-      ...prev,
-      isNew: chooseIfNewOrUsedIsBooleanOrNull(isEnabled, type, filters.isNew),
-    }));
-    if (type === 'new') {
-      setIsNewSelected(prev => !prev);
-      return;
-    }
-    setIsUsedSelected(prev => !prev);
   };
 
   return (
@@ -96,99 +71,68 @@ export function FiltersModal({
             onPress={onClose}
           />
         </HStack>
-        <VStack space={3}>
-          <Text fontSize="sm" fontWeight="bold">
-            Condição
-          </Text>
-          <HStack space={2}>
-            <FilterChip
-              title="Novo"
-              onChange={isEnabled => handleChangeIsNewFilter(isEnabled, 'new')}
-              value={isNewSelected}
-            />
-            <FilterChip
-              title="Usado"
-              onChange={isEnabled => handleChangeIsNewFilter(isEnabled, 'used')}
-              value={isUsedSelected}
-            />
-          </HStack>
-        </VStack>
-        <VStack alignItems="flex-start">
-          <Text fontSize="sm" fontWeight="bold">
-            Aceita troca?
-          </Text>
-          <Switch
-            offTrackColor="gray.500"
-            thumbColor="white"
-            onTrackColor="blue.500"
-            value={!!filters.acceptTrade}
-            onValueChange={value =>
-              setFilters(prev => ({ ...prev, acceptTrade: value }))
-            }
-          />
-        </VStack>
-        <VStack space={2}>
-          <HStack alignItems="baseline">
-            <Heading fontSize="lg">Meios de pagamento aceito</Heading>
-          </HStack>
-          <Checkbox.Group
-            colorScheme="blue"
-            defaultValue={filters.paymentMethods}
-            accessibilityLabel="pick an item"
-            onChange={values => {
-              setFilters(prev => ({ ...prev, paymentMethods: values }));
-            }}
-          >
-            <Checkbox
-              _checked={{ bg: 'blue.500', borderColor: 'blue.500' }}
-              value="boleto"
-              my="1"
-            >
-              Boleto
-            </Checkbox>
-            <Checkbox
-              value="pix"
-              my="1"
-              _checked={{ bg: 'blue.500', borderColor: 'blue.500' }}
-            >
-              Pix
-            </Checkbox>
-            <Checkbox
-              value="cash"
-              my="1"
-              _checked={{ bg: 'blue.500', borderColor: 'blue.500' }}
-            >
-              Dinheiro
-            </Checkbox>
-            <Checkbox
-              value="card"
-              my="1"
-              _checked={{ bg: 'blue.500', borderColor: 'blue.500' }}
-            >
-              Cartão de crédito
-            </Checkbox>
-            <Checkbox
-              value="deposit"
-              my="1"
-              _checked={{ bg: 'blue.500', borderColor: 'blue.500' }}
-            >
-              Depósito Bancário
-            </Checkbox>
-          </Checkbox.Group>
-        </VStack>
-        <HStack space={2} mt="4">
-          <Button
-            title="Resetar filtros"
-            variant="secondary"
-            flex={1}
-            onPress={handleResetFilters}
-          />
-          <Button
-            title="Aplicar filtros"
-            flex={1}
-            onPress={handleApplyFilters}
-          />
-        </HStack>
+
+        {!IS_IMPLEMENTED ? (
+          <Text>Ainda não implementado</Text>
+        ) : (
+          <>
+            <VStack space={2}>
+              <HStack alignItems="baseline">
+                <Heading fontSize="lg">Estados</Heading>
+              </HStack>
+              <Checkbox.Group
+                colorScheme="blue"
+                // defaultValue={filters.paymentMethods}
+                accessibilityLabel="pick an item"
+                onChange={values => {
+                  setFilters(prev => ({ ...prev, paymentMethods: values }));
+                }}
+              >
+                <Checkbox
+                  value="pix"
+                  my="1"
+                  _checked={{ bg: 'blue.500', borderColor: 'blue.500' }}
+                >
+                  Sem Resposta
+                </Checkbox>
+                <Checkbox
+                  value="2"
+                  my="1"
+                  _checked={{ bg: 'blue.500', borderColor: 'blue.500' }}
+                >
+                  Respondido
+                </Checkbox>
+                <Checkbox
+                  value="3"
+                  my="1"
+                  _checked={{ bg: 'blue.500', borderColor: 'blue.500' }}
+                >
+                  Sem Solução
+                </Checkbox>
+                <Checkbox
+                  value="4"
+                  my="1"
+                  _checked={{ bg: 'blue.500', borderColor: 'blue.500' }}
+                >
+                  Resolvido
+                </Checkbox>
+              </Checkbox.Group>
+            </VStack>
+            <HStack space={2} mt="4">
+              <Button
+                title="Resetar filtros"
+                variant="secondary"
+                flex={1}
+                onPress={handleResetFilters}
+              />
+              <Button
+                title="Aplicar filtros"
+                flex={1}
+                onPress={handleApplyFilters}
+              />
+            </HStack>
+          </>
+        )}
       </VStack>
     </Modal>
   );

@@ -16,18 +16,6 @@ export const getAds = async (filters: IFiltersDTO): Promise<ComplaintDTO[]> => {
     params.append('query', filters.complaintName);
   }
 
-  if (typeof filters?.acceptTrade === 'boolean') {
-    params.append('accept_trade', filters.acceptTrade.toString());
-  }
-
-  if (typeof filters?.isNew === 'boolean') {
-    params.append('is_new', filters.isNew.toString());
-  }
-
-  filters?.paymentMethods.forEach(element => {
-    params.append('payment_methods', element);
-  });
-
   const paramsString = params.toString();
 
   const response = await api.get(`/complaints?${paramsString}`);
