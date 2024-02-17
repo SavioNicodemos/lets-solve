@@ -47,28 +47,32 @@ export function AdCard({
         />
 
         <HStack alignItems="center" justifyContent="space-between" p={2}>
-          {userPhoto ? (
+          {!!userPhoto && (
             <UserPhoto
-              position="absolute"
-              left="2"
-              top="2"
+              imageLink={userPhoto}
               size={7}
               borderWidth={2}
-              borderColor="white"
-              imageLink={userPhoto}
+              borderColor={status.color}
             />
-          ) : null}
+          )}
 
           <StatusChip status={status} />
         </HStack>
 
-        {adIsDisabled ? (
-          <Box bg="#1A181B3D" flex="1" mt={-4} p={2} justifyContent="flex-end">
+        {adIsDisabled && (
+          <Box
+            bg="#1A181B3D"
+            w="full"
+            h="full"
+            position="absolute"
+            justifyContent="center"
+            alignItems="center"
+          >
             <Text color="white" fontSize="xs" fontWeight="bold">
               {'Resolve desativado'.toUpperCase()}
             </Text>
           </Box>
-        ) : null}
+        )}
       </VStack>
 
       <Text
