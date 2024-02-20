@@ -1,12 +1,12 @@
 import { Toast } from 'native-base';
 import { AppError } from './AppError';
 
-export const handleError = (error: unknown) => {
+export const handleError = (error: unknown, message: string = '') => {
   const isAppError = error instanceof AppError;
 
-  const title = isAppError
-    ? error.message
-    : 'Não foi possível entrar. Tente novamente mais tarde.';
+  let title = 'Não foi possível concluir a operação, tente novamente.';
+  if (isAppError) title = error.message;
+  if (message) title = message;
 
   Toast.show({
     title,

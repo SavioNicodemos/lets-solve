@@ -9,6 +9,11 @@ export type IImageUpload = {
   type: string;
 };
 
+export type ISubmitEvaluation = {
+  isSolved: boolean;
+  score: number;
+};
+
 export type CreateComplaintDTO = {
   name: string;
   description: string;

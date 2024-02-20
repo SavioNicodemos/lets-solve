@@ -1,5 +1,7 @@
 import { FetchCommentDTO, IComment } from '@/dtos/CommentDTO';
+import { IComplaintId, ISubmitEvaluation } from '@/dtos/ComplaintDTO';
 import { api } from '@/services/api';
+import { handleError } from '@/utils/handleError';
 
 export async function createComplaint({
   description,
@@ -39,6 +41,39 @@ export async function addComment({
 
   return comment;
 }
+
+export const submitEvaluation = async ({
+  complaintId,
+  isSolved,
+  score,
+}: ISubmitEvaluationRequest) => {
+  const response = await api.patch(`/complaints/${complaintId}/evaluate`, {
+    isSolved,
+    score,
+  });
+
+  return response.data;
+};
+
+export const changeAdVisibility = async (
+  complaintId: IComplaintId,
+  complaintActualStatus: boolean,
+) => {
+  try {
+    const response = await api.patch(`/complaints/${complaintId}`, {
+      is_active: !complaintActualStatus,
+    });
+
+    return response.data.is_active;
+  } catch (error) {
+    handleError(error);
+    return complaintActualStatus;
+  }
+};
+
+type ISubmitEvaluationRequest = ISubmitEvaluation & {
+  complaintId: IComplaintId;
+};
 
 type IAddComment = {
   complaintId: string;

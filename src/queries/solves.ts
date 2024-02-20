@@ -8,7 +8,6 @@ import {
 import { IFiltersDTO } from '@/dtos/FiltersDTO';
 import { LaravelPagination } from '@/dtos/RequestsDTO';
 import { api } from '@/services/api';
-import { handleError } from '@/utils/handleError';
 
 export const getAds = async (filters: IFiltersDTO): Promise<ComplaintDTO[]> => {
   const params = new URLSearchParams();
@@ -42,22 +41,6 @@ export const getComplaint = async (
     })),
   };
   return complaintData;
-};
-
-export const changeAdVisibility = async (
-  complaintId: IComplaintId,
-  complaintActualStatus: boolean,
-) => {
-  try {
-    const response = await api.patch(`/complaints/${complaintId}`, {
-      is_active: !complaintActualStatus,
-    });
-
-    return response.data.is_active;
-  } catch (error) {
-    handleError(error);
-    return complaintActualStatus;
-  }
 };
 
 export const getComments = async ({
