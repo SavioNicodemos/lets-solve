@@ -31,7 +31,7 @@ describe('handleError', () => {
     handleError(error);
 
     expect(Toast.show).toHaveBeenCalledWith({
-      title: 'Não foi possível entrar. Tente novamente mais tarde.',
+      title: 'Não foi possível concluir a operação, tente novamente.',
       placement: 'top',
       bgColor: 'red.500',
     });
