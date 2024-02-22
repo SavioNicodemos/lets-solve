@@ -1,5 +1,5 @@
 export type ComplaintStatusDTO = {
-  id: string;
+  id: number;
   key: string;
   name: string;
   color: string;

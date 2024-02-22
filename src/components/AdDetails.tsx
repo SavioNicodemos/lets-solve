@@ -14,6 +14,7 @@ type Props = {
 
 export function AdDetails({ complaint }: Props) {
   const status = complaint.state;
+  const isResolved = [3, 4].includes(complaint.state.id);
 
   return (
     <VStack flex={1}>
@@ -49,7 +50,7 @@ export function AdDetails({ complaint }: Props) {
         </Text>
 
         {complaint?.id && (
-          <CommentSection complaintId={complaint.id} allowAdd />
+          <CommentSection complaintId={complaint.id} allowAdd={!isResolved} />
         )}
       </ScrollView>
     </VStack>

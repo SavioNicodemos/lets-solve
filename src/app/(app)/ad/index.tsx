@@ -27,6 +27,7 @@ export default function Ad() {
   const { data: complaint, isLoading, refetch } = useComplaint(complaintId);
 
   const isMyAd = user.id === complaint?.user.id;
+  const isResolved = complaint?.is_resolved;
 
   const { mutateAsync } = useMutation({
     mutationFn: (items: ISubmitEvaluation) =>
@@ -78,12 +79,20 @@ export default function Ad() {
 
         {isMyAd && (
           <Menu>
-            <MenuItem
-              icon="check"
-              onPress={() => setIsModalOpen(true)}
-              title="Fechar e avaliar"
-            />
-            <MenuItem icon="edit-3" onPress={handleGoToEditAd} title="Editar" />
+            {!isResolved && (
+              <MenuItem
+                icon="check"
+                onPress={() => setIsModalOpen(true)}
+                title="Fechar e avaliar"
+              />
+            )}
+            {!isResolved && (
+              <MenuItem
+                icon="edit-3"
+                onPress={handleGoToEditAd}
+                title="Editar"
+              />
+            )}
             <MenuItem
               icon="trash"
               title="Excluir Resolve"
