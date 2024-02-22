@@ -176,7 +176,7 @@ export default function Home() {
                 name={item.name}
                 userPhoto={item.user.avatar_url}
                 status={item.state}
-                complaintImage={item.complaint_images[0]?.path}
+                complaintImage={item.images?.[0].path}
                 onPress={() => handleGoToAdDetails(item.id)}
               />
             )}

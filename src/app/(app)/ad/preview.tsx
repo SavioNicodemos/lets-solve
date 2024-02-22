@@ -45,11 +45,7 @@ export default function AdPreview() {
 
   const handleCreateAd = async () => {
     try {
-      const {
-        name,
-        description,
-        complaint_images: complaintImages,
-      } = complaintObj;
+      const { name, description, images: complaintImages } = complaintObj;
 
       const createAdResponse = await createComplaint({ name, description });
 

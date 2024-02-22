@@ -18,7 +18,7 @@ export function AdDetails({ complaint }: Props) {
   return (
     <VStack flex={1}>
       <ImageCarousel
-        images={complaint.complaint_images}
+        images={complaint.images}
         adIsDisabled={'is_active' in complaint ? !complaint.is_active : false}
       />
       <ScrollView px={6} flex={1} bg="gray.600">

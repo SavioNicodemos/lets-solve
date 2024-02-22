@@ -17,21 +17,22 @@ export type ISubmitEvaluation = {
 export type CreateComplaintDTO = {
   name: string;
   description: string;
-  complaint_images: (IImageUpload | ImagesDTO)[];
+  images: (IImageUpload | ImagesDTO)[];
 };
 
-export type ShowAdDetailsDTO = Omit<CreateComplaintDTO, 'complaint_images'> & {
+export type ShowAdDetailsDTO = Omit<CreateComplaintDTO, 'images'> & {
   id?: string;
   user: User;
-  complaint_images: (ImagesDTO | IImageUpload)[];
+  images: (ImagesDTO | IImageUpload)[];
   state: ComplaintStatusDTO;
 };
 
-export type ComplaintDTO = ShowAdDetailsDTO & {
+export type ComplaintDTO = Omit<ShowAdDetailsDTO, 'images'> & {
   id: string;
-  user_id: string;
   is_active: boolean;
   state: ComplaintStatusDTO;
+  user: User;
+  images: ImagesDTO[];
 };
 
 export type IComplaintId = string;
@@ -54,6 +55,7 @@ export type FetchMyComplaintsResponse = {
   description: string;
   is_active: boolean;
   created_at: string;
+  is_resolved: boolean;
   images: ImagesDTO[];
   state: ComplaintStatusDTO;
 };

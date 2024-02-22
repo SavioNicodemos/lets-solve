@@ -28,19 +28,10 @@ export const getMyAds = async (): Promise<FetchMyComplaintsResponse[]> => {
 
 export const getComplaint = async (
   complaintId: IComplaintId,
-): Promise<ComplaintDTO> => {
-  const response = await api.get(`/complaints/${complaintId}`);
-  const responseData: FetchComplaint = response.data;
+): Promise<FetchComplaint> => {
+  const response = await api.get<FetchComplaint>(`/complaints/${complaintId}`);
 
-  const complaintData: ComplaintDTO = {
-    ...responseData,
-    user_id: responseData.user.id,
-    complaint_images: responseData.images.map(image => ({
-      ...image,
-      isExternal: true,
-    })),
-  };
-  return complaintData;
+  return response.data;
 };
 
 export const getComments = async ({

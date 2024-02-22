@@ -9,7 +9,7 @@ import { Header } from '@/components/Header';
 import { Input } from '@/components/Input';
 import { TextArea } from '@/components/TextArea';
 import { UploadPicturesContainer } from '@/components/UploadPicturesContainer';
-import { CreateComplaintDTO, IImageUpload } from '@/dtos/ComplaintDTO';
+import { CreateComplaintDTO } from '@/dtos/ComplaintDTO';
 import { useComplaint } from '@/hooks/useComplaint';
 import { useToast } from '@/hooks/useToast';
 import {
@@ -25,9 +25,7 @@ const createAdSchema = z.object({
 
   description: z.string().min(1, 'Informe uma descrição para a queixa'),
 
-  complaint_images: z
-    .array(z.any())
-    .min(1, 'Adicione pelo menos uma foto da queixa'),
+  images: z.array(z.any()).min(1, 'Adicione pelo menos uma foto da queixa'),
 });
 
 export default function CreateAd() {
@@ -43,7 +41,7 @@ export default function CreateAd() {
 
   const isEditView = !!complaint;
 
-  const initialPhotos = complaint?.complaint_images;
+  const initialPhotos = complaint?.images;
 
   const {
     control,
@@ -53,7 +51,7 @@ export default function CreateAd() {
     defaultValues: {
       name: isEditView ? complaint.name : '',
       description: isEditView ? complaint.description : '',
-      complaint_images: isEditView ? complaint.complaint_images : [],
+      images: isEditView ? complaint.images : [],
     },
     resolver: zodResolver(createAdSchema),
   });
@@ -76,15 +74,15 @@ export default function CreateAd() {
     }
 
     const deletedPhotos = findDeletedObjects(
-      initialPhotos as IImageUpload[],
-      data.complaint_images,
+      initialPhotos!,
+      data.images,
       'path',
     );
     const deletedPhotosIds = deletedPhotos
       .map(image => image?.id)
       .filter(Boolean) as string[];
 
-    const newPhotosToAdd = data.complaint_images.filter(
+    const newPhotosToAdd = data.images.filter(
       image => image.isExternal === false,
     );
 
@@ -129,13 +127,13 @@ export default function CreateAd() {
 
             <Controller
               control={control}
-              name="complaint_images"
+              name="images"
               render={({ field: { value, onChange } }) => (
                 <UploadPicturesContainer
                   // @ts-expect-error The type 'IImageUpload | ImagesDTO' is not assignable to type 'IImageUpload'
                   value={value}
                   onChange={onChange}
-                  errorMessage={errors.complaint_images?.message}
+                  errorMessage={errors.images?.message}
                 />
               )}
             />

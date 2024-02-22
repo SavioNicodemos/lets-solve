@@ -26,7 +26,7 @@ export default function Ad() {
 
   const { data: complaint, isLoading, refetch } = useComplaint(complaintId);
 
-  const isMyAd = user.id === complaint?.user_id;
+  const isMyAd = user.id === complaint?.user.id;
 
   const { mutateAsync } = useMutation({
     mutationFn: (items: ISubmitEvaluation) =>
