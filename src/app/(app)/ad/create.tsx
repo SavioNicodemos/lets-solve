@@ -17,6 +17,7 @@ import {
   updateComplaint,
 } from '@/queries/mutations/solves';
 import { api } from '@/services/api';
+import { useCreateComplaint } from '@/stores/useCreateComplaint';
 import { handleError } from '@/utils/handleError';
 import { findDeletedObjects } from '@/utils/helpers/arrayHelper';
 
@@ -56,15 +57,15 @@ export default function CreateAd() {
     resolver: zodResolver(createAdSchema),
   });
 
+  const { setComplaint } = useCreateComplaint();
+
   const handleGoBack = () => {
     router.back();
   };
 
   const handleGoToPreview = (data: CreateComplaintDTO) => {
-    router.push({
-      pathname: '/ad/preview',
-      params: { complaint: JSON.stringify(data) },
-    });
+    setComplaint(data);
+    router.replace('/ad/preview');
   };
 
   const handleSuccessPress = async (data: CreateComplaintDTO) => {

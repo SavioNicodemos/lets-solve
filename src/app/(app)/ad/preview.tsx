@@ -1,27 +1,30 @@
-import { router, useLocalSearchParams } from 'expo-router';
+import { router } from 'expo-router';
 import { Center, HStack, Heading, Text, VStack } from 'native-base';
 import { Platform } from 'react-native';
 
 import { AdDetails } from '@/components/AdDetails';
 import { Button } from '@/components/Button';
-import { CreateComplaintDTO, ShowAdDetailsDTO } from '@/dtos/ComplaintDTO';
+import { ShowAdDetailsDTO } from '@/dtos/ComplaintDTO';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import { createComplaint } from '@/queries/mutations/solves';
 import { api } from '@/services/api';
+import { useCreateComplaint } from '@/stores/useCreateComplaint';
 import { handleError } from '@/utils/handleError';
 
 export { ErrorBoundary } from '@/components/ErrorBoundary';
 
 export default function AdPreview() {
-  const { complaint } = useLocalSearchParams();
-
-  const complaintObj: CreateComplaintDTO = JSON.parse(complaint as string);
+  const { complaint } = useCreateComplaint();
   const { user } = useAuth();
   const toast = useToast();
 
+  if (!complaint) {
+    throw new Error('Complaint not found');
+  }
+
   const complaintPreview: ShowAdDetailsDTO = {
-    ...complaintObj,
+    ...complaint,
     user,
     state: {
       color: 'green.500',
@@ -37,7 +40,7 @@ export default function AdPreview() {
   };
 
   const handleGoToAd = (complaintId: string) => {
-    router.push({
+    router.replace({
       pathname: '/ad/',
       params: { complaintId },
     });
@@ -45,7 +48,7 @@ export default function AdPreview() {
 
   const handleCreateAd = async () => {
     try {
-      const { name, description, images: complaintImages } = complaintObj;
+      const { name, description, images: complaintImages } = complaint;
 
       const createAdResponse = await createComplaint({ name, description });
 
