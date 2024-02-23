@@ -1,14 +1,21 @@
 import { Feather } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import { HStack, Heading, Icon, IconButton, VStack } from 'native-base';
+import {
+  HStack,
+  Heading,
+  IStackProps,
+  Icon,
+  IconButton,
+  VStack,
+} from 'native-base';
 
-export function Header({ title }: Props) {
+export function Header({ title, ...rest }: Props) {
   const handleGoBack = () => {
     router.back();
   };
 
   return (
-    <HStack justifyContent="space-between" mb="8">
+    <HStack justifyContent="space-between" mb="8" alignItems="center" {...rest}>
       <IconButton
         icon={
           <Icon as={Feather} name="arrow-left" color="gray.100" size="lg" />
@@ -26,6 +33,6 @@ export function Header({ title }: Props) {
   );
 }
 
-type Props = {
+type Props = IStackProps & {
   title: string;
 };

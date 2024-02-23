@@ -1,8 +1,10 @@
+import { router } from 'expo-router';
 import { Button, Center, Heading, VStack } from 'native-base';
 import { Alert } from 'react-native';
 
 import { AvatarUpload } from '@/components/AvatarUpload';
 import { Header } from '@/components/Header';
+import { SettingsItem } from '@/components/SettingsItem';
 import { useAuth } from '@/hooks/useAuth';
 
 export default function Profile() {
@@ -22,8 +24,8 @@ export default function Profile() {
   };
 
   return (
-    <VStack bgColor="gray.600" flex={1} pt={16} px={6}>
-      <Header title="Editar Perfil" />
+    <VStack bgColor="gray.600" flex={1} pt={12}>
+      <Header title="Editar Perfil" px={6} />
 
       <Center>
         <AvatarUpload
@@ -43,6 +45,13 @@ export default function Profile() {
         <Heading fontSize="md" color="gray.200">
           {user.tel}
         </Heading>
+
+        <VStack mt={6}>
+          <SettingsItem
+            title="Grupos"
+            onPress={() => router.push('/groups/')}
+          />
+        </VStack>
 
         <Button size="lg" variant="link" mt={8} onPress={handleSignOut}>
           Sair
