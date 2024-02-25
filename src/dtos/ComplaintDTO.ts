@@ -1,4 +1,5 @@
 import { ComplaintStatusDTO } from './ComplaintStatusDTO';
+import { PublicUserDTO } from './UserDTO';
 
 export type IImageUpload = {
   id?: string;
@@ -22,7 +23,7 @@ export type CreateComplaintDTO = {
 
 export type ShowAdDetailsDTO = Omit<CreateComplaintDTO, 'images'> & {
   id?: string;
-  user: User;
+  user: PublicUserDTO;
   images: (ImagesDTO | IImageUpload)[];
   state: ComplaintStatusDTO;
 };
@@ -31,7 +32,7 @@ export type ComplaintDTO = Omit<ShowAdDetailsDTO, 'images'> & {
   id: string;
   is_active: boolean;
   state: ComplaintStatusDTO;
-  user: User;
+  user: PublicUserDTO;
   images: ImagesDTO[];
 };
 
@@ -41,12 +42,6 @@ export type ImagesDTO = {
   id: string;
   path: string;
   isExternal: true;
-};
-
-type User = {
-  id: string;
-  name: string;
-  avatar_url: string;
 };
 
 export type FetchMyComplaintsResponse = {
@@ -61,5 +56,5 @@ export type FetchMyComplaintsResponse = {
 };
 
 export type FetchComplaint = FetchMyComplaintsResponse & {
-  user: User;
+  user: PublicUserDTO;
 };

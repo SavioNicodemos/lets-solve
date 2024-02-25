@@ -16,3 +16,5 @@ export type ICreateUser = {
   password: string;
   confirm_password: string;
 };
+
+export type PublicUserDTO = Pick<UserDTO, 'id' | 'name' | 'avatar_url'>;
