@@ -14,6 +14,7 @@ type Props = IBoxProps & {
   value: ImageProp;
   onChange: (file: IImageUpload) => void;
   errorMessage?: string;
+  size?: number;
 };
 
 export function AvatarUpload({
@@ -24,6 +25,8 @@ export function AvatarUpload({
   ...props
 }: Props) {
   const [image, setImage] = useState<ImageProp>(value);
+
+  const iconSize = Math.ceil(size / 4);
 
   const handleUserPhotoSelect = async () => {
     try {
@@ -78,7 +81,13 @@ export function AvatarUpload({
           bottom="-5"
           right="-5"
           bg="blue.500"
-          icon={<Icon as={Feather} name="edit-3" size="6" />}
+          icon={
+            <Icon
+              as={Feather}
+              name="edit-3"
+              size={iconSize > 6 ? 6 : iconSize}
+            />
+          }
           _icon={{
             color: 'white',
           }}
