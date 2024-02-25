@@ -4,7 +4,7 @@ import { getGroupById } from '@/queries/groups';
 
 export const useGroup = (id: number) =>
   useQuery({
-    queryKey: ['group'],
+    queryKey: ['group', id],
     queryFn: () => getGroupById(id),
     initialData: null,
     meta: {

@@ -74,7 +74,7 @@ export function AvatarUpload({
 
   return (
     <FormControl isInvalid={!!errorMessage} mb={4} alignItems="center">
-      <Box mt="4" width={size} height={size} {...props}>
+      <Box width={size} height={size} {...props}>
         <UserPhoto size={Number(size)} imageLink={image?.path} />
         <IconButton
           position="absolute"

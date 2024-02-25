@@ -1,4 +1,5 @@
 import { FlashList } from '@shopify/flash-list';
+import { router } from 'expo-router';
 import { Center, Divider, Heading, Text, VStack, View } from 'native-base';
 
 import { GroupItem } from '@/components/GroupItem';
@@ -32,7 +33,12 @@ function RenderGroups() {
       <FlashList
         data={data}
         keyExtractor={item => String(item.id)}
-        renderItem={({ item }) => <GroupItem group={item} />}
+        renderItem={({ item }) => (
+          <GroupItem
+            group={item}
+            onPress={() => router.push(`/groups/${item.id}`)}
+          />
+        )}
         estimatedItemSize={213}
         contentContainerStyle={{
           paddingHorizontal: 16,

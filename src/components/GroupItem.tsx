@@ -6,9 +6,9 @@ import { IGroupDTO } from '@/dtos/GroupDTO';
 
 import { UserPhoto } from './UserPhoto';
 
-export function GroupItem({ group }: Props) {
+export function GroupItem({ group, onPress }: Props) {
   return (
-    <TouchableOpacity key={group.id}>
+    <TouchableOpacity key={group.id} onPress={onPress}>
       <HStack
         width="full"
         space={4}
@@ -34,4 +34,5 @@ export function GroupItem({ group }: Props) {
 
 type Props = {
   group: IGroupDTO;
+  onPress: () => void;
 };

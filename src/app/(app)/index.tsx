@@ -58,7 +58,8 @@ export default function Home() {
   };
 
   const handleGoToMyAds = () => {
-    router.push('/ad/my');
+    // router.push('/ad/my');
+    router.push('/groups/1');
   };
 
   const handleGoToAdDetails = (complaintId: IComplaintId) => {
