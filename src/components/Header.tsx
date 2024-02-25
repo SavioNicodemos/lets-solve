@@ -9,7 +9,7 @@ import {
   VStack,
 } from 'native-base';
 
-export function Header({ title, ...rest }: Props) {
+export function Header({ title = '', LeftIconComponent, ...rest }: Props) {
   const handleGoBack = () => {
     router.back();
   };
@@ -28,11 +28,12 @@ export function Header({ title, ...rest }: Props) {
         {title}
       </Heading>
 
-      <VStack />
+      {LeftIconComponent || <VStack />}
     </HStack>
   );
 }
 
 type Props = IStackProps & {
-  title: string;
+  title?: string;
+  LeftIconComponent?: React.ReactNode;
 };
