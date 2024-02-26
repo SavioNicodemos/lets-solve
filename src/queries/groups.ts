@@ -1,4 +1,4 @@
-import { FetchGroupById, IGroupDTO } from '@/dtos/GroupDTO';
+import { FetchGroupById, FetchInvitedUser, IGroupDTO } from '@/dtos/GroupDTO';
 import { PublicUserDTO } from '@/dtos/UserDTO';
 // import { api } from '@/services/api';
 
@@ -19,6 +19,27 @@ export const getGroupById = async (id: number): Promise<FetchGroupById> => {
   }
 
   return Promise.resolve(foundGroup);
+};
+
+export const getInvitedUsers = async (
+  id: number,
+): Promise<FetchInvitedUser[]> => {
+  // const response = await api.get<FetchGroups>(`/groups/${id}/invites`);
+
+  // return response.data;
+  console.log(id);
+  const invitedUsers: FetchInvitedUser[] = [
+    {
+      id: 1,
+      email: 'oi@example.com',
+    },
+    {
+      id: 2,
+      email: 'hello@example.com',
+    },
+  ];
+
+  return Promise.resolve(invitedUsers);
 };
 
 const users: PublicUserDTO[] = [

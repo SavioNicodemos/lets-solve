@@ -6,6 +6,7 @@ import {
   Heading,
   Icon,
   IconButton,
+  ScrollView,
   VStack,
   View,
 } from 'native-base';
@@ -15,6 +16,7 @@ import { AvatarUpload } from '@/components/AvatarUpload';
 import { Header } from '@/components/Header';
 import { UserPhoto } from '@/components/UserPhoto';
 import { UsersInGroupSection } from '@/components/UsersInGroupSection';
+import { UsersInvitedSection } from '@/components/UsersInvitedSection';
 import { useGroup } from '@/hooks/useGroup';
 
 export { ErrorBoundary } from '@/components/ErrorBoundary';
@@ -24,7 +26,7 @@ export default function Group() {
 
   const { data } = useGroup(id);
 
-  const isAdmin = data?.is_admin;
+  const isAdmin = data?.is_admin || false;
 
   const handleDeleteUser = (userId: string) => {
     const userName = data?.users.find(user => user.id === userId)?.name;
@@ -69,22 +71,31 @@ export default function Group() {
   };
 
   return (
-    <VStack bgColor="gray.600" flex={1} pt={12} px={6}>
-      <Header
-        LeftIconComponent={
-          <IconButton
-            icon={<Icon as={Feather} name="log-out" color="red.500" />}
-            onPress={() => handleLeaveButtonPress()}
-          />
-        }
-      />
+    <ScrollView bgColor="gray.600">
+      <VStack bgColor="gray.600" flex={1} pt={12} px={6}>
+        <Header
+          LeftIconComponent={
+            <IconButton
+              icon={<Icon as={Feather} name="log-out" color="red.500" />}
+              onPress={() => handleLeaveButtonPress()}
+            />
+          }
+        />
 
-      <GroupHeaderInfo groupId={id} />
+        <GroupHeaderInfo groupId={id} />
 
-      <Divider my={4} />
+        <Divider my={4} />
 
-      <UsersInGroupSection groupId={id} handleDeleteUser={handleDeleteUser} />
-    </VStack>
+        <UsersInGroupSection groupId={id} handleDeleteUser={handleDeleteUser} />
+
+        {isAdmin && (
+          <>
+            <Divider my={4} />
+            <UsersInvitedSection groupId={id} isAdmin={isAdmin} />
+          </>
+        )}
+      </VStack>
+    </ScrollView>
   );
 }
 

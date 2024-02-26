@@ -12,4 +12,9 @@ export type FetchGroupById = FetchGroups & {
   users: PublicUserDTO[];
 };
 
+export type FetchInvitedUser = {
+  id: number;
+  email: string;
+};
+
 export type IGroupDTO = FetchGroups;

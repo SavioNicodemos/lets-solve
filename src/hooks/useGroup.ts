@@ -7,6 +7,7 @@ export const useGroup = (id: number) =>
     queryKey: ['group', id],
     queryFn: () => getGroupById(id),
     initialData: null,
+    staleTime: 1000 * 10,
     meta: {
       errorMessage: 'Ocorreu um erro ao buscar o grupo selecionado.',
     },

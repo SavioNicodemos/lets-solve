@@ -4,11 +4,16 @@ import { UserPhoto } from './UserPhoto';
 
 type Props = {
   ActionIcons?: React.ReactNode;
-  image: string;
+  image?: string;
   title: string;
   subtitle?: string;
 };
-export function UserItem({ ActionIcons, image, subtitle = '', title }: Props) {
+export function UserItem({
+  ActionIcons,
+  image = '',
+  subtitle = '',
+  title,
+}: Props) {
   return (
     <HStack space={4} alignItems="center" justifyContent="space-between">
       <HStack space={4} alignItems="center">
