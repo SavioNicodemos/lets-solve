@@ -1,5 +1,5 @@
 import { Feather } from '@expo/vector-icons';
-import { useLocalSearchParams } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import {
   Divider,
   HStack,
@@ -17,14 +17,21 @@ import { Header } from '@/components/Header';
 import { UserPhoto } from '@/components/UserPhoto';
 import { UsersInGroupSection } from '@/components/UsersInGroupSection';
 import { UsersInvitedSection } from '@/components/UsersInvitedSection';
+import { useRemoveUserFromGroup } from '@/hooks/mutations/useRemoveUserFromGroup';
+import { useUpdateGroup } from '@/hooks/mutations/useUpdateGroup';
+import { useAuth } from '@/hooks/useAuth';
 import { useGroup } from '@/hooks/useGroup';
+import { useToast } from '@/hooks/useToast';
 
 export { ErrorBoundary } from '@/components/ErrorBoundary';
 
 export default function Group() {
   const id = useValidatedParams();
 
+  const { user: loggedUser } = useAuth();
   const { data } = useGroup(id);
+  const { mutateAsync } = useRemoveUserFromGroup(id);
+  const toast = useToast();
 
   const isAdmin = data?.is_admin || false;
 
@@ -41,8 +48,10 @@ export default function Group() {
         },
         {
           text: 'Remover',
-          onPress: () => {
-            console.log(`Usuário ${userId} removido`);
+          onPress: async () => {
+            await removeUser(userId);
+
+            toast.success(`${userName} foi removido do grupo`);
           },
         },
       ],
@@ -63,11 +72,22 @@ export default function Group() {
       },
       {
         text: 'Sair',
-        onPress: () => {
-          console.log('Saindo do grupo');
+        onPress: async () => {
+          await removeUser(loggedUser.id);
+
+          toast.success('Você saiu do grupo');
+          router.push('/');
         },
       },
     ]);
+  };
+
+  const removeUser = async (userId: string) => {
+    try {
+      await mutateAsync(userId);
+    } catch (error) {
+      toast.error('Erro ao sair do grupo');
+    }
   };
 
   return (
@@ -109,6 +129,7 @@ const useValidatedParams = () => {
 
 function GroupHeaderInfo({ groupId }: { groupId: number }) {
   const { data, isLoading } = useGroup(groupId);
+  const { mutate } = useUpdateGroup(groupId);
 
   const isAdmin = data?.is_admin;
 
@@ -119,7 +140,7 @@ function GroupHeaderInfo({ groupId }: { groupId: number }) {
           <AvatarUpload
             size={16}
             value={{ isExternal: true, path: data?.image_url ?? '' }}
-            onChange={image => console.log(image)}
+            onChange={image => mutate(image)}
           />
         ) : (
           <UserPhoto size={16} imageLink={data?.image_url || ''} />

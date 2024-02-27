@@ -5,6 +5,6 @@ import { sendGroupInvite } from '@/queries/mutations/groups';
 export const useSendGroupInvite = (groupId: number) => {
   return useMutation({
     mutationFn: (email: string) => sendGroupInvite({ groupId, email }),
-    mutationKey: ['sendGroupInvite', groupId],
+    mutationKey: ['send-group-invite', groupId],
   });
 };

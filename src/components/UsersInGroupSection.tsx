@@ -54,12 +54,15 @@ function IconAction({ onPress, groupId, user }: IconActionProps) {
 
   const isAdmin = !!data?.is_admin;
 
-  if (isAdmin && user.id !== myUser.id) {
+  if (!isAdmin) return null;
+
+  if (user.id === myUser.id) return null;
+
+  return (
     <IconButton
       rounded="full"
       icon={<Icon as={Feather} name="x" color="red.500" />}
       onPress={onPress}
-    />;
-  }
-  return null;
+    />
+  );
 }
