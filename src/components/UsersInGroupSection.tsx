@@ -18,12 +18,12 @@ export function UsersInGroupSection({ groupId, handleDeleteUser }: Props) {
   return (
     <VStack>
       <HStack alignItems="baseline">
-        <Heading fontSize={16}>{data?.users_count}</Heading>
+        <Heading fontSize={16}>{data?.participants_count}</Heading>
         <Text> participantes</Text>
       </HStack>
 
       <VStack space={4} mt={4}>
-        {data?.users?.map(user => (
+        {data?.participants?.map(user => (
           <UserItem
             key={user.id}
             title={user.name}

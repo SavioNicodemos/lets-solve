@@ -36,7 +36,7 @@ export default function Group() {
   const isAdmin = data?.is_admin || false;
 
   const handleDeleteUser = (userId: string) => {
-    const userName = data?.users.find(user => user.id === userId)?.name;
+    const userName = data?.participants.find(user => user.id === userId)?.name;
 
     Alert.alert(
       `Remover ${userName}`,

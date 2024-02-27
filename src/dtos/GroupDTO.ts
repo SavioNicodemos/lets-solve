@@ -1,20 +1,18 @@
 import { PublicUserDTO } from './UserDTO';
 
-export type FetchGroups = {
+export type IGroupDTO = {
   id: number;
   name: string;
   image_url: string;
-  users_count: number;
+  is_admin: boolean;
+  participants_count: number;
 };
 
-export type FetchGroupById = FetchGroups & {
-  is_admin: boolean;
-  users: PublicUserDTO[];
+export type FetchGroupById = IGroupDTO & {
+  participants: PublicUserDTO[];
 };
 
 export type FetchInvitedUser = {
   id: number;
   email: string;
 };
-
-export type IGroupDTO = FetchGroups;

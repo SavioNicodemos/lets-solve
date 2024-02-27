@@ -22,7 +22,7 @@ export function GroupItem({ group, onPress }: Props) {
             <Heading fontFamily="heading" fontSize="md">
               {group.name}
             </Heading>
-            <Text>{group.users_count} participantes</Text>
+            <Text>{group.participants_count} participantes</Text>
           </VStack>
         </HStack>
 

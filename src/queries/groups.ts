@@ -3,14 +3,14 @@ import { PublicUserDTO } from '@/dtos/UserDTO';
 // import { api } from '@/services/api';
 
 export const getGroups = async (): Promise<IGroupDTO[]> => {
-  // const response = await api.get<FetchGroups[]>(`/groups`);
+  // const response = await api.get<IGroupDTO[]>(`/groups`);
 
   // return response.data;
   return Promise.resolve(groups);
 };
 
 export const getGroupById = async (id: number): Promise<FetchGroupById> => {
-  // const response = await api.get<FetchGroups>(`/groups/${id}`);
+  // const response = await api.get<IGroupDTO>(`/groups/${id}`);
 
   // return response.data;
   let foundGroup = groups.find(group => group.id === id);
@@ -24,7 +24,7 @@ export const getGroupById = async (id: number): Promise<FetchGroupById> => {
 export const getInvitedUsers = async (
   id: number,
 ): Promise<FetchInvitedUser[]> => {
-  // const response = await api.get<FetchGroups>(`/groups/${id}/invites`);
+  // const response = await api.get<IGroupDTO>(`/groups/${id}/invites`);
 
   // return response.data;
   console.log(id);
@@ -75,24 +75,24 @@ const groups: FetchGroupById[] = [
     id: 1,
     name: 'Cool Office Group',
     image_url: 'https://source.unsplash.com/random/300x300',
-    users_count: 5,
-    users: users.slice(0, 5),
+    participants_count: 5,
+    participants: users.slice(0, 5),
     is_admin: true,
   },
   {
     id: 2,
     name: 'Family Group',
     image_url: 'https://source.unsplash.com/random/350x350',
-    users_count: 4,
-    users: users.slice(0, 4),
+    participants_count: 4,
+    participants: users.slice(0, 4),
     is_admin: false,
   },
   {
     id: 3,
     name: 'Me and my GF',
     image_url: 'https://source.unsplash.com/random/400x400',
-    users_count: 2,
-    users: users.slice(0, 2),
+    participants_count: 2,
+    participants: users.slice(0, 2),
     is_admin: true,
   },
 ];
