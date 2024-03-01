@@ -77,6 +77,7 @@ export function UsersInvitedSection({ groupId, isAdmin }: Props) {
 function InviteUserInput({ groupId }: { groupId: number }) {
   const {
     control,
+    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm<SendInvite>({
@@ -91,6 +92,7 @@ function InviteUserInput({ groupId }: { groupId: number }) {
     try {
       await mutateAsync(data.email);
       refetch();
+      setValue('email', '');
       toast.success('Convite enviado com sucesso.');
     } catch (error) {
       toast.error('Erro ao enviar convite. Tente novamente.');
