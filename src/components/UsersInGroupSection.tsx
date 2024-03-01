@@ -3,36 +3,33 @@ import { HStack, Heading, Icon, IconButton, Text, VStack } from 'native-base';
 
 import { PublicUserDTO } from '@/dtos/UserDTO';
 import { useAuth } from '@/hooks/useAuth';
-import { useGroup } from '@/hooks/useGroup';
 
 import { UserItem } from './UserItem';
 
 type Props = {
-  groupId: number;
+  participants: PublicUserDTO[];
   handleDeleteUser: (userId: string) => void;
 };
 
-export function UsersInGroupSection({ groupId, handleDeleteUser }: Props) {
-  const { data } = useGroup(groupId);
-
+export function UsersInGroupSection({ participants, handleDeleteUser }: Props) {
+  const { user: myUser } = useAuth();
   return (
     <VStack>
       <HStack alignItems="baseline">
-        <Heading fontSize={16}>{data?.participants_count}</Heading>
+        <Heading fontSize={16}>{participants.length}</Heading>
         <Text> participantes</Text>
       </HStack>
 
       <VStack space={4} mt={4}>
-        {data?.participants?.map(user => (
+        {participants?.map(user => (
           <UserItem
             key={user.id}
             title={user.name}
             image={user.avatar_url}
             ActionIcons={
               <IconAction
-                user={user}
                 onPress={() => handleDeleteUser(user.id)}
-                groupId={groupId}
+                hideDeleteIcon={user.id === myUser.id}
               />
             }
           />
@@ -43,20 +40,12 @@ export function UsersInGroupSection({ groupId, handleDeleteUser }: Props) {
 }
 
 type IconActionProps = {
-  user: PublicUserDTO;
+  hideDeleteIcon: boolean;
   onPress: () => void;
-  groupId: number;
 };
 
-function IconAction({ onPress, groupId, user }: IconActionProps) {
-  const { user: myUser } = useAuth();
-  const { data } = useGroup(groupId);
-
-  const isAdmin = !!data?.is_admin;
-
-  if (!isAdmin) return null;
-
-  if (user.id === myUser.id) return null;
+function IconAction({ onPress, hideDeleteIcon }: IconActionProps) {
+  if (hideDeleteIcon) return null;
 
   return (
     <IconButton

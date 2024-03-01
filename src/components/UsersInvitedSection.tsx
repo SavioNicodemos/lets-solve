@@ -16,11 +16,11 @@ import { UserItem } from './UserItem';
 
 type Props = {
   groupId: number;
-  isAdmin: boolean;
+  shouldRender: boolean;
 };
 
-export function UsersInvitedSection({ groupId, isAdmin }: Props) {
-  const { data, refetch } = useInvitedUsers(groupId);
+export function UsersInvitedSection({ groupId, shouldRender }: Props) {
+  const { data } = useInvitedUsers(groupId);
   const { mutateAsync } = useDeleteGroupInvite(groupId);
   const toast = useToast();
 
@@ -44,14 +44,13 @@ export function UsersInvitedSection({ groupId, isAdmin }: Props) {
   const handleDelete = async (inviteId: number) => {
     try {
       await mutateAsync(inviteId);
-      refetch();
       toast.success('Convidado removido com sucesso.');
     } catch (error) {
       toast.error('Erro ao remover convidado. Tente novamente.');
     }
   };
 
-  if (!isAdmin) return null;
+  if (!shouldRender) return null;
 
   return (
     <VStack>
@@ -85,13 +84,11 @@ function InviteUserInput({ groupId }: { groupId: number }) {
   });
 
   const { mutateAsync } = useSendGroupInvite(groupId);
-  const { refetch } = useInvitedUsers(groupId);
   const toast = useToast();
 
   const submitForm = async (data: SendInvite) => {
     try {
       await mutateAsync(data.email);
-      refetch();
       setValue('email', '');
       toast.success('Convite enviado com sucesso.');
     } catch (error) {

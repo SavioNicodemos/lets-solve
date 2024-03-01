@@ -14,9 +14,11 @@ import { Alert } from 'react-native';
 
 import { AvatarUpload } from '@/components/AvatarUpload';
 import { Header } from '@/components/Header';
+import Loading from '@/components/Loading';
 import { UserPhoto } from '@/components/UserPhoto';
 import { UsersInGroupSection } from '@/components/UsersInGroupSection';
 import { UsersInvitedSection } from '@/components/UsersInvitedSection';
+import { IGroupWithParticipants } from '@/dtos/GroupDTO';
 import { useRemoveUserFromGroup } from '@/hooks/mutations/useRemoveUserFromGroup';
 import { useUpdateGroup } from '@/hooks/mutations/useUpdateGroup';
 import { useAuth } from '@/hooks/useAuth';
@@ -29,7 +31,7 @@ export default function Group() {
   const id = useValidatedParams();
 
   const { user: loggedUser } = useAuth();
-  const { data } = useGroup(id);
+  const { data, isLoading, isSuccess } = useGroup(id);
   const { mutateAsync } = useRemoveUserFromGroup(id);
   const toast = useToast();
 
@@ -76,7 +78,7 @@ export default function Group() {
           await removeUser(loggedUser.id);
 
           toast.success('Você saiu do grupo');
-          router.push('/');
+          router.back();
         },
       },
     ]);
@@ -90,6 +92,16 @@ export default function Group() {
     }
   };
 
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (!isSuccess) {
+    router.back();
+    toast.error('Erro ao buscar grupo!');
+    return null;
+  }
+
   return (
     <ScrollView bgColor="gray.600">
       <VStack bgColor="gray.600" flex={1} pt={12} px={6}>
@@ -102,16 +114,19 @@ export default function Group() {
           }
         />
 
-        <GroupHeaderInfo groupId={id} />
+        <GroupHeaderInfo groupId={id} data={data} />
 
         <Divider my={4} />
 
-        <UsersInGroupSection groupId={id} handleDeleteUser={handleDeleteUser} />
+        <UsersInGroupSection
+          participants={data.participants}
+          handleDeleteUser={handleDeleteUser}
+        />
 
         {isAdmin && (
           <>
             <Divider my={4} />
-            <UsersInvitedSection groupId={id} isAdmin={isAdmin} />
+            <UsersInvitedSection groupId={id} shouldRender={isAdmin} />
           </>
         )}
       </VStack>
@@ -127,11 +142,16 @@ const useValidatedParams = () => {
   return Number(id);
 };
 
-function GroupHeaderInfo({ groupId }: { groupId: number }) {
-  const { data, isLoading } = useGroup(groupId);
+function GroupHeaderInfo({
+  groupId,
+  data,
+}: {
+  groupId: number;
+  data: IGroupWithParticipants;
+}) {
   const { mutate } = useUpdateGroup(groupId);
 
-  const isAdmin = data?.is_admin;
+  const isAdmin = data.is_admin;
 
   return (
     <HStack space={4} alignItems="center">
@@ -139,15 +159,15 @@ function GroupHeaderInfo({ groupId }: { groupId: number }) {
         {isAdmin ? (
           <AvatarUpload
             size={16}
-            value={{ isExternal: true, path: data?.image_url ?? '' }}
+            value={{ isExternal: true, path: data.image_url ?? '' }}
             onChange={image => mutate(image)}
           />
         ) : (
-          <UserPhoto size={16} imageLink={data?.image_url || ''} />
+          <UserPhoto size={16} imageLink={data.image_url || ''} />
         )}
       </View>
       <Heading textAlign="center" noOfLines={2} ellipsizeMode="tail" flex="1">
-        {isLoading ? 'Carregando...' : data?.name}
+        {data.name}
       </Heading>
       <HStack alignItems="center" justifyContent="space-between">
         {isAdmin && (
