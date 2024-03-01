@@ -1,41 +1,62 @@
 import { IImageUpload } from '@/dtos/ComplaintDTO';
+import { IGroupDTO, IGroupWithParticipants } from '@/dtos/GroupDTO';
+import { FetchCreateInvite, IInviteDTO } from '@/dtos/GroupInviteDTO';
+import { api } from '@/services/api';
 
 export async function deleteGroupInvite({
-  groupId,
   inviteId,
 }: IDeleteGroupInvite): Promise<void> {
-  // await api.delete(`/groups/${groupId}/invites/${inviteId}`);
-  console.log(`Deleted invite ${inviteId} from group ${groupId}`);
+  await api.delete(`/invites/${inviteId}`);
 }
 
 export async function sendGroupInvite({
   groupId,
   email,
-}: ISendGroupInvite): Promise<void> {
-  // await api.post(`/groups/${groupId}/invites`, { email });
-  console.log(`Sent invite to email ${email} for group ${groupId}`);
+}: ISendGroupInvite): Promise<IInviteDTO> {
+  const response = await api.post<FetchCreateInvite>(
+    `/groups/${groupId}/invites`,
+    { email },
+  );
+
+  return response.data;
 }
 
 export async function deleteFromGroup({
   groupId,
   userId,
 }: IDeleteFromGroup): Promise<void> {
-  // await api.delete(`/groups/${groupId}/users/${userId}`);
-  console.log(`Deleted user ${userId} from group ${groupId}`);
+  await api.delete(`/groups/${groupId}/users/${userId}`);
+}
+
+export async function createGroup({
+  name,
+  image,
+}: {
+  name: string;
+  image: IImageUpload;
+}): Promise<IGroupDTO> {
+  const body = new FormData();
+  body.append('name', name);
+  body.append('image', image as any);
+  const response = await api.postForm<IGroupDTO>(`/groups`, body);
+
+  return response.data;
 }
 
 export async function updateGroup({
   groupId,
   name,
   image,
-}: IUpdateGroup): Promise<void> {
-  // const body = new FormData();
-  // if (image) body.append('image', image as any);
-  // if (name) body.append('name', name);
-  // await api.putForm(`/groups/${groupId}`, body);
-  console.log(
-    `Updated group ${groupId} with name ${name} and with${!image || 'out'} image`,
+}: IUpdateGroup): Promise<IGroupWithParticipants> {
+  const body = new FormData();
+  if (image) body.append('image', image as any);
+  if (name) body.append('name', name);
+  const response = await api.putForm<IGroupWithParticipants>(
+    `/groups/${groupId}`,
+    body,
   );
+
+  return response.data;
 }
 
 type IUpdateGroup = {

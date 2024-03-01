@@ -8,11 +8,17 @@ export type IGroupDTO = {
   participants_count: number;
 };
 
-export type FetchGroupById = IGroupDTO & {
+export type IGroupWithParticipants = IGroupDTO & {
   participants: PublicUserDTO[];
 };
 
-export type FetchInvitedUser = {
+export type IInvitedUser = {
   id: number;
   email: string;
 };
+
+export type FetchInvitedUser = IInvitedUser;
+
+export type FetchGroupById = IGroupWithParticipants;
+
+export type FetchMyGroups = IGroupDTO[];
