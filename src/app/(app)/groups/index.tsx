@@ -1,6 +1,16 @@
+import { Feather } from '@expo/vector-icons';
 import { FlashList } from '@shopify/flash-list';
 import { router } from 'expo-router';
-import { Center, Divider, Heading, Text, VStack, View } from 'native-base';
+import {
+  Center,
+  Divider,
+  Heading,
+  Icon,
+  IconButton,
+  Text,
+  VStack,
+  View,
+} from 'native-base';
 
 import { GroupItem } from '@/components/GroupItem';
 import { Header } from '@/components/Header';
@@ -10,7 +20,16 @@ import { useGroups } from '@/hooks/useGroups';
 export default function Groups() {
   return (
     <VStack bgColor="gray.600" flex={1} pt={12}>
-      <Header title="Grupos" px={6} />
+      <Header
+        title="Grupos"
+        px={6}
+        LeftIconComponent={
+          <IconButton
+            icon={<Icon as={Feather} name="plus" color="gray.100" size="lg" />}
+            onPress={() => router.push('/groups/create')}
+          />
+        }
+      />
 
       <RenderGroups />
     </VStack>

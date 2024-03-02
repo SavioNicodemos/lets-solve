@@ -24,7 +24,7 @@ export function Header({ title = '', LeftIconComponent, ...rest }: Props) {
         onPress={handleGoBack}
       />
 
-      <Heading fontSize="lg" color="gray.100" ml={-5}>
+      <Heading fontSize="lg" color="gray.100" ml={LeftIconComponent ? 0 : -5}>
         {title}
       </Heading>
 
