@@ -119,6 +119,7 @@ export default function Group() {
         <Divider my={4} />
 
         <UsersInGroupSection
+          isAdmin={isAdmin}
           participants={data.participants}
           handleDeleteUser={handleDeleteUser}
         />

@@ -9,9 +9,14 @@ import { UserItem } from './UserItem';
 type Props = {
   participants: PublicUserDTO[];
   handleDeleteUser: (userId: string) => void;
+  isAdmin: boolean;
 };
 
-export function UsersInGroupSection({ participants, handleDeleteUser }: Props) {
+export function UsersInGroupSection({
+  participants,
+  handleDeleteUser,
+  isAdmin,
+}: Props) {
   const { user: myUser } = useAuth();
   return (
     <VStack>
@@ -29,7 +34,7 @@ export function UsersInGroupSection({ participants, handleDeleteUser }: Props) {
             ActionIcons={
               <IconAction
                 onPress={() => handleDeleteUser(user.id)}
-                hideDeleteIcon={user.id === myUser.id}
+                hideDeleteIcon={user.id === myUser.id || !isAdmin}
               />
             }
           />
