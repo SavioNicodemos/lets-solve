@@ -124,7 +124,7 @@ function InviteItem({ invite }: { invite: IInviteFromGroup }) {
         ) : (
           <HStack space={1}>
             {inviteOptions.map(option => (
-              <View style={{ overflow: 'hidden' }}>
+              <View style={{ overflow: 'hidden' }} key={option.icon}>
                 <Animated.View
                   entering={option.animationIn}
                   exiting={option.animationOut}
