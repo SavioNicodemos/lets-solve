@@ -69,6 +69,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
   const signIn = useCallback(async (email: string, password: string) => {
     try {
+      setIsLoadingUserStorageData(true);
       const data = await createSession({ email, password });
 
       if (data.user && data.token && data.refresh_token) {

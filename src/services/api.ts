@@ -38,10 +38,10 @@ api.registerInterceptTokenManager = singOut => {
     response => response,
     async requestError => {
       if (requestError.response?.status === 401) {
-        if (
-          requestError.response.data?.message === 'token.expired' ||
-          requestError.response.data?.message === 'token.invalid'
-        ) {
+        // NOTE: This message always needs to be the same as the one in the backend
+        // So if copy this file to other project, check the message or when change
+        // the message in the backend, change here too
+        if (requestError.response.data?.message === 'Unauthenticated.') {
           const { refreshToken } = await storageAuthTokenGet();
 
           if (!refreshToken) {
