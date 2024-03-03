@@ -17,6 +17,14 @@ export type IInvitedUser = {
   email: string;
 };
 
+export type IInviteFromGroup = {
+  id: number;
+  name: string;
+  image_url: string;
+};
+
+export type FetchInviteFromGroup = IInviteFromGroup;
+
 export type FetchInvitedUser = IInvitedUser;
 
 export type FetchGroupById = IGroupWithParticipants;

@@ -3,7 +3,6 @@ import { FlashList } from '@shopify/flash-list';
 import { router } from 'expo-router';
 import {
   Center,
-  Divider,
   Heading,
   Icon,
   IconButton,
@@ -14,6 +13,8 @@ import {
 
 import { GroupItem } from '@/components/GroupItem';
 import { Header } from '@/components/Header';
+import { InvitesSection } from '@/components/InvitesSection';
+import { ListDivider } from '@/components/ListDivider';
 import Loading from '@/components/Loading';
 import { useGroups } from '@/hooks/useGroups';
 
@@ -49,6 +50,8 @@ function RenderGroups() {
 
   return (
     <View style={{ flex: 1 }}>
+      <InvitesSection />
+
       <FlashList
         data={data}
         keyExtractor={item => String(item.id)}
@@ -67,10 +70,6 @@ function RenderGroups() {
       />
     </View>
   );
-}
-
-function ListDivider() {
-  return <Divider my={2} />;
 }
 
 function EmptyList() {

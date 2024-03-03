@@ -59,6 +59,14 @@ export async function updateGroup({
   return response.data;
 }
 
+export async function acceptGroupInvite(inviteId: number): Promise<void> {
+  await api.patch(`/invites/${inviteId}/accept`);
+}
+
+export async function declineGroupInvite(inviteId: number): Promise<void> {
+  await api.patch(`/invites/${inviteId}/decline`);
+}
+
 type IUpdateGroup = {
   groupId: number;
   name?: string;

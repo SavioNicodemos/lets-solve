@@ -1,9 +1,11 @@
 import {
   FetchGroupById,
+  FetchInviteFromGroup,
   FetchInvitedUser,
   FetchMyGroups,
   IGroupDTO,
   IGroupWithParticipants,
+  IInviteFromGroup,
   IInvitedUser,
 } from '@/dtos/GroupDTO';
 import { api } from '@/services/api';
@@ -27,3 +29,11 @@ export const getInvitedUsers = async (id: number): Promise<IInvitedUser[]> => {
 
   return response.data;
 };
+
+export async function getGroupInvites(): Promise<IInviteFromGroup[]> {
+  const response = await api.get<FetchInviteFromGroup[]>(
+    `/users/groups/invites`,
+  );
+
+  return response.data;
+}
