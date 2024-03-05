@@ -59,6 +59,14 @@ export async function updateGroup({
   return response.data;
 }
 
+export async function updateDefaultGroup(groupId: number): Promise<IGroupDTO> {
+  const response = await api.post<IGroupDTO>(`/users/default-group`, {
+    group_id: groupId,
+  });
+
+  return response.data;
+}
+
 export async function acceptGroupInvite(inviteId: number): Promise<void> {
   await api.patch(`/invites/${inviteId}/accept`);
 }

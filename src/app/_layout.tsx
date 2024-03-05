@@ -20,7 +20,7 @@ import { handleError } from '@/utils/handleError';
 
 import THEME from '@/theme';
 
-const queryClient = new QueryClient({
+export const queryClient = new QueryClient({
   queryCache: new QueryCache({
     onError: (_, query) => {
       if (!query.meta?.errorMessage) return;

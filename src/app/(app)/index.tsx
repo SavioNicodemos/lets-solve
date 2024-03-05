@@ -17,6 +17,7 @@ import { AdCard } from '@/components/AdCard';
 import { Button } from '@/components/Button';
 import { EmptyListText } from '@/components/EmptyListText';
 import { FiltersModal, emptyFilters } from '@/components/FiltersModal';
+import GroupSelector from '@/components/GroupSelector';
 import { Input } from '@/components/Input';
 import Loading from '@/components/Loading';
 import { UserPhoto } from '@/components/UserPhoto';
@@ -104,8 +105,11 @@ export default function Home() {
             />
           </Box>
         </HStack>
+        <Box mt={4}>
+          <GroupSelector />
+        </Box>
 
-        <VStack mt="8">
+        <VStack mt="4">
           <Text color="gray.300" fontSize="sm" mb="3">
             Suas queixas realizadas
           </Text>

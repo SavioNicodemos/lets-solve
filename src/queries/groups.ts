@@ -37,3 +37,9 @@ export async function getGroupInvites(): Promise<IInviteFromGroup[]> {
 
   return response.data;
 }
+
+export async function getDefaultGroup(): Promise<IGroupDTO> {
+  const response = await api.get<IGroupDTO>(`/users/default-group`);
+
+  return response.data;
+}
