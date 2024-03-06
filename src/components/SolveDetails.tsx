@@ -2,17 +2,17 @@
 import { HStack, Heading, ScrollView, Text, VStack } from 'native-base';
 
 import { UserPhoto } from '@/components/UserPhoto';
-import { ShowAdDetailsDTO } from '@/dtos/ComplaintDTO';
+import { ShowSolveDetailsDTO } from '@/dtos/ComplaintDTO';
 
 import { CommentSection } from './CommentSection';
 import { ImageCarousel } from './ImageCarousel';
 import StatusChip from './StatusChip';
 
 type Props = {
-  complaint: ShowAdDetailsDTO;
+  complaint: ShowSolveDetailsDTO;
 };
 
-export function AdDetails({ complaint }: Props) {
+export function SolveDetails({ complaint }: Props) {
   const status = complaint.state;
   const isResolved = [3, 4].includes(complaint.state.id);
 
@@ -20,7 +20,7 @@ export function AdDetails({ complaint }: Props) {
     <VStack flex={1}>
       <ImageCarousel
         images={complaint.images}
-        adIsDisabled={'is_active' in complaint ? !complaint.is_active : false}
+        isDisabled={'is_active' in complaint ? !complaint.is_active : false}
       />
       <ScrollView px={6} flex={1} bg="gray.600">
         <HStack mb={3} mt={5} justifyContent="space-between">

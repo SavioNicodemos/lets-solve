@@ -2,9 +2,9 @@ import { router } from 'expo-router';
 import { Center, HStack, Heading, Text, VStack } from 'native-base';
 import { Platform } from 'react-native';
 
-import { AdDetails } from '@/components/AdDetails';
 import { Button } from '@/components/Button';
-import { ShowAdDetailsDTO } from '@/dtos/ComplaintDTO';
+import { SolveDetails } from '@/components/SolveDetails';
+import { ShowSolveDetailsDTO } from '@/dtos/ComplaintDTO';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import { createComplaint } from '@/queries/mutations/solves';
@@ -14,7 +14,7 @@ import { handleError } from '@/utils/handleError';
 
 export { ErrorBoundary } from '@/components/ErrorBoundary';
 
-export default function AdPreview() {
+export default function SolvePreview() {
   const { complaint } = useCreateComplaint();
   const { user } = useAuth();
   const toast = useToast();
@@ -23,7 +23,7 @@ export default function AdPreview() {
     throw new Error('Complaint not found');
   }
 
-  const complaintPreview: ShowAdDetailsDTO = {
+  const complaintPreview: ShowSolveDetailsDTO = {
     ...complaint,
     user,
     state: {
@@ -39,20 +39,20 @@ export default function AdPreview() {
     router.back();
   };
 
-  const handleGoToAd = (complaintId: string) => {
+  const handleGoToSolve = (complaintId: string) => {
     router.replace({
-      pathname: '/ad/',
+      pathname: '/solves/',
       params: { complaintId },
     });
   };
 
-  const handleCreateAd = async () => {
+  const handleCreateSolve = async () => {
     try {
       const { name, description, images: complaintImages } = complaint;
 
-      const createAdResponse = await createComplaint({ name, description });
+      const createSolveResponse = await createComplaint({ name, description });
 
-      const complaintId = createAdResponse.id;
+      const complaintId = createSolveResponse.id;
 
       const form = new FormData();
       form.append('complaint_id', complaintId);
@@ -64,7 +64,7 @@ export default function AdPreview() {
 
       toast.success('Produto criado com sucesso!');
 
-      handleGoToAd(complaintId);
+      handleGoToSolve(complaintId);
     } catch (error) {
       handleError(error);
     }
@@ -81,7 +81,7 @@ export default function AdPreview() {
         </Text>
       </Center>
 
-      <AdDetails complaint={complaintPreview} />
+      <SolveDetails complaint={complaintPreview} />
 
       <HStack
         justifyContent="space-between"
@@ -106,7 +106,7 @@ export default function AdPreview() {
           variant="blue"
           maxWidth={200}
           px={4}
-          onPress={handleCreateAd}
+          onPress={handleCreateSolve}
         />
       </HStack>
     </VStack>

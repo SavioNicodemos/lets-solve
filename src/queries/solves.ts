@@ -9,7 +9,9 @@ import { IFiltersDTO } from '@/dtos/FiltersDTO';
 import { LaravelPagination } from '@/dtos/RequestsDTO';
 import { api } from '@/services/api';
 
-export const getAds = async (filters: IFiltersDTO): Promise<ComplaintDTO[]> => {
+export const getSolves = async (
+  filters: IFiltersDTO,
+): Promise<ComplaintDTO[]> => {
   const params = new URLSearchParams();
   if (filters?.complaintName) {
     params.append('query', filters.complaintName);
@@ -21,7 +23,7 @@ export const getAds = async (filters: IFiltersDTO): Promise<ComplaintDTO[]> => {
   return response.data;
 };
 
-export const getMyAds = async (): Promise<FetchMyComplaintsResponse[]> => {
+export const getMySolves = async (): Promise<FetchMyComplaintsResponse[]> => {
   const response = await api.get('/users/complaints');
   return response.data;
 };

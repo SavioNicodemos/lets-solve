@@ -10,16 +10,16 @@ type Props = {
   userPhoto?: string;
   complaintImage: string;
   name: string;
-  adIsDisabled?: boolean;
+  isDisabled?: boolean;
   status: Omit<ComplaintStatusDTO, 'id'>;
   onPress: () => void;
 };
 
-export function AdCard({
+export function SolveCard({
   name,
   complaintImage,
   userPhoto,
-  adIsDisabled,
+  isDisabled,
   status,
   onPress,
 }: Props) {
@@ -59,7 +59,7 @@ export function AdCard({
           <StatusChip status={status} />
         </HStack>
 
-        {adIsDisabled && (
+        {isDisabled && (
           <Box
             bg="#1A181B3D"
             w="full"
@@ -76,7 +76,7 @@ export function AdCard({
       </VStack>
 
       <Text
-        color={adIsDisabled ? 'gray.600' : 'gray.200'}
+        color={isDisabled ? 'gray.600' : 'gray.200'}
         fontSize="sm"
         numberOfLines={1}
         ellipsizeMode="tail"

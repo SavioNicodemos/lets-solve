@@ -55,7 +55,7 @@ export const submitEvaluation = async ({
   return response.data;
 };
 
-export const changeAdVisibility = async (
+export const changeSolveVisibility = async (
   complaintId: IComplaintId,
   complaintActualStatus: boolean,
 ) => {

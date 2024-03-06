@@ -8,10 +8,10 @@ import { IImageUpload, ImagesDTO } from '@/dtos/ComplaintDTO';
 
 type Props = {
   images: (ImagesDTO | IImageUpload)[];
-  adIsDisabled?: boolean;
+  isDisabled?: boolean;
 };
 
-export function ImageCarousel({ images, adIsDisabled }: Props) {
+export function ImageCarousel({ images, isDisabled }: Props) {
   const { width } = Dimensions.get('window');
   const imagesArray = images.length ? images : [noComplaint];
   const [viewingImageIndex, setViewingImageIndex] = useState(0);
@@ -50,7 +50,7 @@ export function ImageCarousel({ images, adIsDisabled }: Props) {
               width="full"
               h="full"
             />
-            {adIsDisabled ? (
+            {isDisabled ? (
               <Box
                 bg="#0000006D"
                 height={307}

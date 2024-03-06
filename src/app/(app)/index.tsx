@@ -13,18 +13,18 @@ import {
 } from 'native-base';
 import { useState } from 'react';
 
-import { AdCard } from '@/components/AdCard';
 import { Button } from '@/components/Button';
 import { EmptyListText } from '@/components/EmptyListText';
 import { FiltersModal, emptyFilters } from '@/components/FiltersModal';
 import GroupSelector from '@/components/GroupSelector';
 import { Input } from '@/components/Input';
 import Loading from '@/components/Loading';
+import { SolveCard } from '@/components/SolveCard';
 import { UserPhoto } from '@/components/UserPhoto';
 import { IComplaintId } from '@/dtos/ComplaintDTO';
 import { IFiltersDTO } from '@/dtos/FiltersDTO';
 import { useAuth } from '@/hooks/useAuth';
-import { getAds, getMyAds } from '@/queries/solves';
+import { getMySolves, getSolves } from '@/queries/solves';
 
 export default function Home() {
   const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(false);
@@ -33,38 +33,38 @@ export default function Home() {
   const { user } = useAuth();
 
   const { data: complaintList, isLoading } = useQuery({
-    queryKey: ['ads', filters],
-    queryFn: () => getAds(filters),
+    queryKey: ['solves', filters],
+    queryFn: () => getSolves(filters),
     initialData: [],
     meta: {
       errorMessage: 'Ocorreu um erro ao buscar os Resolves',
     },
   });
 
-  const { data: myAds } = useQuery({
-    queryKey: ['myAds'],
-    queryFn: () => getMyAds(),
+  const { data: mySolves } = useQuery({
+    queryKey: ['mySolves'],
+    queryFn: () => getMySolves(),
     initialData: [],
     meta: {
       errorMessage: 'Ocorreu um erro ao buscar seus Resolves',
     },
   });
 
-  const myActiveComplaintsCount = myAds
-    ? myAds.filter(complaint => complaint.is_active).length
+  const myActiveComplaintsCount = mySolves
+    ? mySolves.filter(complaint => complaint.is_active).length
     : 0;
 
   const handleGoToCreateAdd = () => {
-    router.push('/ad/create');
+    router.push('/solves/create');
   };
 
-  const handleGoToMyAds = () => {
-    router.push('/ad/my');
+  const handleGoToMySolves = () => {
+    router.push('/solves/my');
   };
 
-  const handleGoToAdDetails = (complaintId: IComplaintId) => {
+  const handleGoToSolveDetails = (complaintId: IComplaintId) => {
     router.push({
-      pathname: '/ad/',
+      pathname: '/solves/',
       params: { complaintId },
     });
   };
@@ -113,7 +113,7 @@ export default function Home() {
           <Text color="gray.300" fontSize="sm" mb="3">
             Suas queixas realizadas
           </Text>
-          <Pressable onPress={handleGoToMyAds}>
+          <Pressable onPress={handleGoToMySolves}>
             <HStack
               bgColor="blue.50"
               px="4"
@@ -176,12 +176,12 @@ export default function Home() {
                 : { flex: 1, justifyContent: 'center' }
             }
             renderItem={({ item }) => (
-              <AdCard
+              <SolveCard
                 name={item.name}
                 userPhoto={item.user.avatar_url}
                 status={item.state}
                 complaintImage={item.images?.[0].path}
-                onPress={() => handleGoToAdDetails(item.id)}
+                onPress={() => handleGoToSolveDetails(item.id)}
               />
             )}
             ListEmptyComponent={

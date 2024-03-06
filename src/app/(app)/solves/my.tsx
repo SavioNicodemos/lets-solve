@@ -13,37 +13,37 @@ import {
 } from 'native-base';
 import { useState } from 'react';
 
-import { AdCard } from '@/components/AdCard';
 import { EmptyListText } from '@/components/EmptyListText';
 import Loading from '@/components/Loading';
+import { SolveCard } from '@/components/SolveCard';
 import { IComplaintId } from '@/dtos/ComplaintDTO';
-import { getMyAds } from '@/queries/solves';
+import { getMySolves } from '@/queries/solves';
 
-export default function MyAds() {
+export default function MySolves() {
   const [status, setStatus] = useState('');
 
   const {
-    data: myAds,
+    data: mySolves,
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ['myAds'],
-    queryFn: () => getMyAds(),
+    queryKey: ['mySolves'],
+    queryFn: () => getMySolves(),
     initialData: [],
     meta: {
       errorMessage: 'Ocorreu um erro ao buscar seus Resolves',
     },
   });
 
-  const handleGoToAdDetails = (complaintId: IComplaintId) => {
+  const handleGoToSolveDetails = (complaintId: IComplaintId) => {
     router.push({
-      pathname: '/ad/',
+      pathname: '/solves/',
       params: { complaintId },
     });
   };
 
-  const handleGoToCreateAd = () => {
-    router.push('/ad/create');
+  const handleGoToCreateSolve = () => {
+    router.push('/solves/create');
   };
 
   const handleGoBack = () => {
@@ -70,7 +70,7 @@ export default function MyAds() {
         <IconButton
           icon={<Icon as={Feather} name="plus" color="gray.100" size="lg" />}
           rounded="full"
-          onPress={handleGoToCreateAd}
+          onPress={handleGoToCreateSolve}
         />
       </HStack>
       {isLoading ? (
@@ -79,7 +79,7 @@ export default function MyAds() {
         <>
           <HStack alignItems="center" justifyContent="space-between" mb={5}>
             <Text color="gray.200" fontSize="sm">
-              {myAds?.length} Resolves
+              {mySolves?.length} Resolves
             </Text>
             <Select
               selectedValue={status}
@@ -101,27 +101,27 @@ export default function MyAds() {
             </Select>
           </HStack>
           <FlatList
-            data={myAds}
+            data={mySolves}
             keyExtractor={item => item.id}
             contentContainerStyle={
-              myAds.length
+              mySolves.length
                 ? {
                     justifyContent: 'space-between',
                   }
                 : { flex: 1, justifyContent: 'center' }
             }
             renderItem={({ item }) => (
-              <AdCard
+              <SolveCard
                 name={item.name}
                 status={item.state}
                 complaintImage={item.images?.[0]?.path}
-                adIsDisabled={!item.is_active}
-                onPress={() => handleGoToAdDetails(item.id)}
+                isDisabled={!item.is_active}
+                onPress={() => handleGoToSolveDetails(item.id)}
               />
             )}
             numColumns={2}
             ListEmptyComponent={
-              <EmptyListText title="Não há nenhum Resolve seu criado ainda! Vamos anunciar hoje?" />
+              <EmptyListText title="Não há nenhum Resolve seu criado ainda! Bora começar hoje?" />
             }
           />
         </>

@@ -21,14 +21,14 @@ export type CreateComplaintDTO = {
   images: (IImageUpload | ImagesDTO)[];
 };
 
-export type ShowAdDetailsDTO = Omit<CreateComplaintDTO, 'images'> & {
+export type ShowSolveDetailsDTO = Omit<CreateComplaintDTO, 'images'> & {
   id?: string;
   user: PublicUserDTO;
   images: (ImagesDTO | IImageUpload)[];
   state: ComplaintStatusDTO;
 };
 
-export type ComplaintDTO = Omit<ShowAdDetailsDTO, 'images'> & {
+export type ComplaintDTO = Omit<ShowSolveDetailsDTO, 'images'> & {
   id: string;
   is_active: boolean;
   state: ComplaintStatusDTO;

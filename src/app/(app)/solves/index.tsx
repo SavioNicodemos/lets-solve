@@ -14,19 +14,19 @@ import { useComplaint } from '@/hooks/useComplaint';
 import { submitEvaluation } from '@/queries/mutations/solves';
 import { handleError } from '@/utils/handleError';
 
-export default function Ad() {
+export default function Complaint() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { user } = useAuth();
   const { complaintId } = useLocalSearchParams();
 
   if (typeof complaintId !== 'string') {
-    throw new Error('Invalid complaintId sent to Ad page');
+    throw new Error('Id inválido');
   }
 
   const { data: complaint, isLoading, refetch } = useComplaint(complaintId);
 
-  const isMyAd = user.id === complaint?.user.id;
+  const isMySolve = user.id === complaint?.user.id;
   const isResolved = complaint?.is_resolved;
 
   const { mutateAsync } = useMutation({
@@ -49,9 +49,9 @@ export default function Ad() {
     return router.back();
   };
 
-  const handleGoToEditAd = () => {
+  const handleGoToEditSolve = () => {
     router.push({
-      pathname: '/ad/create',
+      pathname: '/solves/create',
       params: { complaintId: complaint!.id },
     });
   };
@@ -77,7 +77,7 @@ export default function Ad() {
           onPress={handlePressArrowBackButton}
         />
 
-        {isMyAd && (
+        {isMySolve && (
           <Menu>
             {!isResolved && (
               <MenuItem
@@ -89,7 +89,7 @@ export default function Ad() {
             {!isResolved && (
               <MenuItem
                 icon="edit-3"
-                onPress={handleGoToEditAd}
+                onPress={handleGoToEditSolve}
                 title="Editar"
               />
             )}

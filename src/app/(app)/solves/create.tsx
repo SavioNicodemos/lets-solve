@@ -21,7 +21,7 @@ import { useCreateComplaint } from '@/stores/useCreateComplaint';
 import { handleError } from '@/utils/handleError';
 import { findDeletedObjects } from '@/utils/helpers/arrayHelper';
 
-const createAdSchema = z.object({
+const createSolveSchema = z.object({
   name: z.string().min(1, 'Informe um título para a queixa'),
 
   description: z.string().min(1, 'Informe uma descrição para a queixa'),
@@ -29,13 +29,13 @@ const createAdSchema = z.object({
   images: z.array(z.any()).min(1, 'Adicione pelo menos uma foto da queixa'),
 });
 
-export default function CreateAd() {
+export default function CreateSolve() {
   const toast = useToast();
 
   const { complaintId } = useLocalSearchParams();
 
   if (complaintId && typeof complaintId !== 'string') {
-    throw new Error('Invalid complaintId sent to CreateAd page');
+    throw new Error('Id inválido');
   }
 
   const { data: complaint } = useComplaint(complaintId);
@@ -54,7 +54,7 @@ export default function CreateAd() {
       description: isEditView ? complaint.description : '',
       images: isEditView ? complaint.images : [],
     },
-    resolver: zodResolver(createAdSchema),
+    resolver: zodResolver(createSolveSchema),
   });
 
   const { setComplaint } = useCreateComplaint();
@@ -65,7 +65,7 @@ export default function CreateAd() {
 
   const handleGoToPreview = (data: CreateComplaintDTO) => {
     setComplaint(data);
-    router.replace('/ad/preview');
+    router.replace('/solves/preview');
   };
 
   const handleSuccessPress = async (data: CreateComplaintDTO) => {

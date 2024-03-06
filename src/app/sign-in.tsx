@@ -51,7 +51,7 @@ export default function SignIn() {
               Resolve Ai
             </Heading>
             <Text color="gray.300" fontSize="sm">
-              Seu espaço de compra e venda
+              Seu território neutro de resolução de problemas
             </Text>
           </Center>
 
