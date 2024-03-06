@@ -24,6 +24,7 @@ export default function Groups() {
       <Header
         title="Grupos"
         px={6}
+        onBackPress={() => router.replace('/profile')}
         LeftIconComponent={
           <IconButton
             icon={<Icon as={Feather} name="plus" color="gray.100" size="lg" />}

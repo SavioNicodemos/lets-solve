@@ -9,9 +9,11 @@ import {
   useState,
 } from 'react';
 
+import { queryClient } from '@/app/_layout';
 import { IImageUpload } from '@/dtos/ComplaintDTO';
 import { UserDTO } from '@/dtos/UserDTO';
 import { fetchMyUser } from '@/queries/auth';
+import { getGroups } from '@/queries/groups';
 import { createSession, updateAvatar } from '@/queries/mutations/auth';
 import { api } from '@/services/api';
 import {
@@ -81,7 +83,15 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
         userAndTokenUpdate(data.user, data.token);
       }
 
-      router.push('/');
+      const groups = await getGroups();
+      queryClient.setQueryData(['groups'], groups);
+
+      if (!groups.length) {
+        router.replace('/groups/');
+        return;
+      }
+
+      router.replace('/');
     } finally {
       setIsLoadingUserStorageData(false);
     }

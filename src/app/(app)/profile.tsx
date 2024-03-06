@@ -6,9 +6,11 @@ import { AvatarUpload } from '@/components/AvatarUpload';
 import { Header } from '@/components/Header';
 import { SettingsItem } from '@/components/SettingsItem';
 import { useAuth } from '@/hooks/useAuth';
+import { useGroups } from '@/hooks/useGroups';
 
 export default function Profile() {
   const { user, updateUserAvatar, signOut } = useAuth();
+  const { data: groups } = useGroups();
 
   const handleSignOut = () => {
     Alert.alert('Sair', 'Deseja realmente sair?', [
@@ -25,7 +27,12 @@ export default function Profile() {
 
   return (
     <VStack bgColor="gray.600" flex={1} pt={12}>
-      <Header title="Editar Perfil" px={6} />
+      <Header
+        title="Editar Perfil"
+        px={6}
+        disableBackButton={groups.length === 0}
+        onBackPress={() => router.replace('/')}
+      />
 
       <Center>
         <AvatarUpload
