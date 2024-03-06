@@ -5,14 +5,14 @@ import { Controller, useForm } from 'react-hook-form';
 import { Alert } from 'react-native';
 import { z } from 'zod';
 
-import { FetchInvitedUser } from '@/dtos/GroupDTO';
+import { FetchInvitedUser, IInvitedUser } from '@/dtos/GroupDTO';
 import { useDeleteGroupInvite } from '@/hooks/mutations/useDeleteGroupInvite';
 import { useInvitedUsers } from '@/hooks/useInvitedUsers';
 import { useToast } from '@/hooks/useToast';
 
 import { useSendGroupInvite } from '@/hooks/mutations/useSendGroupInvite';
 import { Input } from './Input';
-import { UserItem } from './UserItem';
+import { UserItem, UserItemSkeleton } from './UserItem';
 
 type Props = {
   groupId: number;
@@ -20,7 +20,7 @@ type Props = {
 };
 
 export function UsersInvitedSection({ groupId, shouldRender }: Props) {
-  const { data } = useInvitedUsers(groupId);
+  const { data, isLoading, isSuccess } = useInvitedUsers(groupId);
   const { mutateAsync } = useDeleteGroupInvite(groupId);
   const toast = useToast();
 
@@ -61,15 +61,55 @@ export function UsersInvitedSection({ groupId, shouldRender }: Props) {
       </HStack>
 
       <VStack space={4} mt={4}>
-        {data?.map(user => (
-          <InvitedUserItem
-            key={user.id}
-            user={user}
-            onPress={() => handleClosePress(user.id)}
-          />
-        ))}
+        <RenderInvitedUsers
+          onClosePress={handleClosePress}
+          isLoading={isLoading}
+          isSuccess={isSuccess}
+          groups={data || []}
+        />
       </VStack>
     </VStack>
+  );
+}
+
+function RenderInvitedUsers({
+  onClosePress = () => {},
+  isLoading,
+  isSuccess,
+  groups,
+}: {
+  onClosePress: (id: number) => void;
+  isLoading: boolean;
+  isSuccess: boolean;
+  groups: IInvitedUser[];
+}) {
+  if (isLoading)
+    return (
+      <VStack space={2}>
+        <UserItemSkeleton />
+        <UserItemSkeleton />
+      </VStack>
+    );
+
+  if (!isSuccess)
+    return (
+      <Text fontWeight="bold" color="red.500">
+        Erro ao buscar seus convites
+      </Text>
+    );
+
+  if (!groups.length) return null;
+
+  return (
+    <>
+      {groups.map(user => (
+        <InvitedUserItem
+          key={user.id}
+          user={user}
+          onPress={() => onClosePress(user.id)}
+        />
+      ))}
+    </>
   );
 }
 

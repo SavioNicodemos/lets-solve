@@ -6,7 +6,7 @@ export const useInvitedUsers = (id: number) =>
   useQuery({
     queryKey: ['users-invited', id],
     queryFn: () => getInvitedUsers(id),
-    initialData: null,
+    initialData: [],
     meta: {
       errorMessage: 'Ocorreu um erro ao buscar os usuários convidados.',
     },

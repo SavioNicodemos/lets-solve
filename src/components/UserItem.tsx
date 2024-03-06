@@ -1,4 +1,4 @@
-import { HStack, Heading, Text, VStack } from 'native-base';
+import { HStack, Heading, Skeleton, Text, VStack } from 'native-base';
 
 import { UserPhoto } from './UserPhoto';
 
@@ -25,6 +25,24 @@ export function UserItem({
       </HStack>
 
       {ActionIcons || null}
+    </HStack>
+  );
+}
+
+export function UserItemSkeleton({
+  withSubtitle = false,
+}: {
+  withSubtitle?: boolean;
+}) {
+  return (
+    <HStack space={4} alignItems="center" justifyContent="space-between">
+      <HStack space={4} alignItems="center">
+        <Skeleton height={12} width={12} rounded="full" />
+        <VStack space={1}>
+          <Skeleton height={5} width={170} rounded="full" />
+          {withSubtitle && <Skeleton height={4} width={130} rounded="full" />}
+        </VStack>
+      </HStack>
     </HStack>
   );
 }
