@@ -1,4 +1,10 @@
-import { HStack, Heading, Skeleton, Text, VStack } from 'native-base';
+import {
+  HStack,
+  Heading,
+  Skeleton,
+  Text,
+  VStack,
+} from '@gluestack-ui/themed-native-base';
 import Animated, {
   LinearTransition,
   SlideInRight,

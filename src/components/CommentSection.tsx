@@ -1,4 +1,4 @@
-import { Heading, VStack, View } from 'native-base';
+import { Heading, VStack, View } from '@gluestack-ui/themed-native-base';
 
 import { useInfiniteComments } from '@/hooks/useInfiniteComments';
 import { AddComment } from './AddComment';

@@ -1,12 +1,12 @@
 import {
-  Input as NativeBaseInput,
-  IInputProps,
+  Divider,
   FormControl,
   HStack,
+  IInputProps,
   Icon,
-  Divider,
   IconButton,
-} from 'native-base';
+  Input as NativeBaseInput,
+} from '@gluestack-ui/themed-native-base';
 
 import { Feather } from '@expo/vector-icons';
 
@@ -54,7 +54,11 @@ export function Input({
               <IconButton
                 rounded="full"
                 icon={
-                  <Icon as={Feather} name="search" color="gray.200" size="lg" />
+                  <Icon
+                    as={<Feather name="search" />}
+                    color="gray.200"
+                    size="lg"
+                  />
                 }
                 _pressed={{ bg: 'gray.600' }}
                 onPress={onSearchPress}
@@ -64,8 +68,7 @@ export function Input({
                 rounded="full"
                 icon={
                   <Icon
-                    as={Feather}
-                    name="sliders"
+                    as={<Feather name="sliders" />}
                     color="gray.200"
                     size="lg"
                   />

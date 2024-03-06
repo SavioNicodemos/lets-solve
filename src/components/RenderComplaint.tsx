@@ -1,4 +1,4 @@
-import { Center, Text } from 'native-base';
+import { Center, Text } from '@gluestack-ui/themed-native-base';
 
 import { ComplaintDTO } from '@/dtos/ComplaintDTO';
 import Loading from './Loading';

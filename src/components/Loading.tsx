@@ -1,4 +1,4 @@
-import { Spinner, Center } from 'native-base';
+import { Center, Spinner } from '@gluestack-ui/themed';
 
 type Props = {
   backgroundStyle?: 'appDefault' | 'white';

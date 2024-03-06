@@ -1,7 +1,13 @@
 import { Feather } from '@expo/vector-icons';
+import { Spinner } from '@gluestack-ui/themed';
+import {
+  Center,
+  Icon,
+  IconButton,
+  VStack,
+} from '@gluestack-ui/themed-native-base';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { router } from 'expo-router';
-import { Center, Icon, IconButton, Spinner, VStack } from 'native-base';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -39,12 +45,16 @@ export default function CreateGroup() {
         px={6}
         LeftIconComponent={
           isPending ? (
-            <Spinner color="green.500" size="sm" />
+            <Spinner color="$green500" size="small" />
           ) : (
             <IconButton
               rounded="full"
               icon={
-                <Icon as={Feather} name="check" size="lg" color="green.500" />
+                <Icon
+                  as={<Feather name="check" />}
+                  size="lg"
+                  color="green.500"
+                />
               }
               onPress={handleSubmit(submitForm)}
             />

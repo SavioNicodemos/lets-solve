@@ -1,6 +1,13 @@
 import { Feather } from '@expo/vector-icons';
+import {
+  HStack,
+  Heading,
+  Icon,
+  IconButton,
+  Text,
+  VStack,
+} from '@gluestack-ui/themed-native-base';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { HStack, Heading, Icon, IconButton, Text, VStack } from 'native-base';
 import { Controller, useForm } from 'react-hook-form';
 import { Alert } from 'react-native';
 import { z } from 'zod';
@@ -108,7 +115,7 @@ function InviteUserInput({ groupId }: { groupId: number }) {
           errorMessage={errors.email?.message}
           InputRightElement={
             <IconButton
-              icon={<Icon as={Feather} name="send" />}
+              icon={<Icon as={<Feather name="send" />} />}
               rounded="full"
               onPress={() => handleSubmit(submitForm)()}
             />
@@ -132,7 +139,7 @@ function InvitedUserItem({ user, onPress }: InvitedUserItemProps) {
       ActionIcons={
         <IconButton
           rounded="full"
-          icon={<Icon as={Feather} name="x" color="red.500" />}
+          icon={<Icon as={<Feather name="x" />} color="red.500" />}
           onPress={onPress}
         />
       }

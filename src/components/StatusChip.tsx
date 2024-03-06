@@ -1,5 +1,5 @@
 import { FontAwesome6 } from '@expo/vector-icons';
-import { Box, HStack, Icon, Text } from 'native-base';
+import { Box, HStack, Icon, Text } from '@gluestack-ui/themed-native-base';
 
 import { ComplaintStatusDTO } from '@/dtos/ComplaintStatusDTO';
 
@@ -21,8 +21,11 @@ export function StatusChip({ status }: Props) {
       >
         <Icon
           key={String(status.is_positive)}
-          as={FontAwesome6}
-          name={status.is_positive ? 'face-laugh-wink' : 'angry'}
+          as={
+            <FontAwesome6
+              name={status.is_positive ? 'face-laugh-wink' : 'angry'}
+            />
+          }
           color="white"
           size="md"
         />

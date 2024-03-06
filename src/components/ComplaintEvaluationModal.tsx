@@ -1,5 +1,5 @@
+import { Button, Modal, Text } from '@gluestack-ui/themed-native-base';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Button, Modal, Text } from 'native-base';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
 

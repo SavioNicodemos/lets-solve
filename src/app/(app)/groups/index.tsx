@@ -1,6 +1,4 @@
 import { Feather } from '@expo/vector-icons';
-import { FlashList } from '@shopify/flash-list';
-import { router } from 'expo-router';
 import {
   Center,
   Heading,
@@ -9,7 +7,9 @@ import {
   Text,
   VStack,
   View,
-} from 'native-base';
+} from '@gluestack-ui/themed-native-base';
+import { FlashList } from '@shopify/flash-list';
+import { router } from 'expo-router';
 
 import { GroupItem } from '@/components/GroupItem';
 import { Header } from '@/components/Header';
@@ -26,7 +26,9 @@ export default function Groups() {
         px={6}
         LeftIconComponent={
           <IconButton
-            icon={<Icon as={Feather} name="plus" color="gray.100" size="lg" />}
+            icon={
+              <Icon as={<Feather name="plus" />} color="gray.100" size="lg" />
+            }
             onPress={() => router.push('/groups/create')}
           />
         }

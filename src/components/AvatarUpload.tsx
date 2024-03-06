@@ -1,7 +1,12 @@
 import { Feather } from '@expo/vector-icons';
+import {
+  Box,
+  FormControl,
+  Icon,
+  IconButton,
+} from '@gluestack-ui/themed-native-base';
 import * as FileSystem from 'expo-file-system';
 import * as ImagePicker from 'expo-image-picker';
-import { Box, FormControl, IBoxProps, Icon, IconButton } from 'native-base';
 import { useState } from 'react';
 
 import { IImageUpload } from '@/dtos/ComplaintDTO';
@@ -10,7 +15,7 @@ import { handleError } from '@/utils/handleError';
 
 import { UserPhoto } from './UserPhoto';
 
-type Props = IBoxProps & {
+type Props = {
   value: ImageProp;
   onChange: (file: IImageUpload) => void;
   errorMessage?: string;
@@ -83,9 +88,8 @@ export function AvatarUpload({
           bg="blue.500"
           icon={
             <Icon
-              as={Feather}
-              name="edit-3"
-              size={iconSize > 6 ? 6 : iconSize}
+              as={<Feather name="edit-3" />}
+              size={iconSize > 6 ? 'lg' : 'md'}
             />
           }
           _icon={{

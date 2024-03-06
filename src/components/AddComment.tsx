@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
+import { HStack, Icon, TextareaInput as Textarea } from '@gluestack-ui/themed';
 import { useMutation } from '@tanstack/react-query';
-import { HStack, Icon, IconButton, TextArea } from 'native-base';
 import { useState } from 'react';
 
 import { useAuth } from '@/hooks/useAuth';
@@ -48,13 +48,12 @@ export function AddComment({ complaintId }: { complaintId: string }) {
     <HStack style={{ gap: 4 }} alignItems="center">
       <UserPhoto imageLink={user.avatar_url} size={10} borderColor="red" />
 
-      <TextArea
-        isDisabled={isPending}
-        autoCompleteType="string"
+      <Textarea
+        editable={!isPending}
         bg="gray.700"
         p={2}
         borderWidth={0}
-        fontSize="md"
+        fontSize="$md"
         color="gray.200"
         fontFamily="body"
         placeholderTextColor="gray.400"
@@ -63,25 +62,26 @@ export function AddComment({ complaintId }: { complaintId: string }) {
         minH={12}
         maxH={12}
         scrollEnabled
-        _invalid={{
-          borderWidth: 1,
-          borderColor: 'red.500',
-        }}
-        _focus={{
-          bg: 'gray.700',
-          borderWidth: 1,
-          borderColor: 'blue.500',
-          minH: 24,
-          maxH: 24,
+        sx={{
+          _invalid: {
+            borderWidth: 1,
+            borderColor: 'red.500',
+          },
+          _focus: {
+            bg: 'gray.700',
+            borderWidth: 1,
+            borderColor: 'blue.500',
+            minH: 24,
+            maxH: 24,
+          },
         }}
         value={message}
         onChange={e => setMessage(e.nativeEvent.text)}
       />
 
-      <IconButton
-        disabled={isPending}
-        rounded="full"
-        icon={<Icon as={Ionicons} name="send" color="gray.100" size="lg" />}
+      <Icon
+        rounded="$full"
+        icon={<Icon as={<Ionicons name="send" />} color="gray.100" />}
         onPress={() => handleAddComment()}
       />
     </HStack>

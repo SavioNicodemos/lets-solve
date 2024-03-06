@@ -1,5 +1,4 @@
 import { Feather } from '@expo/vector-icons';
-import { router, useLocalSearchParams } from 'expo-router';
 import {
   Divider,
   HStack,
@@ -9,7 +8,8 @@ import {
   ScrollView,
   VStack,
   View,
-} from 'native-base';
+} from '@gluestack-ui/themed-native-base';
+import { router, useLocalSearchParams } from 'expo-router';
 import { Alert } from 'react-native';
 
 import { AvatarUpload } from '@/components/AvatarUpload';
@@ -108,7 +108,7 @@ export default function Group() {
         <Header
           LeftIconComponent={
             <IconButton
-              icon={<Icon as={Feather} name="log-out" color="red.500" />}
+              icon={<Icon as={<Feather name="log-out" />} color="red.500" />}
               onPress={() => handleLeaveButtonPress()}
             />
           }
@@ -167,14 +167,19 @@ function GroupHeaderInfo({
           <UserPhoto size={16} imageLink={data.image_url || ''} />
         )}
       </View>
-      <Heading textAlign="center" noOfLines={2} ellipsizeMode="tail" flex="1">
+      <Heading
+        textAlign="center"
+        numberOfLines={2}
+        ellipsizeMode="tail"
+        flex="1"
+      >
         {data.name}
       </Heading>
       <HStack alignItems="center" justifyContent="space-between">
         {isAdmin && (
           <IconButton
             rounded="full"
-            icon={<Icon as={Feather} name="edit-2" color="blue.500" />}
+            icon={<Icon as={<Feather name="edit-2" />} color="blue.500" />}
           />
         )}
       </HStack>

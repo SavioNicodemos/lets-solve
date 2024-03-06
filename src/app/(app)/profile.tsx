@@ -1,5 +1,10 @@
+import {
+  Button,
+  Center,
+  Heading,
+  VStack,
+} from '@gluestack-ui/themed-native-base';
 import { router } from 'expo-router';
-import { Button, Center, Heading, VStack } from 'native-base';
 import { Alert } from 'react-native';
 
 import { AvatarUpload } from '@/components/AvatarUpload';

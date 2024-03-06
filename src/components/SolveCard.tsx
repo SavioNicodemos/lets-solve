@@ -1,4 +1,11 @@
-import { Box, HStack, Image, Pressable, Text, VStack } from 'native-base';
+import {
+  Box,
+  HStack,
+  Image,
+  Pressable,
+  Text,
+  VStack,
+} from '@gluestack-ui/themed-native-base';
 
 import defaultComplaintImage from '@/assets/noComplaint.png';
 import { ComplaintStatusDTO } from '@/dtos/ComplaintStatusDTO';
@@ -37,7 +44,7 @@ export function SolveCard({
           source={
             complaintImage ? { uri: complaintImage } : defaultComplaintImage
           }
-          fallbackSource={defaultComplaintImage}
+          defaultSource={defaultComplaintImage}
           rounded="md"
           alt="Foto do da queixa"
           resizeMode="cover"

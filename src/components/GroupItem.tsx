@@ -1,5 +1,12 @@
 import { Feather } from '@expo/vector-icons';
-import { HStack, Heading, Icon, Skeleton, Text, VStack } from 'native-base';
+import {
+  HStack,
+  Heading,
+  Icon,
+  Skeleton,
+  Text,
+  VStack,
+} from '@gluestack-ui/themed-native-base';
 import { TouchableOpacity } from 'react-native';
 
 import { IGroupDTO } from '@/dtos/GroupDTO';
@@ -27,7 +34,11 @@ export function GroupItem({ group, onPress, hideIcon = false }: Props) {
         </HStack>
 
         {!hideIcon && (
-          <Icon as={Feather} name="chevron-right" size={8} color="gray.300" />
+          <Icon
+            as={<Feather name="chevron-right" />}
+            size="md"
+            color="gray.300"
+          />
         )}
       </HStack>
     </TouchableOpacity>

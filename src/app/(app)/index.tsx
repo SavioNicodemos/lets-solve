@@ -1,6 +1,4 @@
 import { Feather } from '@expo/vector-icons';
-import { useQuery } from '@tanstack/react-query';
-import { router } from 'expo-router';
 import {
   Box,
   FlatList,
@@ -10,7 +8,9 @@ import {
   Pressable,
   Text,
   VStack,
-} from 'native-base';
+} from '@gluestack-ui/themed-native-base';
+import { useQuery } from '@tanstack/react-query';
+import { router } from 'expo-router';
 import { useState } from 'react';
 
 import { Button } from '@/components/Button';
@@ -121,7 +121,7 @@ export default function Home() {
               alignItems="center"
               rounded="lg"
             >
-              <Icon as={Feather} name="tag" color="blue.700" size="lg" />
+              <Icon as={<Feather name="tag" />} color="blue.700" size="lg" />
               <Box flex={1} ml={3}>
                 <Heading fontSize="lg" color="gray.200">
                   {myActiveComplaintsCount}
@@ -135,8 +135,7 @@ export default function Home() {
                   Meus Resolves
                 </Heading>
                 <Icon
-                  as={Feather}
-                  name="arrow-right"
+                  as={<Feather name="arrow-right" />}
                   color="blue.700"
                   size="sm"
                 />

@@ -1,4 +1,4 @@
-import { useToast as useToastLib } from 'native-base';
+import { useToast as useToastLib } from '@gluestack-ui/themed-native-base';
 
 export function useToast() {
   const toast = useToastLib();

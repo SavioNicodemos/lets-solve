@@ -1,13 +1,12 @@
-import { IImageProps, Image } from 'native-base';
-import { ColorType } from 'native-base/lib/typescript/components/types';
+import { Image } from '@gluestack-ui/themed';
 import { Pressable } from 'react-native';
 
 import defaultUserImage from '@/assets/defaultAvatar.png';
 
-type Props = IImageProps & {
+type Props = typeof Image & {
   size: number;
   borderWidth?: number;
-  borderColor?: ColorType;
+  borderColor?: string;
   imageLink: string;
   onPress?: () => void;
 };
@@ -15,7 +14,7 @@ type Props = IImageProps & {
 export function UserPhoto({
   size,
   borderWidth = 3,
-  borderColor = 'blue.500',
+  borderColor = '$blue.500',
   imageLink,
   onPress = () => {},
   ...rest
@@ -25,12 +24,12 @@ export function UserPhoto({
       <Image
         w={size}
         h={size}
-        rounded="full"
+        rounded="$full"
         borderWidth={borderWidth}
         borderColor={borderColor}
         alt="Foto de perfil do usuário"
         source={imageLink ? { uri: imageLink } : defaultUserImage}
-        fallbackSource={defaultUserImage}
+        defaultSource={defaultUserImage}
         {...rest}
       />
     </Pressable>

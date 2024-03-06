@@ -1,4 +1,11 @@
-import { Box, Center, HStack, Image, Text, View } from 'native-base';
+import {
+  Box,
+  Center,
+  HStack,
+  Image,
+  Text,
+  View,
+} from '@gluestack-ui/themed-native-base';
 import { useState } from 'react';
 import { Dimensions } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';

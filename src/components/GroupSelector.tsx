@@ -1,5 +1,6 @@
 import { Feather } from '@expo/vector-icons';
-import { Heading, Icon, Modal, Pressable, VStack } from 'native-base';
+import { Pressable } from '@gluestack-ui/themed';
+import { Heading, Icon, Modal, VStack } from '@gluestack-ui/themed-native-base';
 import { useState } from 'react';
 
 import { IGroupDTO } from '@/dtos/GroupDTO';
@@ -27,13 +28,18 @@ function GroupSelector() {
       <Pressable
         onPress={openModal}
         bgColor="gray.700"
-        rounded="full"
+        rounded="$full"
         p={1}
         alignItems="center"
         flexDir="row"
         style={{ gap: 8 }}
-        shadow={1}
-        _pressed={{ opacity: 0.8, shadow: 0, bg: 'gray.600' }}
+        softShadow="1"
+        sx={{
+          ':pressed': {
+            opacity: 0.8,
+            bg: 'gray.600',
+          },
+        }}
       >
         <UserPhoto
           imageLink={data?.image_url ?? ''}
@@ -44,7 +50,7 @@ function GroupSelector() {
         <Heading size="sm" textAlign="center" flex={1} numberOfLines={1}>
           {data?.name ?? 'Selecione um grupo'}
         </Heading>
-        <Icon as={Feather} name="chevron-down" size="sm" mr={2} />
+        <Icon as={<Feather name="chevron-down" />} size="sm" mr={2} />
       </Pressable>
       <GroupsModal visible={visible} onClose={closeModal} />
     </>
@@ -57,12 +63,7 @@ type GroupsModalProps = {
 };
 function GroupsModal({ visible, onClose }: GroupsModalProps) {
   return (
-    <Modal
-      isOpen={visible}
-      onClose={onClose}
-      animationPreset="fade"
-      justifyContent="flex-end"
-    >
+    <Modal isOpen={visible} onClose={onClose} justifyContent="flex-end">
       <VStack
         width="full"
         bg="gray.600"

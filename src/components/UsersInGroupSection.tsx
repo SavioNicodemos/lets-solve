@@ -1,5 +1,12 @@
 import { Feather } from '@expo/vector-icons';
-import { HStack, Heading, Icon, IconButton, Text, VStack } from 'native-base';
+import {
+  HStack,
+  Heading,
+  Icon,
+  IconButton,
+  Text,
+  VStack,
+} from '@gluestack-ui/themed-native-base';
 
 import { PublicUserDTO } from '@/dtos/UserDTO';
 import { useAuth } from '@/hooks/useAuth';
@@ -55,7 +62,7 @@ function IconAction({ onPress, hideDeleteIcon }: IconActionProps) {
   return (
     <IconButton
       rounded="full"
-      icon={<Icon as={Feather} name="x" color="red.500" />}
+      icon={<Icon as={<Feather name="x" />} color="red.500" />}
       onPress={onPress}
     />
   );

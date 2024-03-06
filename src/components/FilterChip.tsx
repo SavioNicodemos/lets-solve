@@ -1,5 +1,10 @@
-import { HStack, Text, Icon, Pressable } from 'native-base';
 import { Octicons } from '@expo/vector-icons';
+import {
+  HStack,
+  Icon,
+  Pressable,
+  Text,
+} from '@gluestack-ui/themed-native-base';
 import { useState } from 'react';
 
 type Props = {

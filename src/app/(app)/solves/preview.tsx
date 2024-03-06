@@ -1,5 +1,11 @@
+import {
+  Center,
+  HStack,
+  Heading,
+  Text,
+  VStack,
+} from '@gluestack-ui/themed-native-base';
 import { router } from 'expo-router';
-import { Center, HStack, Heading, Text, VStack } from 'native-base';
 import { Platform } from 'react-native';
 
 import { Button } from '@/components/Button';

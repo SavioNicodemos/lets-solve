@@ -1,6 +1,4 @@
 import { Feather } from '@expo/vector-icons';
-import { useQuery } from '@tanstack/react-query';
-import { router, useFocusEffect } from 'expo-router';
 import {
   FlatList,
   HStack,
@@ -10,7 +8,9 @@ import {
   Select,
   Text,
   VStack,
-} from 'native-base';
+} from '@gluestack-ui/themed-native-base';
+import { useQuery } from '@tanstack/react-query';
+import { router, useFocusEffect } from 'expo-router';
 import { useState } from 'react';
 
 import { EmptyListText } from '@/components/EmptyListText';
@@ -59,7 +59,11 @@ export default function MySolves() {
       <HStack justifyContent="space-between" mb="8" alignItems="center">
         <IconButton
           icon={
-            <Icon as={Feather} name="arrow-left" color="gray.100" size="lg" />
+            <Icon
+              as={<Feather name="arrow-left" />}
+              color="gray.100"
+              size="lg"
+            />
           }
           rounded="full"
           onPress={handleGoBack}
@@ -68,7 +72,9 @@ export default function MySolves() {
           Meus Resolves
         </Heading>
         <IconButton
-          icon={<Icon as={Feather} name="plus" color="gray.100" size="lg" />}
+          icon={
+            <Icon as={<Feather name="plus" />} color="gray.100" size="lg" />
+          }
           rounded="full"
           onPress={handleGoToCreateSolve}
         />

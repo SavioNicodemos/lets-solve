@@ -8,7 +8,7 @@ import {
   Modal,
   Text,
   VStack,
-} from 'native-base';
+} from '@gluestack-ui/themed-native-base';
 import { useState } from 'react';
 
 import { Button } from '@/components/Button';
@@ -67,7 +67,7 @@ export function FiltersModal({
           </Heading>
           <IconButton
             rounded="full"
-            icon={<Icon as={Feather} name="x" color="gray.400" size="lg" />}
+            icon={<Icon as={<Feather name="x" />} color="gray.400" size="lg" />}
             onPress={onClose}
           />
         </HStack>

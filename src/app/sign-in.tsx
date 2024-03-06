@@ -1,5 +1,11 @@
+import {
+  Center,
+  Heading,
+  ScrollView,
+  Text,
+  VStack,
+} from '@gluestack-ui/themed-native-base';
 import { router } from 'expo-router';
-import { Center, Heading, ScrollView, Text, VStack } from 'native-base';
 import { Controller, useForm } from 'react-hook-form';
 
 import Logo from '@/assets/Logo.svg';

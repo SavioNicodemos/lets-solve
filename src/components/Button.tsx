@@ -1,8 +1,8 @@
 /* eslint-disable no-nested-ternary */
-import { Pressable, Text, Icon, IPressableProps } from 'native-base';
 import { Feather } from '@expo/vector-icons';
+import { Icon, Pressable, Text } from '@gluestack-ui/themed';
 
-type Props = IPressableProps & {
+type Props = typeof Pressable & {
   title: string;
   variant?: 'blue' | 'primary' | 'secondary';
   icon?: keyof typeof Feather.glyphMap;
@@ -23,14 +23,16 @@ export function Button({ title, variant = 'primary', icon, ...rest }: Props) {
             : 'gray.500'
       }
       borderColor="green.500"
-      rounded="md"
-      _pressed={{
-        bg:
-          variant === 'blue'
-            ? 'blue.700'
-            : variant === 'primary'
-              ? 'gray.200'
-              : 'gray.600',
+      rounded="$md"
+      sx={{
+        _pressed: {
+          bg:
+            variant === 'blue'
+              ? 'blue.700'
+              : variant === 'primary'
+                ? 'gray.200'
+                : 'gray.600',
+        },
       }}
       flexDir="row"
       alignItems="center"
@@ -39,14 +41,12 @@ export function Button({ title, variant = 'primary', icon, ...rest }: Props) {
     >
       {icon ? (
         <Icon
-          as={Feather}
-          name={icon}
+          as={<Feather name={icon} size={5} />}
           color={variant === 'secondary' ? 'black' : 'white'}
-          size={5}
           mr={2}
         />
       ) : null}
-      <Text color={textColor} fontFamily="heading" fontSize="sm">
+      <Text color={textColor} fontFamily="heading" fontSize="$sm">
         {title}
       </Text>
     </Pressable>

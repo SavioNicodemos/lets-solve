@@ -1,7 +1,14 @@
 import { Feather } from '@expo/vector-icons';
+import {
+  Box,
+  FormControl,
+  HStack,
+  Icon,
+  IconButton,
+  Image,
+} from '@gluestack-ui/themed-native-base';
 import * as FileSystem from 'expo-file-system';
 import * as ImagePicker from 'expo-image-picker';
-import { Box, FormControl, HStack, Icon, IconButton, Image } from 'native-base';
 import { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 
@@ -93,7 +100,7 @@ export function UploadPicturesContainer({
               <Box mt="4" mb="8" key={photo.path}>
                 <IconButton
                   icon={
-                    <Icon as={Feather} name="x" color="red.500" size="lg" />
+                    <Icon as={<Feather name="x" />} color="red.500" size="lg" />
                   }
                   onPress={() => handleRemovePhoto(index)}
                   rounded="full"
@@ -111,7 +118,7 @@ export function UploadPicturesContainer({
                   bg="gray.500"
                   alt="Foto da queixa"
                   src={photo.path}
-                  fallbackSource={noComplaintImage}
+                  defaultSource={noComplaintImage}
                 />
               </Box>
             ))
@@ -128,7 +135,7 @@ export function UploadPicturesContainer({
               bg="gray.500"
               mt="4"
             >
-              <Icon as={Feather} name="plus" color="gray.400" size="lg" />
+              <Icon as={<Feather name="plus" />} color="gray.400" size="lg" />
             </Box>
           </TouchableOpacity>
         ) : null}

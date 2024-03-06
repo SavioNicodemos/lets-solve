@@ -7,7 +7,7 @@ import {
   Text,
   VStack,
   View,
-} from 'native-base';
+} from '@gluestack-ui/themed-native-base';
 import { Alert } from 'react-native';
 import Animated, {
   SlideInLeft,
@@ -119,7 +119,7 @@ function InviteItem({ invite }: { invite: IInviteFromGroup }) {
             exiting={ZoomOut}
             style={{ paddingRight: 40 }}
           >
-            <Spinner size="sm" />
+            <Spinner />
           </Animated.View>
         ) : (
           <HStack space={1}>
@@ -134,8 +134,11 @@ function InviteItem({ invite }: { invite: IInviteFromGroup }) {
                     rounded="full"
                     icon={
                       <Icon
-                        as={Feather}
-                        name={option.icon}
+                        as={
+                          <Feather
+                            name={option.icon as keyof typeof Feather.glyphMap}
+                          />
+                        }
                         color={option.color}
                         size="lg"
                       />

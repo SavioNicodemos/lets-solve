@@ -3,6 +3,7 @@ import {
   Karla_700Bold as Karla700Bold,
   useFonts,
 } from '@expo-google-fonts/karla';
+import { StyledProvider, ToastProvider } from '@gluestack-ui/themed';
 import {
   QueryCache,
   QueryClient,
@@ -10,7 +11,6 @@ import {
 } from '@tanstack/react-query';
 import { Slot } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { NativeBaseProvider, ToastProvider } from 'native-base';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import Loading from '@/components/Loading';
@@ -34,7 +34,7 @@ export default function App() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <NativeBaseProvider theme={THEME}>
+      <StyledProvider theme={THEME}>
         <QueryClientProvider client={queryClient}>
           <ToastProvider>
             <AuthContextProvider>
@@ -43,7 +43,7 @@ export default function App() {
             </AuthContextProvider>
           </ToastProvider>
         </QueryClientProvider>
-      </NativeBaseProvider>
+      </StyledProvider>
     </GestureHandlerRootView>
   );
 }

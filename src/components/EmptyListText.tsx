@@ -1,4 +1,4 @@
-import { Text } from 'native-base';
+import { Text } from '@gluestack-ui/themed-native-base';
 
 type Props = {
   title: string;

@@ -1,11 +1,16 @@
 import { Entypo, Feather } from '@expo/vector-icons';
-import { Icon, IconButton, Menu as MenuNBase, Text } from 'native-base';
+import {
+  Icon,
+  ButtonIcon as IconButton,
+  Menu as MenuNBase,
+  Text,
+} from '@gluestack-ui/themed';
 import React from 'react';
 
 export function Menu({ children }: { children: React.ReactNode }) {
   return (
     <MenuNBase
-      w="190"
+      w="$96"
       // eslint-disable-next-line react/no-unstable-nested-components
       trigger={triggerProps => {
         return (
@@ -15,10 +20,8 @@ export function Menu({ children }: { children: React.ReactNode }) {
             {...triggerProps}
           >
             <Icon
-              as={Entypo}
-              name="dots-three-vertical"
+              as={<Entypo name="dots-three-vertical" size={25} />}
               color="gray.100"
-              size="lg"
             />
           </IconButton>
         );
@@ -43,9 +46,9 @@ export function MenuItem({
   isDisabled = false,
 }: MenuItemProps) {
   return (
-    <MenuNBase.Item isDisabled={isDisabled} onPress={onPress}>
+    <MenuNBase.Item disabled={isDisabled} onPress={onPress}>
       <>
-        <Icon as={Feather} name={icon} color="black" size={5} mr={2} />
+        <Icon as={<Feather name={icon} size={5} />} color="black" mr={2} />
         <Text>{title}</Text>
       </>
     </MenuNBase.Item>

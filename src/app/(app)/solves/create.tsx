@@ -1,6 +1,11 @@
+import {
+  HStack,
+  ScrollView,
+  Text,
+  VStack,
+} from '@gluestack-ui/themed-native-base';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { router, useLocalSearchParams } from 'expo-router';
-import { HStack, ScrollView, Text, VStack } from 'native-base';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
 

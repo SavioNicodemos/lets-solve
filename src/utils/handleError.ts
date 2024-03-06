@@ -1,4 +1,4 @@
-import { Toast } from 'native-base';
+import { Toast } from '@gluestack-ui/themed-native-base';
 import { AppError } from './AppError';
 
 export const handleError = (error: unknown, message: string = '') => {

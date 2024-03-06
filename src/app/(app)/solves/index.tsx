@@ -1,7 +1,12 @@
 import { Feather } from '@expo/vector-icons';
+import {
+  HStack,
+  Icon,
+  IconButton,
+  VStack,
+} from '@gluestack-ui/themed-native-base';
 import { useMutation } from '@tanstack/react-query';
 import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
-import { HStack, Icon, IconButton, VStack } from 'native-base';
 import { useState } from 'react';
 import { Alert } from 'react-native';
 
@@ -72,7 +77,11 @@ export default function Complaint() {
         <IconButton
           rounded="full"
           icon={
-            <Icon as={Feather} name="arrow-left" color="gray.100" size="lg" />
+            <Icon
+              as={<Feather name="arrow-left" />}
+              color="gray.100"
+              size="lg"
+            />
           }
           onPress={handlePressArrowBackButton}
         />

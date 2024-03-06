@@ -1,4 +1,9 @@
-import { HStack, Heading, Text, VStack } from 'native-base';
+import {
+  HStack,
+  Heading,
+  Text,
+  VStack,
+} from '@gluestack-ui/themed-native-base';
 
 import { UserPhoto } from './UserPhoto';
 

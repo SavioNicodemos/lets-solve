@@ -1,5 +1,11 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import { HStack, Heading, ScrollView, Text, VStack } from 'native-base';
+import {
+  HStack,
+  Heading,
+  ScrollView,
+  Text,
+  VStack,
+} from '@gluestack-ui/themed-native-base';
 
 import { UserPhoto } from '@/components/UserPhoto';
 import { ShowSolveDetailsDTO } from '@/dtos/ComplaintDTO';
@@ -30,7 +36,7 @@ export function SolveDetails({ complaint }: Props) {
               borderWidth={2}
               borderColor={status.color}
               imageLink={complaint.user.avatar_url}
-              mr={2}
+              mr="$2"
             />
 
             <Text fontSize="sm">{complaint.user.name}</Text>

@@ -1,4 +1,9 @@
-import { Button, FormControl } from 'native-base';
+import {
+  Button,
+  ButtonGroup,
+  FormControl,
+  FormControlErrorText,
+} from '@gluestack-ui/themed';
 import { useState } from 'react';
 
 export function ScoreSelector({
@@ -16,40 +21,35 @@ export function ScoreSelector({
 
   return (
     <FormControl isInvalid={!!errorMessage}>
-      <Button.Group
-        isAttached
-        colorScheme="blue"
-        mx={{
-          base: 'auto',
-          md: 0,
-        }}
-        size="md"
-      >
+      <ButtonGroup isAttached mx={0}>
         {Array.from({ length }, (_, i) => i + 1).map(i => (
           <Button
             key={i}
-            variant={score === i ? undefined : 'outline'}
             onPress={() => handleSelectScore(i)}
             bgColor={score === i ? 'blue.500' : undefined}
-            _text={{ color: score === i ? 'white' : 'blue.500' }}
+            sx={{
+              _text: { color: score === i ? 'white' : 'blue.500' },
+            }}
           >
             {i}
           </Button>
         ))}
-      </Button.Group>
+      </ButtonGroup>
 
-      <FormControl.ErrorMessage
+      <FormControlErrorText
         justifyContent="center"
         alignItems="center"
-        _text={{ color: 'red.500' }}
+        sx={{
+          _text: { color: 'red.500' },
+        }}
         bg="red.100"
-        borderRadius="sm"
+        borderRadius="$sm"
         mt={2}
         px={2}
         pb={1}
       >
         {errorMessage}
-      </FormControl.ErrorMessage>
+      </FormControlErrorText>
     </FormControl>
   );
 }
