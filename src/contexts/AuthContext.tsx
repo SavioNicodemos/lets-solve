@@ -13,7 +13,7 @@ import { queryClient } from '@/app/_layout';
 import { IImageUpload } from '@/dtos/ComplaintDTO';
 import { UserDTO } from '@/dtos/UserDTO';
 import { fetchMyUser } from '@/queries/auth';
-import { getGroups } from '@/queries/groups';
+import { getDefaultGroup, getGroups } from '@/queries/groups';
 import { createSession, updateAvatar } from '@/queries/mutations/auth';
 import { api } from '@/services/api';
 import {
@@ -149,6 +149,12 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     if (!groups.length) {
       isRedirect = true;
       router.replace('/groups/');
+    }
+
+    const defaultGroup = await getDefaultGroup();
+
+    if (defaultGroup) {
+      queryClient.setQueryData(['selectedGroup'], defaultGroup);
     }
 
     return isRedirect;
