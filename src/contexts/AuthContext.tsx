@@ -9,7 +9,8 @@ import {
   useState,
 } from 'react';
 
-import { queryClient } from '@/app/_layout';
+import { queryClient } from './ReactQueryContext';
+
 import { IImageUpload } from '@/dtos/ComplaintDTO';
 import { UserDTO } from '@/dtos/UserDTO';
 import { fetchMyUser } from '@/queries/auth';
