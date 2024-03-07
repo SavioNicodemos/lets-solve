@@ -83,11 +83,9 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
         userAndTokenUpdate(data.user, data.token);
       }
 
-      const groups = await getGroups();
-      queryClient.setQueryData(['groups'], groups);
+      const isRedirect = await getAndSetGroups();
 
-      if (!groups.length) {
-        router.replace('/groups/');
+      if (isRedirect) {
         return;
       }
 
@@ -120,6 +118,8 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       if (token && userLogged) {
         userAndTokenUpdate(userLogged, token);
       }
+
+      await getAndSetGroups();
     } finally {
       setIsLoadingUserStorageData(false);
     }
@@ -138,6 +138,20 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
         handleError(new Error('Erro ao atualizar foto de perfil'));
       }
     }
+  }
+
+  async function getAndSetGroups() {
+    const groups = await getGroups();
+    queryClient.setQueryData(['groups'], groups);
+
+    let isRedirect = false;
+
+    if (!groups.length) {
+      isRedirect = true;
+      router.replace('/groups/');
+    }
+
+    return isRedirect;
   }
 
   useEffect(() => {
