@@ -1,6 +1,6 @@
 import { Feather } from '@expo/vector-icons';
 import { useQuery } from '@tanstack/react-query';
-import { router } from 'expo-router';
+import { Redirect, router } from 'expo-router';
 import {
   Box,
   FlatList,
@@ -24,11 +24,13 @@ import { UserPhoto } from '@/components/UserPhoto';
 import { IComplaintId } from '@/dtos/ComplaintDTO';
 import { IFiltersDTO } from '@/dtos/FiltersDTO';
 import { useAuth } from '@/hooks/useAuth';
+import { useGroups } from '@/hooks/useGroups';
 import { getMySolves, getSolves } from '@/queries/solves';
 
 export default function Home() {
   const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(false);
   const [filters, setFilters] = useState<IFiltersDTO>(emptyFilters);
+  const { data: groups } = useGroups();
 
   const { user } = useAuth();
 
@@ -72,6 +74,10 @@ export default function Home() {
   const handleGoToProfile = () => {
     router.push('/profile');
   };
+
+  if (groups.length === 0) {
+    return <Redirect href="/groups/" />;
+  }
 
   return (
     <>
