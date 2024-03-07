@@ -11,23 +11,23 @@ import {
 
 export function Header({
   title = '',
-  LeftIconComponent,
-  onBackPress,
+  RightIconComponent,
+  backButtonFallback,
   disableBackButton = false,
   ...rest
 }: Props) {
   const handleGoBack = () => {
-    if (onBackPress) {
-      onBackPress();
-      return;
-    }
-
     if (router.canGoBack()) {
       router.back();
       return;
     }
 
-    router.push('/');
+    if (backButtonFallback) {
+      backButtonFallback();
+      return;
+    }
+
+    router.replace('/');
   };
 
   return (
@@ -46,18 +46,18 @@ export function Header({
         onPress={handleGoBack}
       />
 
-      <Heading fontSize="lg" color="gray.100" ml={LeftIconComponent ? 0 : -60}>
+      <Heading fontSize="lg" color="gray.100" ml={RightIconComponent ? 0 : -60}>
         {title}
       </Heading>
 
-      {LeftIconComponent || <VStack />}
+      {RightIconComponent || <VStack />}
     </HStack>
   );
 }
 
 type Props = IStackProps & {
   title?: string;
-  LeftIconComponent?: React.ReactNode;
-  onBackPress?: () => void;
+  RightIconComponent?: React.ReactNode;
+  backButtonFallback?: () => void;
   disableBackButton?: boolean;
 };

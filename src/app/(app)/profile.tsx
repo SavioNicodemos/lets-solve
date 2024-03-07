@@ -31,7 +31,7 @@ export default function Profile() {
         title="Editar Perfil"
         px={6}
         disableBackButton={groups.length === 0}
-        onBackPress={() => router.replace('/')}
+        backButtonFallback={() => router.replace('/')}
       />
 
       <Center>

@@ -106,7 +106,7 @@ export default function Group() {
     <ScrollView bgColor="gray.600">
       <VStack bgColor="gray.600" flex={1} pt={12} px={6}>
         <Header
-          LeftIconComponent={
+          RightIconComponent={
             <IconButton
               icon={<Icon as={Feather} name="log-out" color="red.500" />}
               onPress={() => handleLeaveButtonPress()}

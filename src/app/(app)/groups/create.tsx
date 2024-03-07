@@ -37,7 +37,7 @@ export default function CreateGroup() {
       <Header
         title="Criar grupo"
         px={6}
-        LeftIconComponent={
+        RightIconComponent={
           isPending ? (
             <Spinner color="green.500" size="sm" />
           ) : (
