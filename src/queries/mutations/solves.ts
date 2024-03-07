@@ -1,5 +1,9 @@
 import { FetchCommentDTO, IComment } from '@/dtos/CommentDTO';
-import { IComplaintId, ISubmitEvaluation } from '@/dtos/ComplaintDTO';
+import {
+  IComplaintId,
+  IImageUpload,
+  ISubmitEvaluation,
+} from '@/dtos/ComplaintDTO';
 import { api } from '@/services/api';
 import { handleError } from '@/utils/handleError';
 
@@ -21,6 +25,22 @@ export async function updateComplaint(data: IUpdateComplaint): Promise<void> {
 
 export async function deleteComplaintImagesByIds(ids: string[]): Promise<void> {
   await api.delete('/complaints/images', { data: { complaintImagesIds: ids } });
+}
+
+export async function addImagesToComplaint({
+  complaintId,
+  images,
+}: {
+  complaintId: string;
+  images: IImageUpload[];
+}): Promise<void> {
+  const formData = new FormData();
+  formData.append('complaint_id', complaintId);
+  images.forEach((image: any) => {
+    formData.append('images[]', image);
+  });
+
+  await api.postForm('/complaints/images', formData);
 }
 
 export async function addComment({

@@ -4,11 +4,13 @@ import { Platform } from 'react-native';
 
 import { Button } from '@/components/Button';
 import { SolveDetails } from '@/components/SolveDetails';
-import { ShowSolveDetailsDTO } from '@/dtos/ComplaintDTO';
+import { IImageUpload, ShowSolveDetailsDTO } from '@/dtos/ComplaintDTO';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
-import { createComplaint } from '@/queries/mutations/solves';
-import { api } from '@/services/api';
+import {
+  addImagesToComplaint,
+  createComplaint,
+} from '@/queries/mutations/solves';
 import { useCreateComplaint } from '@/stores/useCreateComplaint';
 import { handleError } from '@/utils/handleError';
 
@@ -54,13 +56,10 @@ export default function SolvePreview() {
 
       const complaintId = createSolveResponse.id;
 
-      const form = new FormData();
-      form.append('complaint_id', complaintId);
-      complaintImages.forEach((element: any) => {
-        form.append('images[]', element);
+      await addImagesToComplaint({
+        complaintId,
+        images: complaintImages as IImageUpload[],
       });
-
-      await api.postForm('/complaints/images', form);
 
       toast.success('Produto criado com sucesso!');
 

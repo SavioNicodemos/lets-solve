@@ -9,14 +9,14 @@ import { Header } from '@/components/Header';
 import { Input } from '@/components/Input';
 import { TextArea } from '@/components/TextArea';
 import { UploadPicturesContainer } from '@/components/UploadPicturesContainer';
-import { CreateComplaintDTO } from '@/dtos/ComplaintDTO';
+import { CreateComplaintDTO, IImageUpload } from '@/dtos/ComplaintDTO';
 import { useComplaint } from '@/hooks/useComplaint';
 import { useToast } from '@/hooks/useToast';
 import {
+  addImagesToComplaint,
   deleteComplaintImagesByIds,
   updateComplaint,
 } from '@/queries/mutations/solves';
-import { api } from '@/services/api';
 import { useCreateComplaint } from '@/stores/useCreateComplaint';
 import { handleError } from '@/utils/handleError';
 import { findDeletedObjects } from '@/utils/helpers/arrayHelper';
@@ -90,18 +90,15 @@ export default function CreateSolve() {
     try {
       await updateComplaint({ id: complaint.id, ...data });
 
-      if (newPhotosToAdd.length) {
-        const imagesForm = new FormData();
-        imagesForm.append('complaint_id', complaint.id);
-        newPhotosToAdd.forEach((element: any) => {
-          imagesForm.append('images[]', element);
-        });
-
-        await api.postForm('/complaints/images', imagesForm);
-      }
-
       if (deletedPhotosIds.length) {
         await deleteComplaintImagesByIds(deletedPhotosIds);
+      }
+
+      if (newPhotosToAdd.length) {
+        await addImagesToComplaint({
+          complaintId: complaint.id,
+          images: newPhotosToAdd as IImageUpload[],
+        });
       }
 
       toast.success('Resolve atualizado com sucesso!');
