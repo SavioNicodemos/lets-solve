@@ -6,6 +6,7 @@ import { Button } from '@/components/Button';
 import { SolveDetails } from '@/components/SolveDetails';
 import { IImageUpload, ShowSolveDetailsDTO } from '@/dtos/ComplaintDTO';
 import { useAuth } from '@/hooks/useAuth';
+import { useSelectedGroup } from '@/hooks/useSelectedGroup';
 import { useToast } from '@/hooks/useToast';
 import {
   addImagesToComplaint,
@@ -20,6 +21,9 @@ export default function SolvePreview() {
   const { complaint } = useCreateComplaint();
   const { user } = useAuth();
   const toast = useToast();
+  const {
+    query: { data: selectedGroup },
+  } = useSelectedGroup();
 
   if (!complaint) {
     throw new Error('Complaint not found');
@@ -52,7 +56,11 @@ export default function SolvePreview() {
     try {
       const { name, description, images: complaintImages } = complaint;
 
-      const createSolveResponse = await createComplaint({ name, description });
+      const createSolveResponse = await createComplaint({
+        name,
+        description,
+        groupId: selectedGroup!.id,
+      });
 
       const complaintId = createSolveResponse.id;
 

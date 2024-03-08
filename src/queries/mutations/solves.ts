@@ -10,10 +10,12 @@ import { handleError } from '@/utils/handleError';
 export async function createComplaint({
   description,
   name,
+  groupId,
 }: ICreateComplaint): Promise<ICreateComplaintResponse> {
   const { data } = await api.post<ICreateComplaintResponse>('/complaints', {
     name,
     description,
+    group_id: groupId,
   });
 
   return data;
@@ -103,6 +105,7 @@ type IAddComment = {
 type ICreateComplaint = {
   name: string;
   description: string;
+  groupId: number;
 };
 
 type IUpdateComplaint = {
