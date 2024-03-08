@@ -1,4 +1,4 @@
-import { router } from 'expo-router';
+import { Redirect, router } from 'expo-router';
 
 import { useToast } from '@/hooks/useToast';
 
@@ -10,7 +10,9 @@ export function ErrorBoundary({ message }: Props) {
   const toast = useToast();
   toast.error(message || 'Erro ao carregar essa página, tente novamente!');
 
-  router.back();
+  if (router.canGoBack()) {
+    return <Redirect href=".." />;
+  }
 
-  return null;
+  return <Redirect href="/" />;
 }

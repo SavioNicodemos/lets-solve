@@ -1,6 +1,11 @@
 import { Feather } from '@expo/vector-icons';
 import { useMutation } from '@tanstack/react-query';
-import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
+import {
+  Redirect,
+  router,
+  useFocusEffect,
+  useLocalSearchParams,
+} from 'expo-router';
 import { HStack, Icon, IconButton, VStack } from 'native-base';
 import { useState } from 'react';
 import { Alert } from 'react-native';
@@ -24,7 +29,12 @@ export default function Complaint() {
     throw new Error('Id inválido');
   }
 
-  const { data: complaint, isLoading, refetch } = useComplaint(complaintId);
+  const {
+    data: complaint,
+    isLoading,
+    refetch,
+    isError,
+  } = useComplaint(complaintId);
 
   const isMySolve = user.id === complaint?.user.id;
   const isResolved = complaint?.is_resolved;
@@ -59,6 +69,10 @@ export default function Complaint() {
   useFocusEffect(() => {
     refetch();
   });
+
+  if (isError) {
+    return <Redirect href="/" />;
+  }
 
   return (
     <VStack bgColor="gray.600" flex={1} pt={12}>
