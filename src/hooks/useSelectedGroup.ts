@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 
-import { queryClient } from '@/app/_layout';
+import { queryClient } from '@/contexts/ReactQueryContext';
 import { IGroupDTO } from '@/dtos/GroupDTO';
 import { getDefaultGroup } from '@/queries/groups';
 import { updateDefaultGroup } from '@/queries/mutations/groups';
@@ -17,6 +17,8 @@ export function useSelectedGroup() {
   const mutation = useMutation({
     mutationKey: ['setSelectGroup'],
     mutationFn: (group: IGroupDTO) => {
+      if (group.id === query.data?.id) return Promise.resolve(group);
+
       queryClient.setQueryData(['selectedGroup'], group);
 
       return updateDefaultGroup(group.id);
