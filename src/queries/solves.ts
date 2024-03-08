@@ -11,11 +11,13 @@ import { api } from '@/services/api';
 
 export const getSolves = async (
   filters: IFiltersDTO,
+  groupId: number,
 ): Promise<ComplaintDTO[]> => {
   const params = new URLSearchParams();
   if (filters?.complaintName) {
     params.append('query', filters.complaintName);
   }
+  params.append('group_id', String(groupId));
 
   const paramsString = params.toString();
 
@@ -23,8 +25,12 @@ export const getSolves = async (
   return response.data;
 };
 
-export const getMySolves = async (): Promise<FetchMyComplaintsResponse[]> => {
-  const response = await api.get('/users/complaints');
+export const getMySolves = async (
+  groupId: number,
+): Promise<FetchMyComplaintsResponse[]> => {
+  const params = new URLSearchParams();
+  params.append('group_id', String(groupId));
+  const response = await api.get(`/users/complaints?${params.toString()}`);
   return response.data;
 };
 
