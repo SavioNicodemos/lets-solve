@@ -1,5 +1,4 @@
 import { Feather } from '@expo/vector-icons';
-import { useQuery } from '@tanstack/react-query';
 import { router, useFocusEffect } from 'expo-router';
 import {
   FlatList,
@@ -17,23 +16,12 @@ import { EmptyListText } from '@/components/EmptyListText';
 import Loading from '@/components/Loading';
 import { SolveCard } from '@/components/SolveCard';
 import { IComplaintId } from '@/dtos/ComplaintDTO';
-import { getMySolves } from '@/queries/solves';
+import { useMySolves } from '@/hooks/useMySolves';
 
 export default function MySolves() {
   const [status, setStatus] = useState('');
 
-  const {
-    data: mySolves,
-    isLoading,
-    refetch,
-  } = useQuery({
-    queryKey: ['mySolves'],
-    queryFn: () => getMySolves(),
-    initialData: [],
-    meta: {
-      errorMessage: 'Ocorreu um erro ao buscar seus Resolves',
-    },
-  });
+  const { data: mySolves, isLoading, refetch } = useMySolves();
 
   const handleGoToSolveDetails = (complaintId: IComplaintId) => {
     router.push({

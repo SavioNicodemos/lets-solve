@@ -1,5 +1,4 @@
 import { Feather } from '@expo/vector-icons';
-import { useQuery } from '@tanstack/react-query';
 import { Redirect, router } from 'expo-router';
 import {
   Box,
@@ -25,7 +24,8 @@ import { IComplaintId } from '@/dtos/ComplaintDTO';
 import { IFiltersDTO } from '@/dtos/FiltersDTO';
 import { useAuth } from '@/hooks/useAuth';
 import { useGroups } from '@/hooks/useGroups';
-import { getMySolves, getSolves } from '@/queries/solves';
+import { useMySolves } from '@/hooks/useMySolves';
+import { useSolves } from '@/hooks/useSolves';
 
 export default function Home() {
   const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(false);
@@ -34,23 +34,9 @@ export default function Home() {
 
   const { user } = useAuth();
 
-  const { data: complaintList, isLoading } = useQuery({
-    queryKey: ['solves', filters],
-    queryFn: () => getSolves(filters),
-    initialData: [],
-    meta: {
-      errorMessage: 'Ocorreu um erro ao buscar os Resolves',
-    },
-  });
+  const { data: complaintList, isLoading } = useSolves(filters);
 
-  const { data: mySolves } = useQuery({
-    queryKey: ['mySolves'],
-    queryFn: () => getMySolves(),
-    initialData: [],
-    meta: {
-      errorMessage: 'Ocorreu um erro ao buscar seus Resolves',
-    },
-  });
+  const { data: mySolves } = useMySolves();
 
   const myActiveComplaintsCount = mySolves
     ? mySolves.filter(complaint => complaint.is_active).length

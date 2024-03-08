@@ -12,6 +12,8 @@ export function useSelectedGroup() {
     queryKey: ['selectedGroup'],
     queryFn: () => getDefaultGroup(),
     staleTime: 1000 * 60 * 60 * 2,
+    // Added this as we always have the default group set when the app starts
+    initialData: {} as IGroupDTO,
   });
 
   const mutation = useMutation({
