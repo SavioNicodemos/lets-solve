@@ -35,11 +35,9 @@ export default function Home() {
 
   const { data: complaintList, isLoading } = useSolves(filters);
 
-  const { data: mySolves } = useMySolves();
+  const { data: mySolves } = useMySolves('OPEN');
 
-  const myActiveComplaintsCount = mySolves
-    ? mySolves.filter(complaint => complaint.is_active).length
-    : 0;
+  const myActiveComplaintsCount = mySolves.length;
 
   const handleGoToCreateAdd = () => {
     router.push('/solves/create');
@@ -125,7 +123,7 @@ export default function Home() {
                   {myActiveComplaintsCount}
                 </Heading>
                 <Text color="gray.200" fontSize="xs">
-                  Resolves ativos
+                  Resolves em aberto
                 </Text>
               </Box>
               <Box flexDir="row" alignItems="center">
@@ -143,11 +141,7 @@ export default function Home() {
           </Pressable>
         </VStack>
 
-        <VStack mt="8">
-          <Text color="gray.300" fontSize="sm" mb="3">
-            Resolve os seus problemas do dia a dia sem nenhum drama!
-          </Text>
-
+        <VStack mt="4">
           <Input
             placeholder="Buscar Resolve"
             searchBar

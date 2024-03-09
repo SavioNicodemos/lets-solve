@@ -66,3 +66,5 @@ export type FetchMyComplaintsResponse = {
 export type FetchComplaint = FetchMyComplaintsResponse & {
   user: PublicUserDTO;
 };
+
+export type MyComplaintsStatusEnum = 'OPEN' | 'CLOSED' | 'ALL';

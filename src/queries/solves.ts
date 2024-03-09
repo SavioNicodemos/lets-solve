@@ -3,6 +3,7 @@ import {
   FetchComplaint,
   FetchMyComplaintsResponse,
   IComplaintId,
+  MyComplaintsStatusEnum,
   PublicComplaintListDTO,
 } from '@/dtos/ComplaintDTO';
 import { IFiltersDTO } from '@/dtos/FiltersDTO';
@@ -25,11 +26,16 @@ export const getSolves = async (
   return response.data;
 };
 
-export const getMySolves = async (
-  groupId: number,
-): Promise<FetchMyComplaintsResponse[]> => {
+export const getMySolves = async ({
+  groupId,
+  state = 'ALL',
+}: {
+  groupId: number;
+  state?: MyComplaintsStatusEnum;
+}): Promise<FetchMyComplaintsResponse[]> => {
   const params = new URLSearchParams();
   params.append('group_id', String(groupId));
+  params.append('state', state);
   const response = await api.get(`/users/complaints?${params.toString()}`);
   return response.data;
 };

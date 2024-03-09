@@ -15,13 +15,13 @@ import { useState } from 'react';
 import { EmptyListText } from '@/components/EmptyListText';
 import Loading from '@/components/Loading';
 import { SolveCard } from '@/components/SolveCard';
-import { IComplaintId } from '@/dtos/ComplaintDTO';
+import { IComplaintId, MyComplaintsStatusEnum } from '@/dtos/ComplaintDTO';
 import { useMySolves } from '@/hooks/useMySolves';
 
 export default function MySolves() {
-  const [status, setStatus] = useState('');
+  const [status, setStatus] = useState<MyComplaintsStatusEnum>('OPEN');
 
-  const { data: mySolves, isLoading, refetch } = useMySolves();
+  const { data: mySolves, isLoading, refetch } = useMySolves(status);
 
   const handleGoToSolveDetails = (complaintId: IComplaintId) => {
     router.push({
@@ -61,58 +61,58 @@ export default function MySolves() {
           onPress={handleGoToCreateSolve}
         />
       </HStack>
+      <HStack alignItems="center" justifyContent="space-between" mb={5}>
+        <Text color="gray.200" fontSize="sm">
+          {mySolves?.length} Resolves
+        </Text>
+        <Select
+          selectedValue={status}
+          minWidth="150"
+          accessibilityLabel="Choose Service"
+          placeholder="Todos"
+          _selectedItem={{
+            _text: {
+              color: 'white',
+            },
+            bg: 'blue.500',
+            endIcon: <Feather name="check" size={20} color="white" />,
+          }}
+          onValueChange={itemValue =>
+            setStatus(itemValue as MyComplaintsStatusEnum)
+          }
+        >
+          <Select.Item label="Todos" value="ALL" />
+          <Select.Item label="Em Aberto" value="OPEN" />
+          <Select.Item label="Fechados" value="CLOSED" />
+        </Select>
+      </HStack>
       {isLoading ? (
         <Loading backgroundStyle="appDefault" />
       ) : (
-        <>
-          <HStack alignItems="center" justifyContent="space-between" mb={5}>
-            <Text color="gray.200" fontSize="sm">
-              {mySolves?.length} Resolves
-            </Text>
-            <Select
-              selectedValue={status}
-              minWidth="100"
-              accessibilityLabel="Choose Service"
-              placeholder="Todos"
-              _selectedItem={{
-                _text: {
-                  color: 'white',
-                },
-                bg: 'blue.500',
-                endIcon: <Feather name="check" size={20} color="white" />,
-              }}
-              onValueChange={itemValue => setStatus(itemValue)}
-            >
-              <Select.Item label="Todos" value="all" />
-              <Select.Item label="Ativos" value="active" />
-              <Select.Item label="Inativos" value="disabled" />
-            </Select>
-          </HStack>
-          <FlatList
-            data={mySolves}
-            keyExtractor={item => item.id}
-            contentContainerStyle={
-              mySolves.length
-                ? {
-                    justifyContent: 'space-between',
-                  }
-                : { flex: 1, justifyContent: 'center' }
-            }
-            renderItem={({ item }) => (
-              <SolveCard
-                name={item.name}
-                status={item.state}
-                complaintImage={item.images?.[0]?.path}
-                isDisabled={!item.is_active}
-                onPress={() => handleGoToSolveDetails(item.id)}
-              />
-            )}
-            numColumns={2}
-            ListEmptyComponent={
-              <EmptyListText title="Não há nenhum Resolve seu criado ainda! Bora começar hoje?" />
-            }
-          />
-        </>
+        <FlatList
+          data={mySolves}
+          keyExtractor={item => item.id}
+          contentContainerStyle={
+            mySolves.length
+              ? {
+                  justifyContent: 'space-between',
+                }
+              : { flex: 1, justifyContent: 'center' }
+          }
+          renderItem={({ item }) => (
+            <SolveCard
+              name={item.name}
+              status={item.state}
+              complaintImage={item.images?.[0]?.path}
+              isDisabled={!item.is_active}
+              onPress={() => handleGoToSolveDetails(item.id)}
+            />
+          )}
+          numColumns={2}
+          ListEmptyComponent={
+            <EmptyListText title="Não há nenhum Resolve seu criado ainda! Bora começar hoje?" />
+          }
+        />
       )}
     </VStack>
   );
