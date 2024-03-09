@@ -26,7 +26,6 @@ describe('User storage', () => {
     const mockUser: UserDTO = {
       id: 'uuid',
       name: 'John Doe',
-      tel: '2342342',
       avatar_url: 'avatar.png',
       email: 'test@email.com',
     };
@@ -41,7 +40,6 @@ describe('User storage', () => {
     const mockStorage = JSON.stringify({
       id: 1,
       name: 'John Doe',
-      tel: '2342342',
     });
     (LocalStorage.getItem as jest.Mock).mockResolvedValueOnce(mockStorage);
     const user = await storageUserGet();

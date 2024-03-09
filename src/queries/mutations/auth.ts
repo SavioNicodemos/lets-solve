@@ -7,7 +7,6 @@ export async function createUser(data: ICreateUser): Promise<void> {
   formData.append('avatar', data.avatar as any);
   formData.append('name', data.name);
   formData.append('email', data.email);
-  formData.append('tel', data.tel);
   formData.append('password', data.password);
 
   await api.postForm('/users', formData);

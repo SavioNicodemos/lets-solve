@@ -117,20 +117,6 @@ export default function SignUp() {
 
         <Controller
           control={control}
-          name="tel"
-          render={({ field: { value, onChange } }) => (
-            <Input
-              placeholder="Telefone"
-              isInvalid={false}
-              value={value}
-              onChangeText={onChange}
-              errorMessage={errors.tel?.message}
-            />
-          )}
-        />
-
-        <Controller
-          control={control}
           name="password"
           render={({ field: { value, onChange } }) => (
             <Input
@@ -194,15 +180,6 @@ const createUserSchema = z.object({
     .string({ required_error: 'Informe um email' })
     .min(1, 'Informe um email')
     .email('Formato de e-mail errado'),
-
-  tel: z
-    .string({
-      required_error: 'Informe um telefone',
-    })
-    .min(1, 'Informe um telefone')
-    .refine(data => !Number.isNaN(Number(data)), {
-      message: 'Please enter only numeric values',
-    }),
 
   password: z
     .string({ required_error: 'Informe uma senha' })

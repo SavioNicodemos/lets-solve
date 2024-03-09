@@ -49,10 +49,6 @@ export default function Profile() {
           {user.email}
         </Heading>
 
-        <Heading fontSize="md" color="gray.200">
-          {user.tel}
-        </Heading>
-
         <VStack mt={6}>
           <SettingsItem
             title="Grupos"
