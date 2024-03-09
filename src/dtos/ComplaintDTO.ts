@@ -36,6 +36,14 @@ export type ComplaintDTO = Omit<ShowSolveDetailsDTO, 'images'> & {
   images: ImagesDTO[];
 };
 
+export type PublicComplaintListDTO = {
+  id: string;
+  name: string;
+  image: null | { id: string; path: string };
+  state: ComplaintStatusDTO;
+  user: PublicUserDTO;
+};
+
 export type IComplaintId = string;
 
 export type ImagesDTO = {

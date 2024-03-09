@@ -102,6 +102,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       setUser({} as UserDTO);
       await storageUserRemove();
       await storageAuthTokenRemove();
+      queryClient.clear();
 
       router.replace('/sign-in');
     } finally {

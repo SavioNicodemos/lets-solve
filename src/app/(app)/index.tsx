@@ -178,7 +178,7 @@ export default function Home() {
                 name={item.name}
                 userPhoto={item.user.avatar_url}
                 status={item.state}
-                complaintImage={item.images?.[0].path}
+                complaintImage={item.image?.path || ''}
                 onPress={() => handleGoToSolveDetails(item.id)}
               />
             )}

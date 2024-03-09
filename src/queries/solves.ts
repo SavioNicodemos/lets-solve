@@ -1,9 +1,9 @@
 import { FetchCommentDTO, IComment } from '@/dtos/CommentDTO';
 import {
-  ComplaintDTO,
   FetchComplaint,
   FetchMyComplaintsResponse,
   IComplaintId,
+  PublicComplaintListDTO,
 } from '@/dtos/ComplaintDTO';
 import { IFiltersDTO } from '@/dtos/FiltersDTO';
 import { LaravelPagination } from '@/dtos/RequestsDTO';
@@ -12,7 +12,7 @@ import { api } from '@/services/api';
 export const getSolves = async (
   filters: IFiltersDTO,
   groupId: number,
-): Promise<ComplaintDTO[]> => {
+): Promise<PublicComplaintListDTO[]> => {
   const params = new URLSearchParams();
   if (filters?.complaintName) {
     params.append('query', filters.complaintName);
