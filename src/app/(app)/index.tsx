@@ -12,7 +12,6 @@ import {
 } from 'native-base';
 import { useState } from 'react';
 
-import { Button } from '@/components/Button';
 import { EmptyListText } from '@/components/EmptyListText';
 import { FiltersModal, emptyFilters } from '@/components/FiltersModal';
 import GroupSelector from '@/components/GroupSelector';
@@ -89,12 +88,19 @@ export default function Home() {
               </Heading>
             </VStack>
           </HStack>
-          <Box flex={1} minW={150} maxW={150}>
-            <Button
-              title="Abrir um Resolve"
-              icon="plus"
+          <Box flex={1} justifyContent="center" minW={150} maxW={150}>
+            <Pressable
+              flexDir="row"
+              alignItems="center"
               onPress={handleGoToCreateAdd}
-            />
+              variant="unstyled"
+              style={{ gap: 4 }}
+            >
+              <Icon as={Feather} name="plus" size={6} color="blue.500" />
+              <Text fontSize="16" fontWeight="bold" color="blue.500">
+                Abrir um Resolve
+              </Text>
+            </Pressable>
           </Box>
         </HStack>
         <Box mt={4}>
