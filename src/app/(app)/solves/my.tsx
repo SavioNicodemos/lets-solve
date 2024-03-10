@@ -16,7 +16,7 @@ import { EmptyListText } from '@/components/EmptyListText';
 import Loading from '@/components/Loading';
 import { SolveCard } from '@/components/SolveCard';
 import { IComplaintId, MyComplaintsStatusEnum } from '@/dtos/ComplaintDTO';
-import { useMySolves } from '@/hooks/useMySolves';
+import { useMySolves } from '@/hooks/queries/useMySolves';
 
 export default function MySolves() {
   const [status, setStatus] = useState<MyComplaintsStatusEnum>('OPEN');

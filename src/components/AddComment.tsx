@@ -1,13 +1,12 @@
 import { Ionicons } from '@expo/vector-icons';
-import { useMutation } from '@tanstack/react-query';
 import { HStack, Icon, IconButton, TextArea } from 'native-base';
 import { useState } from 'react';
 
+import useAddComment from '@/hooks/mutations/useAddComment';
+import { useComplaint } from '@/hooks/queries/useComplaint';
+import { useInfiniteComments } from '@/hooks/queries/useInfiniteComments';
 import { useAuth } from '@/hooks/useAuth';
-import { useComplaint } from '@/hooks/useComplaint';
-import { useInfiniteComments } from '@/hooks/useInfiniteComments';
 import { useToast } from '@/hooks/useToast';
-import { addComment } from '@/queries/mutations/solves';
 import { UserPhoto } from './UserPhoto';
 
 export function AddComment({ complaintId }: { complaintId: string }) {
@@ -16,10 +15,7 @@ export function AddComment({ complaintId }: { complaintId: string }) {
   const { user } = useAuth();
   const toast = useToast();
 
-  const { isPending, mutateAsync } = useMutation({
-    mutationFn: () => addComment({ complaintId, message: message.trim() }),
-    mutationKey: ['comments', complaintId],
-  });
+  const { isPending, mutateAsync } = useAddComment(complaintId);
 
   const { refetch } = useInfiniteComments(complaintId);
 
@@ -34,7 +30,7 @@ export function AddComment({ complaintId }: { complaintId: string }) {
     }
 
     try {
-      await mutateAsync();
+      await mutateAsync(trimmedMessage);
       refetch();
       refetchComplaint();
     } catch (error) {

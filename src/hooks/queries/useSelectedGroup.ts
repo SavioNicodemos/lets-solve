@@ -2,9 +2,9 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { queryClient } from '@/contexts/ReactQueryContext';
 import { IGroupDTO } from '@/dtos/GroupDTO';
+import { useToast } from '@/hooks/useToast';
 import { getDefaultGroup } from '@/queries/groups';
 import { updateDefaultGroup } from '@/queries/mutations/groups';
-import { useToast } from './useToast';
 
 export function useSelectedGroup() {
   const toast = useToast();

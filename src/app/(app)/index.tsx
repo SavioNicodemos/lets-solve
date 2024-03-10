@@ -21,10 +21,10 @@ import { SolveCard } from '@/components/SolveCard';
 import { UserPhoto } from '@/components/UserPhoto';
 import { IComplaintId } from '@/dtos/ComplaintDTO';
 import { IFiltersDTO } from '@/dtos/FiltersDTO';
+import { useGroups } from '@/hooks/queries/useGroups';
+import { useMySolves } from '@/hooks/queries/useMySolves';
+import { useSolves } from '@/hooks/queries/useSolves';
 import { useAuth } from '@/hooks/useAuth';
-import { useGroups } from '@/hooks/useGroups';
-import { useMySolves } from '@/hooks/useMySolves';
-import { useSolves } from '@/hooks/useSolves';
 
 export default function Home() {
   const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(false);

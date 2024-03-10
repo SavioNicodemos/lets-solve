@@ -5,8 +5,8 @@ import { Platform } from 'react-native';
 import { Button } from '@/components/Button';
 import { SolveDetails } from '@/components/SolveDetails';
 import { IImageUpload, ShowSolveDetailsDTO } from '@/dtos/ComplaintDTO';
+import { useSelectedGroup } from '@/hooks/queries/useSelectedGroup';
 import { useAuth } from '@/hooks/useAuth';
-import { useSelectedGroup } from '@/hooks/useSelectedGroup';
 import { useToast } from '@/hooks/useToast';
 import {
   addImagesToComplaint,

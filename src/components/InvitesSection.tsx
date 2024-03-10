@@ -21,7 +21,7 @@ import Animated, {
 import { UserItem } from '@/components/UserItem';
 import { IInviteFromGroup } from '@/dtos/GroupDTO';
 import { useManageGroupInvite } from '@/hooks/mutations/useManageGroupInvite';
-import { useGroupInvites } from '@/hooks/useGroupInvites';
+import { useGroupInvites } from '@/hooks/queries/useGroupInvites';
 import { handleError } from '@/utils/handleError';
 import { ListDivider } from './ListDivider';
 

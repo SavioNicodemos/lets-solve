@@ -21,8 +21,8 @@ import { UsersInvitedSection } from '@/components/UsersInvitedSection';
 import { IGroupWithParticipants } from '@/dtos/GroupDTO';
 import { useRemoveUserFromGroup } from '@/hooks/mutations/useRemoveUserFromGroup';
 import { useUpdateGroup } from '@/hooks/mutations/useUpdateGroup';
+import { useGroup } from '@/hooks/queries/useGroup';
 import { useAuth } from '@/hooks/useAuth';
-import { useGroup } from '@/hooks/useGroup';
 import { useToast } from '@/hooks/useToast';
 
 export { ErrorBoundary } from '@/components/ErrorBoundary';

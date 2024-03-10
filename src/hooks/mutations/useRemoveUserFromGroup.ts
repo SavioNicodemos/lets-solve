@@ -1,8 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
 
+import { useGroup } from '@/hooks/queries/useGroup';
+import { useGroups } from '@/hooks/queries/useGroups';
 import { deleteFromGroup } from '@/queries/mutations/groups';
-import { useGroup } from '../useGroup';
-import { useGroups } from '../useGroups';
 
 export const useRemoveUserFromGroup = (groupId: number) => {
   const { refetch: refetchGroups } = useGroups();

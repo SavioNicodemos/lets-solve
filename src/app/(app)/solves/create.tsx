@@ -10,7 +10,7 @@ import { Input } from '@/components/Input';
 import { TextArea } from '@/components/TextArea';
 import { UploadPicturesContainer } from '@/components/UploadPicturesContainer';
 import { CreateComplaintDTO, IImageUpload } from '@/dtos/ComplaintDTO';
-import { useComplaint } from '@/hooks/useComplaint';
+import { useComplaint } from '@/hooks/queries/useComplaint';
 import { useToast } from '@/hooks/useToast';
 import {
   addImagesToComplaint,

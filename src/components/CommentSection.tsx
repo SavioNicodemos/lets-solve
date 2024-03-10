@@ -1,6 +1,6 @@
 import { Heading, VStack, View } from 'native-base';
 
-import { useInfiniteComments } from '@/hooks/useInfiniteComments';
+import { useInfiniteComments } from '@/hooks/queries/useInfiniteComments';
 import { AddComment } from './AddComment';
 import { CommentItem } from './CommentItem';
 

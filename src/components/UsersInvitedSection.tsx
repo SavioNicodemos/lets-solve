@@ -7,7 +7,7 @@ import { z } from 'zod';
 
 import { FetchInvitedUser, IInvitedUser } from '@/dtos/GroupDTO';
 import { useDeleteGroupInvite } from '@/hooks/mutations/useDeleteGroupInvite';
-import { useInvitedUsers } from '@/hooks/useInvitedUsers';
+import { useInvitedUsers } from '@/hooks/queries/useInvitedUsers';
 import { useToast } from '@/hooks/useToast';
 
 import { useSendGroupInvite } from '@/hooks/mutations/useSendGroupInvite';

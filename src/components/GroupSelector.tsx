@@ -3,8 +3,8 @@ import { Heading, Icon, Modal, Pressable, VStack } from 'native-base';
 import { useState } from 'react';
 
 import { IGroupDTO } from '@/dtos/GroupDTO';
-import { useGroups } from '@/hooks/useGroups';
-import { useSelectedGroup } from '@/hooks/useSelectedGroup';
+import { useGroups } from '@/hooks/queries/useGroups';
+import { useSelectedGroup } from '@/hooks/queries/useSelectedGroup';
 import { GroupItem, SkeletonGroupItem } from './GroupItem';
 import { UserPhoto } from './UserPhoto';
 

@@ -1,5 +1,4 @@
 import { Feather } from '@expo/vector-icons';
-import { useMutation } from '@tanstack/react-query';
 import {
   Redirect,
   router,
@@ -14,9 +13,9 @@ import { ComplaintEvaluationModal } from '@/components/ComplaintEvaluationModal'
 import { Menu, MenuItem } from '@/components/Menu';
 import RenderComplaint from '@/components/RenderComplaint';
 import { ISubmitEvaluation } from '@/dtos/ComplaintDTO';
+import { useSubmitEvaluation } from '@/hooks/mutations/useSubmitEvaluation';
+import { useComplaint } from '@/hooks/queries/useComplaint';
 import { useAuth } from '@/hooks/useAuth';
-import { useComplaint } from '@/hooks/useComplaint';
-import { submitEvaluation } from '@/queries/mutations/solves';
 import { handleError } from '@/utils/handleError';
 
 export default function Complaint() {
@@ -39,10 +38,7 @@ export default function Complaint() {
   const isMySolve = user.id === complaint?.user.id;
   const isResolved = complaint?.is_resolved;
 
-  const { mutateAsync } = useMutation({
-    mutationFn: (items: ISubmitEvaluation) =>
-      submitEvaluation({ complaintId, ...items }),
-  });
+  const { mutateAsync } = useSubmitEvaluation(complaintId);
 
   const handleStartEvaluation = async (items: ISubmitEvaluation) => {
     try {

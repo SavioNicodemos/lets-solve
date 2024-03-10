@@ -1,11 +1,11 @@
 import { useMutation } from '@tanstack/react-query';
 
+import { useGroupInvites } from '@/hooks/queries/useGroupInvites';
+import { useGroups } from '@/hooks/queries/useGroups';
 import {
   acceptGroupInvite,
   declineGroupInvite,
 } from '@/queries/mutations/groups';
-import { useGroupInvites } from '../useGroupInvites';
-import { useGroups } from '../useGroups';
 
 export const useManageGroupInvite = () => {
   const { refetch: refetchInvites } = useGroupInvites();

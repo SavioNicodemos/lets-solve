@@ -5,8 +5,8 @@ import { Alert } from 'react-native';
 import { AvatarUpload } from '@/components/AvatarUpload';
 import { Header } from '@/components/Header';
 import { SettingsItem } from '@/components/SettingsItem';
+import { useGroups } from '@/hooks/queries/useGroups';
 import { useAuth } from '@/hooks/useAuth';
-import { useGroups } from '@/hooks/useGroups';
 
 export default function Profile() {
   const { user, updateUserAvatar, signOut } = useAuth();
