@@ -117,10 +117,9 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       const userLogged = await storageUserGet();
       const { token } = await storageAuthTokenGet();
 
-      if (token && userLogged) {
-        userAndTokenUpdate(userLogged, token);
-      }
+      if (!(userLogged && token)) return;
 
+      userAndTokenUpdate(userLogged, token);
       await getAndSetGroups();
     } finally {
       setIsLoadingUserStorageData(false);
