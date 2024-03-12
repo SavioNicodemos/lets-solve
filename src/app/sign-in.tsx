@@ -14,7 +14,7 @@ type FormData = {
 };
 
 export default function SignIn() {
-  const { signIn } = useAuth();
+  const { signIn, isLoadingUserStorageData: isLoading } = useAuth();
   const {
     control,
     handleSubmit,
@@ -97,6 +97,8 @@ export default function SignIn() {
             mt="4"
             mx={12}
             onPress={handleSubmit(handleSignIn)}
+            isDisabled={isSubmitting || isLoading}
+            isLoading={isSubmitting || isLoading}
           />
         </VStack>
         <Center px={12} mt={16}>
