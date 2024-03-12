@@ -8,6 +8,7 @@ import { z } from 'zod';
 import { AvatarUpload } from '@/components/AvatarUpload';
 import { Header } from '@/components/Header';
 import { Input } from '@/components/Input';
+import { queryClient } from '@/contexts/ReactQueryContext';
 import { IImageUpload } from '@/dtos/ComplaintDTO';
 import { useCreateGroup } from '@/hooks/mutations/useCreateGroup';
 import { IImageUploadSchema } from '@/schemas/Image';
@@ -25,6 +26,8 @@ export default function CreateGroup() {
   const submitForm = async (data: ICreateGroup) => {
     try {
       const newGroup = await mutateAsync(data);
+
+      queryClient.setQueryData(['selectedGroup'], newGroup);
 
       router.replace(`/groups/${newGroup.id}`);
     } catch (error) {
