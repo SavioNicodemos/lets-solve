@@ -2,29 +2,32 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { router } from 'expo-router';
 import { Center, Heading, ScrollView, Text, VStack } from 'native-base';
 import { Controller, useForm } from 'react-hook-form';
-import { z } from 'zod';
 
 import Logo from '@/assets/Logo.svg';
 import { AvatarUpload } from '@/components/AvatarUpload';
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
 import { ICreateUser } from '@/dtos/UserDTO';
+import { useCreateUser } from '@/hooks/mutations/useCreateUser';
 import { useToast } from '@/hooks/useToast';
-import { createUser } from '@/queries/mutations/auth';
+import { createUserSchema } from '@/schemas/user';
 import { handleError } from '@/utils/handleError';
 
 export default function SignUp() {
   const toast = useToast();
 
+  const { isPending, mutateAsync } = useCreateUser();
+
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     setError,
   } = useForm<ICreateUser>({
-    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     resolver: zodResolver(createUserSchema),
   });
+
+  const isLoading = isPending || isSubmitting;
 
   const handleGoBack = () => {
     router.back();
@@ -38,7 +41,7 @@ export default function SignUp() {
       return;
     }
     try {
-      await createUser(data);
+      await mutateAsync(data);
 
       toast.success('Usuário criado com sucesso!');
 
@@ -148,6 +151,8 @@ export default function SignUp() {
           variant="primary"
           mt="4"
           onPress={handleSubmit(handleCreateUser)}
+          isDisabled={isLoading}
+          isLoading={isLoading}
         />
 
         <Text color="gray.200" fontSize="sm" mt={12} textAlign="center">
@@ -163,31 +168,3 @@ export default function SignUp() {
     </ScrollView>
   );
 }
-
-const createUserSchema = z.object({
-  avatar: z
-    .any({ required_error: 'É necessário escolher uma foto de perfil' })
-    .refine(
-      file => file?.type.startsWith('image/'),
-      'O arquivo deve ser uma imagem',
-    ),
-
-  name: z
-    .string({ required_error: 'Informe o nome de usuário' })
-    .min(1, 'Informe o nome de usuário'),
-
-  email: z
-    .string({ required_error: 'Informe um email' })
-    .min(1, 'Informe um email')
-    .email('Formato de e-mail errado'),
-
-  password: z
-    .string({ required_error: 'Informe uma senha' })
-    .min(6, 'A senha deve ter pelo menos 6 dígitos.'),
-
-  confirm_password: z
-    .string({
-      required_error: 'Informe uma confirmação de senha',
-    })
-    .min(6, 'A senha deve ter pelo menos 6 dígitos.'),
-});
