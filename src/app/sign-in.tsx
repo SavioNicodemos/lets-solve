@@ -1,5 +1,12 @@
 import { router } from 'expo-router';
-import { Center, Heading, ScrollView, Text, VStack } from 'native-base';
+import {
+  Center,
+  Heading,
+  Button as NButton,
+  ScrollView,
+  Text,
+  VStack,
+} from 'native-base';
 import { Controller, useForm } from 'react-hook-form';
 
 import Logo from '@/assets/Logo.svg';
@@ -90,16 +97,26 @@ export default function SignIn() {
               )}
             />
           </Center>
+
           <Button
             title="Entrar"
             variant="blue"
-            mb="16"
+            mb="12"
             mt="4"
             mx={12}
             onPress={handleSubmit(handleSignIn)}
             isDisabled={isSubmitting || isLoading}
             isLoading={isSubmitting || isLoading}
           />
+
+          <NButton
+            variant="link"
+            mb={4}
+            onPress={() => router.push('/password/forgot')}
+            isDisabled={isSubmitting}
+          >
+            Esqueci minha senha
+          </NButton>
         </VStack>
         <Center px={12} mt={16}>
           <Text color="gray.200" fontSize="sm">

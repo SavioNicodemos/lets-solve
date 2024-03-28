@@ -35,7 +35,16 @@ let isRefreshing = false;
 
 api.registerInterceptTokenManager = singOut => {
   const interceptTokenManager = api.interceptors.response.use(
-    response => response,
+    async response => {
+      // add artificial delay for dev env
+      if (process.env.NODE_ENV === 'development') {
+        // eslint-disable-next-line no-console
+        console.log('Kindly remember to remove `sleep`');
+        // eslint-disable-next-line no-promise-executor-return
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      }
+      return response;
+    },
     async requestError => {
       if (requestError.response?.status === 401) {
         // NOTE: This message always needs to be the same as the one in the backend

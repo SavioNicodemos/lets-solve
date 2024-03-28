@@ -1,11 +1,11 @@
 import {
-  Input as NativeBaseInput,
-  IInputProps,
+  Divider,
   FormControl,
   HStack,
   Icon,
-  Divider,
   IconButton,
+  IInputProps,
+  Input as NativeBaseInput,
 } from 'native-base';
 
 import { Feather } from '@expo/vector-icons';
@@ -24,6 +24,7 @@ export function Input({
   searchBar = false,
   onSearchPress = () => {},
   onFilterPress = () => {},
+  mx,
   ...rest
 }: Props) {
   const isInvalidField = !!errorMessage || isInvalid;
@@ -32,7 +33,7 @@ export function Input({
       <NativeBaseInput
         bg="gray.700"
         h={12}
-        px={4}
+        mx={mx}
         borderWidth={0}
         fontSize="md"
         color="gray.200"
@@ -85,6 +86,7 @@ export function Input({
         borderBottomRightRadius="sm"
         mt={0}
         px={2}
+        mx={mx}
         pb={1}
       >
         {errorMessage}

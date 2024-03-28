@@ -19,11 +19,20 @@ export const createUserSchema = z.object({
 
   password: z
     .string({ required_error: 'Informe uma senha' })
-    .min(6, 'A senha deve ter pelo menos 6 dígitos.'),
+    .min(8, 'A senha deve ter pelo menos 6 dígitos.'),
 
   confirm_password: z
     .string({
       required_error: 'Informe uma confirmação de senha',
     })
-    .min(6, 'A senha deve ter pelo menos 6 dígitos.'),
+    .min(8, 'A senha deve ter pelo menos 6 dígitos.'),
 });
+
+export const passwordSchema = z
+  .string()
+  .min(8, 'Senha deve conter pelo menos 8 caracteres')
+  .regex(/[A-Z]/, 'A senha deve conter pelo menos 1 letra maiúscula')
+  .regex(
+    /[!@#$%^&*(),.?":{}|<>]/,
+    'A senha deve conter pelo menos 1 caractere especial',
+  );
