@@ -3,6 +3,7 @@ import {
   FetchInviteFromGroup,
   FetchInvitedUser,
   FetchMyGroups,
+  GroupId,
   IGroupDTO,
   IGroupWithParticipants,
   IInviteFromGroup,
@@ -17,14 +18,14 @@ export const getGroups = async (): Promise<IGroupDTO[]> => {
 };
 
 export const getGroupById = async (
-  id: number,
+  id: GroupId,
 ): Promise<IGroupWithParticipants> => {
   const response = await api.get<FetchGroupById>(`/groups/${id}`);
 
   return response.data;
 };
 
-export const getInvitedUsers = async (id: number): Promise<IInvitedUser[]> => {
+export const getInvitedUsers = async (id: GroupId): Promise<IInvitedUser[]> => {
   const response = await api.get<FetchInvitedUser[]>(`/groups/${id}/invites`);
 
   return response.data;

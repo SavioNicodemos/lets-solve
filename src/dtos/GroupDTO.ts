@@ -1,12 +1,14 @@
 import { PublicUserDTO } from './UserDTO';
 
 export type IGroupDTO = {
-  id: number;
+  id: GroupId;
   name: string;
   image_url: string;
   is_admin: boolean;
   participants_count: number;
 };
+
+export type GroupId = string;
 
 export type IGroupWithParticipants = IGroupDTO & {
   participants: PublicUserDTO[];

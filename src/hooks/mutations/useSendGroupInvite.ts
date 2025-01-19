@@ -2,8 +2,9 @@ import { useMutation } from '@tanstack/react-query';
 
 import { sendGroupInvite } from '@/queries/mutations/groups';
 import { useInvitedUsers } from '../queries/useInvitedUsers';
+import { GroupId } from '@/dtos/GroupDTO';
 
-export const useSendGroupInvite = (groupId: number) => {
+export const useSendGroupInvite = (groupId: GroupId) => {
   const { refetch } = useInvitedUsers(groupId);
 
   return useMutation({

@@ -1,5 +1,5 @@
 import { IImageUpload } from '@/dtos/ComplaintDTO';
-import { IGroupDTO, IGroupWithParticipants } from '@/dtos/GroupDTO';
+import { GroupId, IGroupDTO, IGroupWithParticipants } from '@/dtos/GroupDTO';
 import { FetchCreateInvite, IInviteDTO } from '@/dtos/GroupInviteDTO';
 import { api } from '@/services/api';
 
@@ -59,7 +59,7 @@ export async function updateGroup({
   return response.data;
 }
 
-export async function updateDefaultGroup(groupId: number): Promise<IGroupDTO> {
+export async function updateDefaultGroup(groupId: GroupId): Promise<IGroupDTO> {
   const response = await api.post<IGroupDTO>(`/users/default-group`, {
     group_id: groupId,
   });
@@ -76,22 +76,21 @@ export async function declineGroupInvite(inviteId: number): Promise<void> {
 }
 
 type IUpdateGroup = {
-  groupId: number;
+  groupId: GroupId;
   name?: string;
   image?: IImageUpload;
 };
 
 type IDeleteFromGroup = {
-  groupId: number;
+  groupId: GroupId;
   userId: string;
 };
 
 type ISendGroupInvite = {
-  groupId: number;
+  groupId: GroupId;
   email: string;
 };
 
 type IDeleteGroupInvite = {
-  groupId: number;
   inviteId: number;
 };

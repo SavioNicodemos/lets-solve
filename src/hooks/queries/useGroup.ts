@@ -1,8 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { getGroupById } from '@/queries/groups';
+import { GroupId } from '@/dtos/GroupDTO';
 
-export const useGroup = (id: number) =>
+export const useGroup = (id: GroupId) =>
   useQuery({
     queryKey: ['group', id],
     queryFn: () => getGroupById(id),

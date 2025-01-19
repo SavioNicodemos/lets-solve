@@ -7,12 +7,13 @@ import {
   PublicComplaintListDTO,
 } from '@/dtos/ComplaintDTO';
 import { IFiltersDTO } from '@/dtos/FiltersDTO';
+import { GroupId } from '@/dtos/GroupDTO';
 import { LaravelPagination } from '@/dtos/RequestsDTO';
 import { api } from '@/services/api';
 
 export const getSolves = async (
   filters: IFiltersDTO,
-  groupId: number,
+  groupId: GroupId,
 ): Promise<PublicComplaintListDTO[]> => {
   const params = new URLSearchParams();
   if (filters?.complaintName) {
@@ -30,7 +31,7 @@ export const getMySolves = async ({
   groupId,
   state = 'ALL',
 }: {
-  groupId: number;
+  groupId: GroupId;
   state?: MyComplaintsStatusEnum;
 }): Promise<FetchMyComplaintsResponse[]> => {
   const params = new URLSearchParams();

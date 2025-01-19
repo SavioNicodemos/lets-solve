@@ -4,6 +4,7 @@ import {
   IImageUpload,
   ISubmitEvaluation,
 } from '@/dtos/ComplaintDTO';
+import { GroupId } from '@/dtos/GroupDTO';
 import { api } from '@/services/api';
 import { handleError } from '@/utils/handleError';
 
@@ -105,7 +106,7 @@ type IAddComment = {
 type ICreateComplaint = {
   name: string;
   description: string;
-  groupId: number;
+  groupId: GroupId;
 };
 
 type IUpdateComplaint = {

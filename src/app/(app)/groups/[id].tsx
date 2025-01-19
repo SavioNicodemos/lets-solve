@@ -18,7 +18,7 @@ import Loading from '@/components/Loading';
 import { UserPhoto } from '@/components/UserPhoto';
 import { UsersInGroupSection } from '@/components/UsersInGroupSection';
 import { UsersInvitedSection } from '@/components/UsersInvitedSection';
-import { IGroupWithParticipants } from '@/dtos/GroupDTO';
+import { GroupId, IGroupWithParticipants } from '@/dtos/GroupDTO';
 import { useRemoveUserFromGroup } from '@/hooks/mutations/useRemoveUserFromGroup';
 import { useUpdateGroup } from '@/hooks/mutations/useUpdateGroup';
 import { useGroup } from '@/hooks/queries/useGroup';
@@ -137,17 +137,17 @@ export default function Group() {
 
 const useValidatedParams = () => {
   const { id } = useLocalSearchParams();
-  if (Array.isArray(id) || !id || Number.isNaN(Number(id))) {
+  if (typeof id !== 'string') {
     throw new Error('Id inválido!');
   }
-  return Number(id);
+  return id;
 };
 
 function GroupHeaderInfo({
   groupId,
   data,
 }: {
-  groupId: number;
+  groupId: GroupId;
   data: IGroupWithParticipants;
 }) {
   const { mutate } = useUpdateGroup(groupId);

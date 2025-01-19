@@ -5,7 +5,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { Alert } from 'react-native';
 import { z } from 'zod';
 
-import { FetchInvitedUser, IInvitedUser } from '@/dtos/GroupDTO';
+import { FetchInvitedUser, GroupId, IInvitedUser } from '@/dtos/GroupDTO';
 import { useDeleteGroupInvite } from '@/hooks/mutations/useDeleteGroupInvite';
 import { useInvitedUsers } from '@/hooks/queries/useInvitedUsers';
 import { useToast } from '@/hooks/useToast';
@@ -15,7 +15,7 @@ import { Input } from './Input';
 import { UserItem, UserItemSkeleton } from './UserItem';
 
 type Props = {
-  groupId: number;
+  groupId: GroupId;
   shouldRender: boolean;
 };
 
@@ -113,7 +113,7 @@ function RenderInvitedUsers({
   );
 }
 
-function InviteUserInput({ groupId }: { groupId: number }) {
+function InviteUserInput({ groupId }: { groupId: GroupId }) {
   const {
     control,
     setValue,
