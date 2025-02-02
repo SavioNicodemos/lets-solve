@@ -4,7 +4,8 @@ import { Dimensions } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 
 import noComplaint from '@/assets/noComplaint.png';
-import { IImageUpload, ImagesDTO } from '@/dtos/ComplaintDTO';
+import { IImageUpload } from '@/features/shared/images/types';
+import { ImagesDTO } from '@/features/solves/types';
 
 type Props = {
   images: (ImagesDTO | IImageUpload)[];

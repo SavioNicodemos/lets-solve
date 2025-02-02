@@ -5,14 +5,19 @@ import { Controller, useForm } from 'react-hook-form';
 import { Alert } from 'react-native';
 import { z } from 'zod';
 
-import { FetchInvitedUser, GroupId, IInvitedUser } from '@/dtos/GroupDTO';
-import { useDeleteGroupInvite } from '@/hooks/mutations/useDeleteGroupInvite';
-import { useInvitedUsers } from '@/hooks/queries/useInvitedUsers';
-import { useToast } from '@/hooks/useToast';
-
-import { useSendGroupInvite } from '@/hooks/mutations/useSendGroupInvite';
 import { Input } from './Input';
 import { UserItem, UserItemSkeleton } from './UserItem';
+import { GroupId } from '@/features/groups/types';
+import { useToast } from '@/features/shared/hooks/useToast';
+import { useInvitedUsers } from '@/features/groups/invites/queries';
+import {
+  useDeleteGroupInvite,
+  useSendGroupInvite,
+} from '@/features/groups/invites/mutations';
+import {
+  FetchInvitedUser,
+  IInvitedUser,
+} from '@/features/groups/invites/types';
 
 type Props = {
   groupId: GroupId;

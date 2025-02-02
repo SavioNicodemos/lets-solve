@@ -1,7 +1,6 @@
-import { UserDTO } from '@/dtos/UserDTO';
 import LocalStorage from '@/storage/localStorage';
-
 import { USER_STORAGE } from './storageConfig';
+import { UserDTO } from '@/features/users/types';
 
 export async function storageUserSave(user: UserDTO) {
   await LocalStorage.setItem(USER_STORAGE, JSON.stringify(user));

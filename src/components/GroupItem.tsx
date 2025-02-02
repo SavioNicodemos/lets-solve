@@ -2,9 +2,8 @@ import { Feather } from '@expo/vector-icons';
 import { HStack, Heading, Icon, Skeleton, Text, VStack } from 'native-base';
 import { TouchableOpacity } from 'react-native';
 
-import { IGroupDTO } from '@/dtos/GroupDTO';
-
 import { UserPhoto } from './UserPhoto';
+import { IGroupDTO } from '@/features/groups/types';
 
 export function GroupItem({ group, onPress, hideIcon = false }: Props) {
   return (

@@ -4,21 +4,19 @@ import { Platform } from 'react-native';
 
 import { Button } from '@/components/Button';
 import { SolveDetails } from '@/components/SolveDetails';
-import { IImageUpload, ShowSolveDetailsDTO } from '@/dtos/ComplaintDTO';
-import { useSelectedGroup } from '@/hooks/queries/useSelectedGroup';
-import { useAuth } from '@/hooks/useAuth';
-import { useToast } from '@/hooks/useToast';
-import {
-  addImagesToComplaint,
-  createComplaint,
-} from '@/queries/mutations/solves';
-import { useCreateComplaint } from '@/stores/useCreateComplaint';
 import { handleError } from '@/utils/handleError';
+import { useCreateMultiStepComplaintStore } from '@/features/solves/stores';
+import { useAuth } from '@/features/auth/hooks';
+import { useToast } from '@/features/shared/hooks/useToast';
+import { useSelectedGroup } from '@/features/groups/queries';
+import { ShowSolveDetailsDTO } from '@/features/solves/types';
+import { addImagesToComplaint, createComplaint } from '@/features/solves/api';
+import { IImageUpload } from '@/features/shared/images/types';
 
 export { ErrorBoundary } from '@/components/ErrorBoundary';
 
 export default function SolvePreview() {
-  const { complaint } = useCreateComplaint();
+  const { complaint } = useCreateMultiStepComplaintStore();
   const { user } = useAuth();
   const toast = useToast();
   const {

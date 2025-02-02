@@ -9,17 +9,18 @@ import { Header } from '@/components/Header';
 import { Input } from '@/components/Input';
 import { TextArea } from '@/components/TextArea';
 import { UploadPicturesContainer } from '@/components/UploadPicturesContainer';
-import { CreateComplaintDTO, IImageUpload } from '@/dtos/ComplaintDTO';
-import { useComplaint } from '@/hooks/queries/useComplaint';
-import { useToast } from '@/hooks/useToast';
+import { handleError } from '@/utils/handleError';
+import { findDeletedObjects } from '@/utils/helpers/arrayHelper';
+import { useToast } from '@/features/shared/hooks/useToast';
+import { useSolve } from '@/features/solves/queries';
+import { CreateComplaintDTO } from '@/features/solves/types';
+import { useCreateMultiStepComplaintStore } from '@/features/solves/stores';
 import {
   addImagesToComplaint,
   deleteComplaintImagesByIds,
   updateComplaint,
-} from '@/queries/mutations/solves';
-import { useCreateComplaint } from '@/stores/useCreateComplaint';
-import { handleError } from '@/utils/handleError';
-import { findDeletedObjects } from '@/utils/helpers/arrayHelper';
+} from '@/features/solves/api';
+import { IImageUpload } from '@/features/shared/images/types';
 
 const createSolveSchema = z.object({
   name: z.string().min(1, 'Informe um título para a queixa'),
@@ -38,7 +39,7 @@ export default function CreateSolve() {
     throw new Error('Id inválido');
   }
 
-  const { data: complaint } = useComplaint(complaintId);
+  const { data: complaint } = useSolve(complaintId);
 
   const isEditView = !!complaint;
 
@@ -57,7 +58,7 @@ export default function CreateSolve() {
     resolver: zodResolver(createSolveSchema),
   });
 
-  const { setComplaint } = useCreateComplaint();
+  const { setComplaint } = useCreateMultiStepComplaintStore();
 
   const handleGoBack = () => {
     router.back();

@@ -2,12 +2,12 @@ import { Ionicons } from '@expo/vector-icons';
 import { HStack, Icon, IconButton, TextArea } from 'native-base';
 import { useState } from 'react';
 
-import useAddComment from '@/hooks/mutations/useAddComment';
-import { useComplaint } from '@/hooks/queries/useComplaint';
-import { useInfiniteComments } from '@/hooks/queries/useInfiniteComments';
-import { useAuth } from '@/hooks/useAuth';
-import { useToast } from '@/hooks/useToast';
 import { UserPhoto } from './UserPhoto';
+import { useAuth } from '@/features/auth/hooks';
+import { useToast } from '@/features/shared/hooks/useToast';
+import { useSolve } from '@/features/solves/queries';
+import useAddComment from '@/features/solves/comments/mutations';
+import { useInfiniteComments } from '@/features/solves/comments/queries';
 
 export function AddComment({ complaintId }: { complaintId: string }) {
   const [message, setMessage] = useState('');
@@ -19,7 +19,7 @@ export function AddComment({ complaintId }: { complaintId: string }) {
 
   const { refetch } = useInfiniteComments(complaintId);
 
-  const { refetch: refetchComplaint } = useComplaint(complaintId);
+  const { refetch: refetchComplaint } = useSolve(complaintId);
 
   const handleAddComment = async () => {
     const trimmedMessage = message.trim();

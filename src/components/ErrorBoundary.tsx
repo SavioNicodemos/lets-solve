@@ -1,6 +1,5 @@
 import { Redirect, router } from 'expo-router';
-
-import { useToast } from '@/hooks/useToast';
+import { useToast } from '@/features/shared/hooks/useToast';
 
 type Props = {
   message?: string;

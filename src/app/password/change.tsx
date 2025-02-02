@@ -9,11 +9,11 @@ import Logo from '@/assets/Logo.svg';
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
 import Loading from '@/components/Loading';
-import { useUpdatePassword } from '@/hooks/mutations/useUpdatePassword';
-import { useValidatePasswordToken } from '@/hooks/queries/useValidatePasswordToken';
-import { useToast } from '@/hooks/useToast';
-import { passwordSchema } from '@/schemas/user';
 import { handleError } from '@/utils/handleError';
+import { useToast } from '@/features/shared/hooks/useToast';
+import { passwordSchema } from '@/features/auth/schemas';
+import { useUpdatePassword } from '@/features/auth/mutations';
+import { useValidatePasswordToken } from '@/features/auth/queries';
 
 export default function ChangePassword() {
   const toast = useToast();

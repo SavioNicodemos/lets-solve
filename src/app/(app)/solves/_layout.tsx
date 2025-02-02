@@ -1,6 +1,5 @@
 import { Redirect, Slot } from 'expo-router';
-
-import { useGroups } from '@/hooks/queries/useGroups';
+import { useGroups } from '@/features/groups/queries';
 
 export default function SolveLayout() {
   const { data: groups } = useGroups();

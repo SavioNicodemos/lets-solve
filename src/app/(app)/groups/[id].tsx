@@ -18,12 +18,14 @@ import Loading from '@/components/Loading';
 import { UserPhoto } from '@/components/UserPhoto';
 import { UsersInGroupSection } from '@/components/UsersInGroupSection';
 import { UsersInvitedSection } from '@/components/UsersInvitedSection';
-import { GroupId, IGroupWithParticipants } from '@/dtos/GroupDTO';
-import { useRemoveUserFromGroup } from '@/hooks/mutations/useRemoveUserFromGroup';
-import { useUpdateGroup } from '@/hooks/mutations/useUpdateGroup';
-import { useGroup } from '@/hooks/queries/useGroup';
-import { useAuth } from '@/hooks/useAuth';
-import { useToast } from '@/hooks/useToast';
+import { useAuth } from '@/features/auth/hooks';
+import { useGroup } from '@/features/groups/queries';
+import {
+  useRemoveUserFromGroup,
+  useUpdateGroup,
+} from '@/features/groups/mutations';
+import { useToast } from '@/features/shared/hooks/useToast';
+import { GroupId, IGroupWithParticipants } from '@/features/groups/types';
 
 export { ErrorBoundary } from '@/components/ErrorBoundary';
 

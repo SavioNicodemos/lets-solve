@@ -4,11 +4,11 @@ import * as ImagePicker from 'expo-image-picker';
 import { Box, FormControl, IBoxProps, Icon, IconButton } from 'native-base';
 import { useState } from 'react';
 
-import { IImageUpload } from '@/dtos/ComplaintDTO';
 import { AppError } from '@/utils/AppError';
 import { handleError } from '@/utils/handleError';
 
 import { UserPhoto } from './UserPhoto';
+import { IImageUpload } from '@/features/shared/images/types';
 
 type Props = IBoxProps & {
   value: ImageProp;

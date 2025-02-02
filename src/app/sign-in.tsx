@@ -12,8 +12,8 @@ import { Controller, useForm } from 'react-hook-form';
 import Logo from '@/assets/Logo.svg';
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
-import { useAuth } from '@/hooks/useAuth';
 import { handleError } from '@/utils/handleError';
+import { useAuth } from '@/features/auth/hooks';
 
 type FormData = {
   email: string;

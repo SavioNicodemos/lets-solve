@@ -8,7 +8,7 @@ import { PropsWithChildren } from 'react';
 import { AppError } from '@/utils/AppError';
 import { handleError } from '@/utils/handleError';
 
-export const queryClient = new QueryClient({
+const queryClient = new QueryClient({
   queryCache: new QueryCache({
     onError: (_, query) => {
       if (!query.meta?.errorMessage) return;

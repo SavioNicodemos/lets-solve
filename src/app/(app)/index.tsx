@@ -19,12 +19,11 @@ import { Input } from '@/components/Input';
 import Loading from '@/components/Loading';
 import { SolveCard } from '@/components/SolveCard';
 import { UserPhoto } from '@/components/UserPhoto';
-import { IComplaintId } from '@/dtos/ComplaintDTO';
-import { IFiltersDTO } from '@/dtos/FiltersDTO';
-import { useGroups } from '@/hooks/queries/useGroups';
-import { useMySolves } from '@/hooks/queries/useMySolves';
-import { useSolves } from '@/hooks/queries/useSolves';
-import { useAuth } from '@/hooks/useAuth';
+import { IFiltersDTO } from '@/features/shared/dtos/FiltersDTO';
+import { useGroups } from '@/features/groups/queries';
+import { useAuth } from '@/features/auth/hooks';
+import { useMySolves, useSolves } from '@/features/solves/queries';
+import { IComplaintId } from '@/features/solves/types';
 
 export default function Home() {
   const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(false);

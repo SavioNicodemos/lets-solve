@@ -5,9 +5,9 @@ import Animated, {
   SlideOutLeft,
 } from 'react-native-reanimated';
 
-import { IComment } from '@/dtos/CommentDTO';
 import { formatRelativeDate } from '@/utils/helpers/dates';
 import { UserPhoto } from './UserPhoto';
+import { IComment } from '@/features/solves/comments/types';
 
 export function CommentItem({ comment, isLoading }: Props) {
   if (isLoading) {

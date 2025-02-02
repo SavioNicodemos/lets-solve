@@ -5,14 +5,14 @@ import { Center, Icon, IconButton, Spinner, VStack } from 'native-base';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import { useQueryClient } from '@tanstack/react-query';
 import { AvatarUpload } from '@/components/AvatarUpload';
 import { Header } from '@/components/Header';
 import { Input } from '@/components/Input';
-import { queryClient } from '@/contexts/ReactQueryContext';
-import { IImageUpload } from '@/dtos/ComplaintDTO';
-import { useCreateGroup } from '@/hooks/mutations/useCreateGroup';
-import { IImageUploadSchema } from '@/schemas/Image';
 import { handleError } from '@/utils/handleError';
+import { IImageUploadSchema } from '@/features/shared/images/schemas';
+import { IImageUpload } from '@/features/shared/images/types';
+import { useCreateGroup } from '@/features/groups/mutations';
 
 export { ErrorBoundary } from '@/components/ErrorBoundary';
 
@@ -20,6 +20,7 @@ export default function CreateGroup() {
   const { control, handleSubmit } = useForm<ICreateGroup>({
     resolver: zodResolver(createGroupSchema),
   });
+  const queryClient = useQueryClient();
 
   const { mutateAsync, isPending } = useCreateGroup();
 

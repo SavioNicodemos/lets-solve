@@ -12,7 +12,7 @@ import {
 import { useState } from 'react';
 
 import { Button } from '@/components/Button';
-import { IFiltersDTO } from '@/dtos/FiltersDTO';
+import { IFiltersDTO } from '@/features/shared/dtos/FiltersDTO';
 
 type Props = {
   visible: boolean;

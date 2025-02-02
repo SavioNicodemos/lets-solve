@@ -1,10 +1,10 @@
 import { Box, HStack, Image, Pressable, Text, VStack } from 'native-base';
 
 import defaultComplaintImage from '@/assets/noComplaint.png';
-import { ComplaintStatusDTO } from '@/dtos/ComplaintStatusDTO';
 
 import StatusChip from './StatusChip';
 import { UserPhoto } from './UserPhoto';
+import { ComplaintStatusDTO } from '@/features/solves/types';
 
 type Props = {
   userPhoto?: string;

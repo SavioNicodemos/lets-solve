@@ -8,8 +8,8 @@ import Logo from '@/assets/Logo.svg';
 
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
-import { useToast } from '@/hooks/useToast';
-import { requestPasswordReset } from '@/queries/auth';
+import { useToast } from '@/features/shared/hooks/useToast';
+import { requestPasswordReset } from '@/features/auth/api';
 
 export default function ForgotPassword() {
   const toast = useToast();

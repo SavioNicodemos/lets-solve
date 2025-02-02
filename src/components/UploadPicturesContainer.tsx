@@ -6,9 +6,9 @@ import { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 
 import noComplaintImage from '@/assets/noComplaint.png';
-import { IImageUpload } from '@/dtos/ComplaintDTO';
-import { useToast } from '@/hooks/useToast';
 import { handleError } from '@/utils/handleError';
+import { IImageUpload } from '@/features/shared/images/types';
+import { useToast } from '@/features/shared/hooks/useToast';
 
 type Props = {
   onChange: (value: IImageUpload[]) => void;

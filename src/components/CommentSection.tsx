@@ -1,8 +1,8 @@
 import { Heading, VStack, View } from 'native-base';
 
-import { useInfiniteComments } from '@/hooks/queries/useInfiniteComments';
 import { AddComment } from './AddComment';
 import { CommentItem } from './CommentItem';
+import { useInfiniteComments } from '@/features/solves/comments/queries';
 
 export function CommentSection({ complaintId, allowAdd = false }: Props) {
   return (

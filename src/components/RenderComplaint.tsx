@@ -1,8 +1,8 @@
 import { Center, Text } from 'native-base';
 
-import { ComplaintDTO } from '@/dtos/ComplaintDTO';
 import Loading from './Loading';
 import { SolveDetails } from './SolveDetails';
+import { ComplaintDTO } from '@/features/solves/types';
 
 function RenderComplaint({ complaint, isLoading }: Props) {
   if (isLoading) {

@@ -7,11 +7,11 @@ import Logo from '@/assets/Logo.svg';
 import { AvatarUpload } from '@/components/AvatarUpload';
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
-import { ICreateUser } from '@/dtos/UserDTO';
-import { useCreateUser } from '@/hooks/mutations/useCreateUser';
-import { useToast } from '@/hooks/useToast';
-import { createUserSchema } from '@/schemas/user';
 import { handleError } from '@/utils/handleError';
+import { useToast } from '@/features/shared/hooks/useToast';
+import { useCreateUser } from '@/features/users/mutations';
+import { ICreateUser } from '@/features/users/types';
+import { createUserSchema } from '@/features/users/schemas';
 
 export default function SignUp() {
   const toast = useToast();

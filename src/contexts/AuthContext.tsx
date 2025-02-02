@@ -9,13 +9,7 @@ import {
   useState,
 } from 'react';
 
-import { queryClient } from './ReactQueryContext';
-
-import { IImageUpload } from '@/dtos/ComplaintDTO';
-import { UserDTO } from '@/dtos/UserDTO';
-import { fetchMyUser } from '@/queries/auth';
-import { getDefaultGroup, getGroups } from '@/queries/groups';
-import { createSession, updateAvatar } from '@/queries/mutations/auth';
+import { useQueryClient } from '@tanstack/react-query';
 import { api } from '@/services/api';
 import {
   storageAuthTokenGet,
@@ -28,14 +22,12 @@ import {
   storageUserSave,
 } from '@/storage/storageUser';
 import { handleError } from '@/utils/handleError';
-
-export type AuthContextDataProps = {
-  user: UserDTO;
-  signIn: (email: string, password: string) => Promise<void>;
-  signOut: () => Promise<void>;
-  updateUserAvatar: (avatar: IImageUpload) => Promise<void>;
-  isLoadingUserStorageData: boolean;
-};
+import { AuthContextDataProps } from '@/features/auth/types';
+import { UserDTO } from '@/features/users/types';
+import { createSession } from '@/features/auth/api';
+import { IImageUpload } from '@/features/shared/images/types';
+import { fetchMyUser, updateAvatar } from '@/features/users/api';
+import { getDefaultGroup, getGroups } from '@/features/groups/api';
 
 type AuthContextProviderProps = {
   children: ReactNode;
@@ -49,6 +41,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const [user, setUser] = useState<UserDTO>({} as UserDTO);
   const [isLoadingUserStorageData, setIsLoadingUserStorageData] =
     useState(true);
+  const queryClient = useQueryClient();
 
   function userAndTokenUpdate(userData: UserDTO, token: string) {
     api.defaults.headers.common.Authorization = `Bearer ${token}`;
@@ -70,78 +63,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     }
   }
 
-  const signIn = useCallback(async (email: string, password: string) => {
-    try {
-      setIsLoadingUserStorageData(true);
-      const data = await createSession({ email, password });
-
-      if (data.user && data.token && data.refresh_token) {
-        await storageUserAndTokenSave(
-          data.user,
-          data.token,
-          data.refresh_token,
-        );
-        userAndTokenUpdate(data.user, data.token);
-      }
-
-      const isRedirect = await getAndSetGroups();
-
-      if (isRedirect) {
-        return;
-      }
-
-      router.replace('/');
-    } finally {
-      setIsLoadingUserStorageData(false);
-    }
-  }, []);
-
-  async function signOut() {
-    try {
-      setIsLoadingUserStorageData(true);
-      setUser({} as UserDTO);
-      await storageUserRemove();
-      await storageAuthTokenRemove();
-      queryClient.clear();
-
-      router.replace('/sign-in');
-    } finally {
-      setIsLoadingUserStorageData(false);
-    }
-  }
-
-  async function loadUserData() {
-    try {
-      setIsLoadingUserStorageData(true);
-
-      const userLogged = await storageUserGet();
-      const { token } = await storageAuthTokenGet();
-
-      if (!(userLogged && token)) return;
-
-      userAndTokenUpdate(userLogged, token);
-      await getAndSetGroups();
-    } finally {
-      setIsLoadingUserStorageData(false);
-    }
-  }
-
-  async function updateUserAvatar(avatar: IImageUpload): Promise<void> {
-    try {
-      await updateAvatar(avatar);
-
-      const myUser = await fetchMyUser();
-
-      await storageUserSave(myUser);
-      setUser(myUser);
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        handleError(new Error('Erro ao atualizar foto de perfil'));
-      }
-    }
-  }
-
-  async function getAndSetGroups() {
+  const getAndSetGroups = useCallback(async () => {
     const groups = await getGroups();
     queryClient.setQueryData(['groups'], groups);
 
@@ -159,7 +81,84 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     }
 
     return isRedirect;
+  }, [queryClient]);
+
+  const signIn = useCallback(
+    async (email: string, password: string) => {
+      try {
+        setIsLoadingUserStorageData(true);
+        const data = await createSession({ email, password });
+
+        if (data.user && data.token && data.refresh_token) {
+          await storageUserAndTokenSave(
+            data.user,
+            data.token,
+            data.refresh_token,
+          );
+          userAndTokenUpdate(data.user, data.token);
+        }
+
+        const isRedirect = await getAndSetGroups();
+
+        if (isRedirect) {
+          return;
+        }
+
+        router.replace('/');
+      } finally {
+        setIsLoadingUserStorageData(false);
+      }
+    },
+    [getAndSetGroups],
+  );
+
+  const signOut = useCallback(async () => {
+    try {
+      setIsLoadingUserStorageData(true);
+      setUser({} as UserDTO);
+      await storageUserRemove();
+      await storageAuthTokenRemove();
+      queryClient.clear();
+
+      router.replace('/sign-in');
+    } finally {
+      setIsLoadingUserStorageData(false);
+    }
+  }, [queryClient]);
+
+  async function loadUserData() {
+    try {
+      setIsLoadingUserStorageData(true);
+
+      const userLogged = await storageUserGet();
+      const { token } = await storageAuthTokenGet();
+
+      if (!(userLogged && token)) return;
+
+      userAndTokenUpdate(userLogged, token);
+      await getAndSetGroups();
+    } finally {
+      setIsLoadingUserStorageData(false);
+    }
   }
+
+  const updateUserAvatar = useCallback(
+    async (avatar: IImageUpload): Promise<void> => {
+      try {
+        await updateAvatar(avatar);
+
+        const myUser = await fetchMyUser();
+
+        await storageUserSave(myUser);
+        setUser(myUser);
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          handleError(new Error('Erro ao atualizar foto de perfil'));
+        }
+      }
+    },
+    [],
+  );
 
   useEffect(() => {
     loadUserData();
@@ -172,7 +171,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     return () => {
       subscribe();
     };
-  }, []);
+  }, [signOut]);
 
   const contextReturnValues = useMemo<AuthContextDataProps>(() => {
     return {
@@ -182,7 +181,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       updateUserAvatar,
       isLoadingUserStorageData,
     };
-  }, [isLoadingUserStorageData, signIn, user]);
+  }, [isLoadingUserStorageData, signIn, user, signOut, updateUserAvatar]);
 
   return (
     <AuthContext.Provider value={contextReturnValues}>

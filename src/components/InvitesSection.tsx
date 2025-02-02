@@ -19,11 +19,11 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { UserItem } from '@/components/UserItem';
-import { IInviteFromGroup } from '@/dtos/GroupDTO';
-import { useManageGroupInvite } from '@/hooks/mutations/useManageGroupInvite';
-import { useGroupInvites } from '@/hooks/queries/useGroupInvites';
 import { handleError } from '@/utils/handleError';
 import { ListDivider } from './ListDivider';
+import { useGroupInvites } from '@/features/groups/invites/queries';
+import { IInviteFromGroup } from '@/features/groups/invites/types';
+import { useManageGroupInvite } from '@/features/groups/invites/mutations';
 
 export function InvitesSection() {
   const { data: invites, isLoading, isSuccess } = useGroupInvites();

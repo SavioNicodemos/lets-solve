@@ -1,4 +1,4 @@
-import { UserDTO } from '@/dtos/UserDTO';
+import { UserDTO } from '@/features/users/types';
 import LocalStorage from '@/storage/localStorage';
 import { USER_STORAGE } from '@/storage/storageConfig';
 import {

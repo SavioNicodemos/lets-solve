@@ -12,11 +12,11 @@ import { Alert } from 'react-native';
 import { ComplaintEvaluationModal } from '@/components/ComplaintEvaluationModal';
 import { Menu, MenuItem } from '@/components/Menu';
 import RenderComplaint from '@/components/RenderComplaint';
-import { ISubmitEvaluation } from '@/dtos/ComplaintDTO';
-import { useSubmitEvaluation } from '@/hooks/mutations/useSubmitEvaluation';
-import { useComplaint } from '@/hooks/queries/useComplaint';
-import { useAuth } from '@/hooks/useAuth';
 import { handleError } from '@/utils/handleError';
+import { useAuth } from '@/features/auth/hooks';
+import { useSolve } from '@/features/solves/queries';
+import { useSubmitEvaluation } from '@/features/solves/mutations';
+import { ISubmitEvaluation } from '@/features/solves/types';
 
 export default function Complaint() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -33,7 +33,7 @@ export default function Complaint() {
     isLoading,
     refetch,
     isError,
-  } = useComplaint(complaintId);
+  } = useSolve(complaintId);
 
   const isMySolve = user.id === complaint?.user.id;
   const isResolved = complaint?.is_resolved;

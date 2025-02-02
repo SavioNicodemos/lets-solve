@@ -3,8 +3,8 @@ import { Button, Modal, Text } from 'native-base';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { ISubmitEvaluation } from '@/dtos/ComplaintDTO';
 import { ScoreSelector } from './ScoreSelector';
+import { ISubmitEvaluation } from '@/features/solves/types';
 
 const ICreateEvaluation = z.object({
   isSolved: z.boolean(),

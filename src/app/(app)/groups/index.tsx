@@ -16,7 +16,7 @@ import { Header } from '@/components/Header';
 import { InvitesSection } from '@/components/InvitesSection';
 import { ListDivider } from '@/components/ListDivider';
 import Loading from '@/components/Loading';
-import { useGroups } from '@/hooks/queries/useGroups';
+import { useGroups } from '@/features/groups/queries';
 
 export default function Groups() {
   return (

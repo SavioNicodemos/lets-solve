@@ -1,0 +1,3 @@
+export const USE_SOLVE_QUERY_KEY = 'USE_SOLVE';
+export const USE_MY_SOLVES_QUERY_KEY = 'USE_MY_SOLVES';
+export const USE_SOLVES_QUERY_KEY = 'USE_SOLVES';

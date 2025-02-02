@@ -1,10 +1,9 @@
 import { Feather } from '@expo/vector-icons';
 import { HStack, Heading, Icon, IconButton, Text, VStack } from 'native-base';
 
-import { PublicUserDTO } from '@/dtos/UserDTO';
-import { useAuth } from '@/hooks/useAuth';
-
 import { UserItem } from './UserItem';
+import { PublicUserDTO } from '@/features/users/types';
+import { useAuth } from '@/features/auth/hooks';
 
 type Props = {
   participants: PublicUserDTO[];

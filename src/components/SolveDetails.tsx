@@ -2,11 +2,11 @@
 import { HStack, Heading, ScrollView, Text, VStack } from 'native-base';
 
 import { UserPhoto } from '@/components/UserPhoto';
-import { ShowSolveDetailsDTO } from '@/dtos/ComplaintDTO';
 
 import { CommentSection } from './CommentSection';
 import { ImageCarousel } from './ImageCarousel';
 import StatusChip from './StatusChip';
+import { ShowSolveDetailsDTO } from '@/features/solves/types';
 
 type Props = {
   complaint: ShowSolveDetailsDTO;

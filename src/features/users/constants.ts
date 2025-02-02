@@ -1,0 +1,1 @@
+export const CREATE_USER_MUTATION_KEY = 'CREATE_USER';
